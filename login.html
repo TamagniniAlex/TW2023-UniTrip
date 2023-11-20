@@ -13,19 +13,28 @@
     <!-- Stile Personalizzato -->
     <link rel="stylesheet" href="style.css">
 
-    <title>UniTrip</title>
+    <title>Accedi</title>
 </head>
 
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-10 col-md-6 col-xl-4">
                 <h1 class="text-center mb-4">UniTrip</h1>
-                <p class="text-center">Benvenuto su UniTrip</p>
-                <div class="text-center mt-4">
-                    <a href="login.html" class="btn btn-primary btn-lg">Accedi</a>
-                    <a href="register.html" class="btn btn-primary btn-lg">Registrati</a>
-                </div>
+                <p class="text-center mb-5">Accedi</p>
+                <form action="login.php" method="post">
+                    <div class="mb-3">
+                        <label for="nickname-mail" class="form-label">Inserisci nickname o E-mail:</label>
+                        <input type="text" class="form-control" id="nickname-mail">
+                    </div>
+                    <div class="mb-5">
+                        <label for="password" class="form-label">Inserisci Password:</label>
+                        <input type="password" class="form-control" id="password">
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary form-control">Accedi</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
