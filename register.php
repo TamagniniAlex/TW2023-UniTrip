@@ -20,11 +20,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $photo_url="img/profile/gray.jpg";
     }
 
-    $sql = "INSERT INTO profile (nickname, password, mail, name, surname, photo_url, description, birth_date, join_date) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO profile (nickname, password, salt, mail, name, surname, photo_url, description, birth_date, join_date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $mysqli->prepare($sql);
-    $stmt->bind_param("sssssssss", $nickname, $password, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
+    $stmt->bind_param("sssssssss", $nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
     $stmt->execute();
 
     if ($stmt->affected_rows > 0) {
