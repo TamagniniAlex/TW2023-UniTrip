@@ -6,9 +6,9 @@ USE UniTrip;
 
 CREATE TABLE Profile (
   nickname VARCHAR(20) PRIMARY KEY,
+  mail VARCHAR(150),
   password VARCHAR(20),
   name VARCHAR(20),
-  mail VARCHAR(150),
   surname VARCHAR(20),
   photo_url VARCHAR(255),
   description VARCHAR(500),
