@@ -42,14 +42,6 @@ CREATE TABLE City (
   FOREIGN KEY (region) REFERENCES Region(name)
 );
 
-CREATE TABLE FavoriteDestination (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  username VARCHAR(255),
-  city varchar(255),
-  FOREIGN KEY (username) REFERENCES Profile(nickname),
-  FOREIGN KEY (city) REFERENCES City(name)
-);
-
 CREATE TABLE Trip (
   id INT PRIMARY KEY AUTO_INCREMENT,
   city varchar(255),
@@ -131,7 +123,15 @@ CREATE TABLE GroupParticipations (
 
 CREATE TABLE PostLikes (
   post_id INT,
-  profile_username VARCHAR(255),
+  profile_username VARCHAR(50),
+  FOREIGN KEY (post_id) REFERENCES Post(id),
+  FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
+  PRIMARY KEY (profile_username, post_id)
+);
+
+CREATE TABLE PostFavourites (
+  post_id INT,
+  profile_username VARCHAR(50),
   FOREIGN KEY (post_id) REFERENCES Post(id),
   FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
   PRIMARY KEY (profile_username, post_id)
