@@ -139,6 +139,8 @@ CREATE TABLE PostFavourites (
 CREATE TABLE `unitrip`.`login_attempts` (
   `user_id` INT(11) NOT NULL,
   `time` VARCHAR(30) NOT NULL 
-)
-CREATE USER 'secure_user'@'localhost' IDENTIFIED BY 'roHdLmnCs35P0Ssl2Q4'; 
-GRANT SELECT, INSERT, UPDATE ON `secure_login`.* TO 'sec_user'@'localhost';
+);
+
+DROP USER 'secure_user'@'localhost';
+CREATE USER 'secure_user'@'localhost' IDENTIFIED BY 'roHdLmnCs35P0Ssl2Q4';
+GRANT SELECT, INSERT, UPDATE ON `unitrip`.* TO 'secure_user'@'localhost';

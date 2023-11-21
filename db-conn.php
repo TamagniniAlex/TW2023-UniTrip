@@ -1,10 +1,8 @@
 <?php 
-
 define("HOST", "localhost"); 
-define("USER", "secure_user");
-define("PASSWORD", "roHdLmnCs35P0Ssl2Q4"); 
-define("DATABASE", "unitrip");
-
+define("USER", "secure_user"); 
+define("PASSWORD", "roHdLmnCs35P0Ssl2Q4");
+define("DATABASE", "unitrip"); 
 $mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
 
 if ($mysqli->connect_errno) {
