@@ -4,7 +4,11 @@ require_once("db-conn.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nickname = $_POST["nickname"];
+    
     $password = $_POST["password"];
+    $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
+    $password = hash('sha512', $password.$random_salt);
+
     $name = $_POST["name"];
     $surname = $_POST["surname"];
     $mail = $_POST["mail"];
@@ -23,6 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO profile (nickname, password, salt, mail, name, surname, photo_url, description, birth_date, join_date) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+$host = "localhost";
+$dbname = "unitrip";
+$username = "root";
+$password = "";
+
+$mysqli = new mysqli($host, $username, $password, $dbname);
     $stmt = $mysqli->prepare($sql);
     $stmt->bind_param("sssssssss", $nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
     $stmt->execute();
