@@ -136,5 +136,7 @@ CREATE TABLE PostLikes (
   PRIMARY KEY (profile_username, post_id)
 );
 
-INSERT INTO Profile (nickname, password, name, surname, photo_url, description, birth_date, join_date)
-VALUES ('admin', 'admin', 'admin', 'admin', '../img/gray.jpg', 'admin', '2000-01-01', '2020-01-01');
+INSERT INTO Profile (nickname, mail, password, name, surname, photo_url, description, birth_date, join_date)
+VALUES ("admin", "a@a.com", "admin", "admin", "admin", "img/gray.jpg", "admin", "1990-01-01", "2020-01-01");
+INSERT INTO Profile (nickname, mail, password, name, surname, photo_url, description, birth_date, join_date)
+VALUES ("user", "u@u.com", "user", "user", "user", "img/gray.jpg", "user", "2000-01-01", "2023-01-01");
