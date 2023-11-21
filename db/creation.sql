@@ -25,28 +25,28 @@ CREATE TABLE Follow (
   FOREIGN KEY (to_username) REFERENCES Profile(nickname)
 );
 
+CREATE TABLE Country (
+  name VARCHAR(255) PRIMARY KEY
+);
+
+CREATE TABLE Region (
+  country varchar(255),
+  name VARCHAR(255) PRIMARY KEY,
+  FOREIGN KEY (country) REFERENCES Country(name)
+);
+
+CREATE TABLE City (
+  region varchar(255),
+  name VARCHAR(255) PRIMARY KEY ,
+  FOREIGN KEY (region) REFERENCES Region(name)
+);
+
 CREATE TABLE FavoriteDestination (
   id INT PRIMARY KEY AUTO_INCREMENT,
   username VARCHAR(255),
   city varchar(255),
   FOREIGN KEY (username) REFERENCES Profile(nickname),
   FOREIGN KEY (city) REFERENCES City(name)
-);
-
-CREATE TABLE Country (
-  name PRIMARY KEY VARCHAR(255)
-);
-
-CREATE TABLE Region (
-  country varchar(255),
-  name PRIMARY KEY VARCHAR(255),
-  FOREIGN KEY (country) REFERENCES Country(name)
-);
-
-CREATE TABLE Citie (
-  region varchar(255),
-  name PRIMARY KEY VARCHAR(255),
-  FOREIGN KEY (region) REFERENCES Region(name)
 );
 
 CREATE TABLE Trip (
@@ -60,7 +60,7 @@ CREATE TABLE Trip (
 );
 
 CREATE TABLE Post (
-  id_post INT PRIMARY KEY AUTO_INCREMENT,
+  id INT PRIMARY KEY AUTO_INCREMENT,
   trip_id INT,
   photo_url VARCHAR(255),
   description VARCHAR(255),
@@ -69,7 +69,7 @@ CREATE TABLE Post (
   FOREIGN KEY (city) REFERENCES City(name)
 );
 
-CREATE TABLE Itineraries (
+CREATE TABLE Itinerary (
   id INT PRIMARY KEY AUTO_INCREMENT
 );
 
@@ -93,19 +93,7 @@ CREATE TABLE Chat (
   FOREIGN KEY (to_username) REFERENCES Profile(nickname)
 );
 
-CREATE TABLE Messages (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  from_username VARCHAR(255),
-  to_username NULL varchar(255),
-  message VARCHAR(255),
-  group_id NULL INT,
-  datetime DATETIME,
-  FOREIGN KEY (from_username) REFERENCES Chat(from_username),
-  FOREIGN KEY (to_username) REFERENCES Chat(to_username),
-  FOREIGN KEY (group_id) REFERENCES Groups(id)
-);
-
-CREATE TABLE Activity(
+CREATE TABLE Activity (
   id INT PRIMARY KEY AUTO_INCREMENT,
   itinerary_id INT,
   start_time TIME,
@@ -114,18 +102,22 @@ CREATE TABLE Activity(
   FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id)
 );
 
-CREATE TABLE Like (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  from_username VARCHAR(255),
-  trip_id INT,
-  FOREIGN KEY (from_username) REFERENCES Profile(nickname),
-  FOREIGN KEY (trip_id) REFERENCES Trip(id)
-);
-
 CREATE TABLE Groups (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(255),
   description VARCHAR(255)
+);
+
+CREATE TABLE Messages (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  from_username VARCHAR(255),
+  to_username varchar(255) NULL,
+  message VARCHAR(255),
+  group_id INT NULL,
+  datetime DATETIME,
+  FOREIGN KEY (from_username) REFERENCES Chat(from_username),
+  FOREIGN KEY (to_username) REFERENCES Chat(to_username),
+  FOREIGN KEY (group_id) REFERENCES Groups(id)
 );
 
 CREATE TABLE GroupParticipations (
@@ -139,7 +131,7 @@ CREATE TABLE GroupParticipations (
 CREATE TABLE PostLikes (
   post_id INT,
   profile_username VARCHAR(255),
-  FOREIGN KEY (post_id) REFERENCES Posts(id),
+  FOREIGN KEY (post_id) REFERENCES Post(id),
   FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
   PRIMARY KEY (profile_username, post_id)
 );
