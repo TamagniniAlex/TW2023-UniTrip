@@ -22,29 +22,41 @@
             <div class="col-10 col-md-6 col-xl-4">
                 <h1 class="text-center mb-4">UniTrip</h1>
                 <p class="text-center mb-5">Registrati</p>
-                <form action="register.php" method="post">
+                <form action="register.php" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="name" class="form-label">Inserisci nome:</label>
-                        <input type="text" class="form-control" id="name">
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="mb-3">
                         <label for="surname" class="form-label">Inserisci cognome:</label>
-                        <input type="text" class="form-control" id="surname">
+                        <input type="text" class="form-control" id="surname" name="surname">
                     </div>
                     <div class="mb-3">
                         <label for="nickname" class="form-label">Inserisci nickname:</label>
-                        <input type="text" class="form-control" id="nickname" aria-describedby="nicknameHelp">
+                        <input type="text" class="form-control" id="nickname" aria-describedby="nicknameHelp" name="nickname">
                         <div id="nicknameHelp" class="form-text">Non utilizzare spazi</div>
                     </div>
                     <div class="mb-3">
                         <label for="mail" class="form-label">Inserisci E-mail:</label>
-                        <input type="text" class="form-control" id="mail">
-                    </div>
-                    <div class="mb-5">
-                        <label for="password" class="form-label">Inserisci Password:</label>
-                        <input type="password" class="form-control" id="password">
+                        <input type="text" class="form-control" id="mail" name="mail">
                     </div>
                     <div class="mb-3">
+                        <label for="password" class="form-label">Inserisci Password:</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Inserisci descrizione:</label>
+                        <textarea type="text" class="form-control" rows="3" id="description" name="description"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="birth-date" class="form-label">Inserisci data di nascita:</label>
+                        <input type="date" class="form-control" id="birth-date" name="birth-date">
+                    </div>
+                    <div class="mb-5">
+                        <label for="image" class="form-label">Inserisci foto profilo:</label>
+                        <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpeg">
+                    </div>
+                    <div class="mb-5">
                         <button type="submit" class="btn btn-primary form-control">Registrati</button>
                     </div>
                 </form>
