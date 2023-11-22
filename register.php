@@ -1,14 +1,14 @@
 <?php
-
 require_once("db-conn.php");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nickname"]) 
+        && isset($_POST["password"]) && isset($_POST["name"]) 
+        && isset($_POST["surname"]) && isset($_POST["mail"]) 
+        && isset($_POST["description"]) && isset($_POST["birth-date"])) {
     $nickname = $_POST["nickname"];
-
     $password = $_POST["password"];
     $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
     $password = hash('sha512', $password.$random_salt);
-
     $name = $_POST["name"];
     $surname = $_POST["surname"];
     $mail = $_POST["mail"];
@@ -16,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $birth_date = $_POST["birth-date"];
     $join_date = date("Y-m-d");
 
-    $filePngName = $_FILES["image"]["name"];
-    if (isset($_FILES['image'])) {
+    if ($_FILES['image']['error'] === UPLOAD_ERR_OK && is_uploaded_file($_FILES['image']['tmp_name'])) {
+        $filePngName = $_FILES["image"]["name"];
         move_uploaded_file($_FILES["image"]["tmp_name"], 'img/profile/' . $filePngName);
         $photo_url = "img/profile/" . $filePngName;
     } else {
@@ -41,5 +41,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $mysqli->close();
 }
-
 ?>
