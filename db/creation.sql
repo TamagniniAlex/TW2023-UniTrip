@@ -136,9 +136,10 @@ CREATE TABLE PostFavourites (
   FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
   PRIMARY KEY (profile_username, post_id)
 );
-CREATE TABLE `unitrip`.`login_attempts` (
-  `user_id` INT(11) NOT NULL,
-  `time` VARCHAR(30) NOT NULL 
+
+CREATE TABLE LoginAttempts (
+  user_id INT(11) NOT NULL,
+  time VARCHAR(30) NOT NULL 
 );
 
 DROP USER 'secure_user'@'localhost';
