@@ -163,8 +163,8 @@ INSERT INTO City (region, name) VALUES ('Provence', 'Marseille');
 INSERT INTO City (region, name) VALUES ('Catalonia', 'Barcelona');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
-VALUES ('a', 'a@a.com', 'faceb2153f201fbb3ae1dc926822281e1398670a9e4edcad3f6f31e8434f7ebc330511c6c5de1162a77919c1bcd0e3632ff2a18a70d5bb62925f64ecc83508e3',
- '3efebc57f4f5f445c88e904737c9182dfb43c3863f1958d340dc57eaaf3ba6d9cd7c4ec6473aa75ab9eb3b3f3b67eafa129aa2e2a29e961e544771077d6c7cb0', 'a', 'a', 'img/profile/a.jpg',
+VALUES ('a', 'a@a.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
+ '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/a.jpg',
   'A.', '1990-01-01', '2023-11-21');
 
 INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'a', 'img/black.jpg', 'Milan trip');
