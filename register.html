@@ -23,38 +23,49 @@
                 <h1 class="text-center mb-4">UniTrip</h1>
                 <p class="text-center mb-5">Registrati</p>
                 <form action="register.php" method="post" enctype="multipart/form-data">
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="name" class="form-label">Inserisci nome:</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <input type="text" pattern="^[A-Za-z]+$" placeholder="Inserisci nome..." class="form-control" id="name" name="name" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="surname" class="form-label">Inserisci cognome:</label>
-                        <input type="text" class="form-control" id="surname" name="surname">
+                        <input type="text" pattern="^[A-Za-z]+$" placeholder="Inserisci cognome..." class="form-control" id="surname" name="surname" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="nickname" class="form-label">Inserisci nickname:</label>
-                        <input type="text" class="form-control" id="nickname" aria-describedby="nicknameHelp" name="nickname">
-                        <div id="nicknameHelp" class="form-text">Non utilizzare spazi</div>
+                        <input type="text" pattern="^[a-z0-9]+$" placeholder="Inserisci nickname..." class="form-control" id="nickname" aria-describedby="nicknameHelp" name="nickname" required>
+                        <div id="nicknameHelp" class="form-text">
+                            &#9679; Solo lettere minuscole.<br> 
+                            &#9679; Non utilizzare spazi.
+                        </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="mail" class="form-label">Inserisci E-mail:</label>
-                        <input type="text" class="form-control" id="mail" name="mail">
+                        <input type="email" placeholder="Inserisci E-mail..." class="form-control" id="mail" name="mail" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="password" class="form-label">Inserisci Password:</label>
-                        <input type="password" class="form-control" id="password" name="password">
+                        <input type="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" placeholder="Inserisci password..." class="form-control" id="password" name="password" required>
+                        <div id="passwordHelp" class="form-text">
+                            &#9679; Almeno 8 caratteri.<br>
+                            &#9679; Almeno una lettera minuscola.<br>
+                            &#9679; Almeno una lettera maiuscola.<br>
+                            &#9679; Almeno un numero.<br>
+                            &#9679; Almeno un carattere speciale
+                        </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="description" class="form-label">Inserisci descrizione:</label>
-                        <textarea type="text" class="form-control" rows="3" id="description" name="description"></textarea>
+                        <textarea placeholder="Inserisci descrizione..." class="form-control" rows="3" id="description" name="description"></textarea>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="birth-date" class="form-label">Inserisci data di nascita:</label>
-                        <input type="date" class="form-control" id="birth-date" name="birth-date">
+                        <input type="date" class="form-control" id="birth-date" name="birth-date" required>
                     </div>
                     <div class="mb-5">
                         <label for="image" class="form-label">Inserisci foto profilo:</label>
                         <input type="file" class="form-control" id="image" name="image" accept="image/png, image/jpeg">
+                        <div id="imageHelp" class="form-text">Puoi anche caricare la foto successivamente.</div>
                     </div>
                     <div class="mb-5">
                         <button type="submit" class="btn btn-primary form-control">Registrati</button>

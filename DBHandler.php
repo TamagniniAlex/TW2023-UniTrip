@@ -11,11 +11,9 @@ function sec_session_start()
     session_start();
     session_regenerate_id();
 }
-
 function login($email, $password, $mysqli)
 {
     // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
-
     $nickname = "";
     $db_password = "";
     $salt = "";
@@ -46,7 +44,7 @@ function login($email, $password, $mysqli)
                     return true;
                 } else {
                     $now = time();
-                    $mysqli->query("INSERT INTO login_attempts (user_id, time) VALUES ('$nickname', '$now')");
+                    $mysqli->query("INSERT INTO LoginAttempts (user_id, time) VALUES ('$nickname', '$now')");
                     return false;
                 }
             }
