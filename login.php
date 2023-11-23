@@ -1,18 +1,18 @@
 <?php
 require_once('db-conn.php');
 require_once('DBHandler.php');
-sec_session_start(); // usiamo la nostra funzione per avviare una sessione php sicura
+sec_session_start();
 
-if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nickname_mail']) && isset($_POST['password'])) {
-   $nickname_mail = $_POST['nickname_mail'];
-   $password = $_POST['password'];
-   if(login($nickname_mail, $password, $mysqli)) {
-      echo 'Success: You have been logged in!';
-   } else {
-      echo 'Invalid Credentials';
-   }
-} else { 
-   echo 'Invalid Request';
+// Check if all fields are set
+if ($_SERVER["REQUEST_METHOD"] != "POST" || !isset($_POST['nickname_mail']) || !isset($_POST['password'])) header("Location: login.html?error=php");
+
+$nickname_mail = $_POST['nickname_mail'];
+$password = $_POST['password'];
+if (login($nickname_mail, $password, $mysqli)) {
+   // Redirect to the home page with a success message
+   header("Location: feed.html?login=success");
+} else {
+   // Redirect back to the login page with an error message
+   header("Location: login.html?error=assente");
 }
-
-?>
+exit();

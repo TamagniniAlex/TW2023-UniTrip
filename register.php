@@ -5,10 +5,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nickname"])
         && isset($_POST["password"]) && isset($_POST["name"]) 
         && isset($_POST["surname"]) && isset($_POST["mail"]) 
         && isset($_POST["description"]) && isset($_POST["birth-date"])) {
-    $nickname = $_POST["nickname"];
+
     $password = $_POST["password"];
     $random_salt = hash('sha512', uniqid(mt_rand(1, mt_getrandmax()), true));
     $password = hash('sha512', $password.$random_salt);
+
+    $nickname = $_POST["nickname"];
     $name = $_POST["name"];
     $surname = $_POST["surname"];
     $mail = $_POST["mail"];
@@ -33,13 +35,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nickname"])
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
         $_SESSION["nickname"] = $nickname;
-        echo "Profile created successfully.";
+        header("Location: feed.html?registration=success");
     } else {
-        echo "Failed to create profile.";
+        header("Location: register.html?registration=failure");
     }
-
+    if ($isValidCredentials) {
+        // Redirect to the home page with a success message
+        header("Location: home.php?login=success");
+    } else {
+        // Redirect back to the login page with an error message
+        header("Location: login.html?error=1");
+    }
     $stmt->close();
     $mysqli->close();
-    
+    exit();
 }
 ?>
