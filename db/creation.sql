@@ -137,7 +137,7 @@ CREATE TABLE PostFavourites (
   PRIMARY KEY (profile_username, post_id)
 );
 CREATE TABLE `unitrip`.`login_attempts` (
-  `user_id` INT(11) NOT NULL,
+  `nickname` varchar(255) NOT NULL,
   `time` VARCHAR(30) NOT NULL 
 );
 

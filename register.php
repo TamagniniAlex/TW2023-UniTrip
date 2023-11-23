@@ -31,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $salt = "";
     $stmt->bind_param("ssssssssss", $nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
     $stmt->execute();
-
     if ($stmt->affected_rows > 0) {
         echo "Profile created successfully.";
     } else {
@@ -40,6 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $stmt->close();
     $mysqli->close();
+    
+var_dump($_SESSION);
 }
 
 ?>

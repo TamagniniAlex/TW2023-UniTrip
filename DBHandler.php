@@ -19,8 +19,9 @@ function login($email, $password, $mysqli)
     $nickname = "";
     $db_password = "";
     $salt = "";
-    if ($stmt = $mysqli->prepare("SELECT nickname, mail, password, salt, name, surname, photo_url, description,birth_date,jpoin_date FROM members WHERE email = ? LIMIT 1")) {
-        $stmt->bind_param('s', $email); // esegue il bind del parametro '$email'.
+    if ($stmt = $mysqli->prepare("SELECT nickname, password, salt FROM profile WHERE mail = ? LIMIT 1")) {
+         // esegue il bind del parametro '$email'.
+        $stmt->bind_param('s', $email);
         $stmt->execute(); // esegue la query appena creata.
         $stmt->store_result();
         $stmt->bind_result($nickname, $db_password, $salt); // recupera il risultato della query e lo memorizza nelle relative variabili.
@@ -31,14 +32,13 @@ function login($email, $password, $mysqli)
             if (checkbrute($nickname, $mysqli) == true) {
                 // Account disabilitato
                 // Invia un e-mail all'utente avvisandolo che il suo account è stato disabilitato.
+                
                 return false;
             } else {
                 if ($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
                     // Password corretta!            
                     $user_browser = $_SERVER['HTTP_USER_AGENT']; // Recupero il parametro 'user-agent' relativo all'utente corrente.
 
-                    $user_id = preg_replace("/[^0-9]+/", "", $nickname); // ci proteggiamo da un attacco XSS
-                    $_SESSION['user_id'] = $user_id;
                     $nickname = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $nickname); // ci proteggiamo da un attacco XSS
                     $_SESSION['nickname'] = $nickname;
                     $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
@@ -51,6 +51,7 @@ function login($email, $password, $mysqli)
                 }
             }
         } else {
+            return $email;
             // L'utente inserito non esiste.
             return false;
         }
@@ -62,7 +63,7 @@ function checkbrute($nickname, $mysqli)
     // Vengono analizzati tutti i tentativi di login a partire dalle ultime due ore.
     $valid_attempts = $now - (2 * 60 * 60);
     if ($stmt = $mysqli->prepare("SELECT time FROM login_attempts WHERE nickname = ? AND time > '$valid_attempts'")) {
-        $stmt->bind_param('i', $nickname);
+        $stmt->bind_param('s', $nickname);
         $stmt->execute();
         $stmt->store_result();
         // Verifico l'esistenza di più di 5 tentativi di login falliti.
