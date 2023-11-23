@@ -20,8 +20,10 @@ function login($nickname_mail, $password, $mysqli)
 
     if (!strstr($nickname_mail, '@')) { 
         if($stmt = $mysqli->prepare("SELECT mail FROM profile WHERE nickname = ? LIMIT 1")){
-            $stmt->bind_param('s', $nickname_mail); $stmt->execute(); // esegue la query appena creata. 
-            $stmt->store_result(); $stmt->bind_result($nickname_mail); // recupera il risultato della query e lo memorizza nelle relative variabili. 
+            $stmt->bind_param('s', $nickname_mail); 
+            $stmt->execute(); // esegue la query appena creata. 
+            $stmt->store_result(); 
+            $stmt->bind_result($nickname_mail); // recupera il risultato della query e lo memorizza nelle relative variabili. 
             $stmt->fetch(); 
         }
     } 

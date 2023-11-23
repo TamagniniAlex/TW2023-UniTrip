@@ -20,7 +20,6 @@ CREATE TABLE Profile (
 CREATE TABLE Follow (
   from_username VARCHAR(20),
   to_username VARCHAR(20),
-  mutual BOOLEAN,
   PRIMARY KEY (from_username, to_username),
   FOREIGN KEY (from_username) REFERENCES Profile(nickname),
   FOREIGN KEY (to_username) REFERENCES Profile(nickname)
@@ -164,9 +163,30 @@ INSERT INTO City (region, name) VALUES ('Catalonia', 'Barcelona');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('a', 'a@a.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
- '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/a.jpg',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/a.jpg',
   'A.', '1990-01-01', '2023-11-21');
 
-INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'a', 'img/black.jpg', 'Milan trip');
+INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
+VALUES ('b', 'b@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/a.jpg',
+  'A.', '1990-01-01', '2023-11-21');
 
-INSERT INTO Post (trip_id, photo_url, description, city) VALUES (1, 'img/black.jpg', 'Post of Milan Trip', 'Milan');
+INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
+VALUES ('c', 'c@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/a.jpg',
+  'A.', '1990-01-01', '2023-11-21');
+
+INSERT INTO Follow (from_username, to_username) VALUES ('a', 'b');
+INSERT INTO Follow (from_username, to_username) VALUES ('b', 'c');
+
+INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'b', 'img/black.jpg', 'Milan trip');
+INSERT INTO Post (trip_id, photo_url, description, city) VALUES (1, 'img/black.jpg', 'Post of b', 'Milan');
+
+INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'b', 'img/black.jpg', '321321321 trip');
+INSERT INTO Post (trip_id, photo_url, description, city) VALUES (2, 'img/black.jpg', 'Post of b', 'Milan');
+
+INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'a', 'img/black.jpg', '321321321 trip');
+INSERT INTO Post (trip_id, photo_url, description, city) VALUES (3, 'img/black.jpg', 'Post of a', 'Milan');
+
+INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'c', 'img/black.jpg', 'Milan trip');
+INSERT INTO Post (trip_id, photo_url, description, city) VALUES (4, 'img/black.jpg', 'Post of c', 'Milan');
