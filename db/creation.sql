@@ -136,11 +136,37 @@ CREATE TABLE PostFavourites (
   FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
   PRIMARY KEY (profile_username, post_id)
 );
-CREATE TABLE `unitrip`.`login_attempts` (
-  `nickname` varchar(255) NOT NULL,
-  `time` VARCHAR(30) NOT NULL 
+
+CREATE TABLE LoginAttempts (
+  user_id INT(11) NOT NULL,
+  time VARCHAR(30) NOT NULL 
 );
 
 DROP USER 'secure_user'@'localhost';
 CREATE USER 'secure_user'@'localhost' IDENTIFIED BY 'roHdLmnCs35P0Ssl2Q4';
 GRANT SELECT, INSERT, UPDATE ON `unitrip`.* TO 'secure_user'@'localhost';
+
+INSERT INTO Country (name) VALUES ('Italy');
+INSERT INTO Country (name) VALUES ('France');
+INSERT INTO Country (name) VALUES ('Spain');
+
+INSERT INTO Region (country, name) VALUES ('Italy', 'Lombardy');
+INSERT INTO Region (country, name) VALUES ('Italy', 'Tuscany');
+INSERT INTO Region (country, name) VALUES ('France', 'Provence');
+INSERT INTO Region (country, name) VALUES ('Spain', 'Catalonia');
+
+INSERT INTO City (region, name) VALUES ('Lombardy', 'Milan');
+INSERT INTO City (region, name) VALUES ('Lombardy', 'Bergamo');
+INSERT INTO City (region, name) VALUES ('Tuscany', 'Florence');
+INSERT INTO City (region, name) VALUES ('Tuscany', 'Pisa');
+INSERT INTO City (region, name) VALUES ('Provence', 'Marseille');
+INSERT INTO City (region, name) VALUES ('Catalonia', 'Barcelona');
+
+INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
+VALUES ('a', 'a@example.com', 'faceb2153f201fbb3ae1dc926822281e1398670a9e4edcad3f6f31e8434f7ebc330511c6c5de1162a77919c1bcd0e3632ff2a18a70d5bb62925f64ecc83508e3',
+ '3efebc57f4f5f445c88e904737c9182dfb43c3863f1958d340dc57eaaf3ba6d9cd7c4ec6473aa75ab9eb3b3f3b67eafa129aa2e2a29e961e544771077d6c7cb0', 'a', 'a', 'img/profile/a.jpg',
+  'A.', '1990-01-01', '2023-11-21');
+
+INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'a', 'img/black.jpg', 'Milan trip');
+
+INSERT INTO Post (trip_id, photo_url, description, city) VALUES (1, 'img/black.jpg', 'Post of Milan Trip', 'Milan');

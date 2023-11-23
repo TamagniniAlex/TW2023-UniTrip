@@ -60,7 +60,7 @@ function checkbrute($nickname, $mysqli)
     $now = time();
     // Vengono analizzati tutti i tentativi di login a partire dalle ultime due ore.
     $valid_attempts = $now - (2 * 60 * 60);
-    if ($stmt = $mysqli->prepare("SELECT time FROM login_attempts WHERE nickname = ? AND time > '$valid_attempts'")) {
+    if ($stmt = $mysqli->prepare("SELECT time FROM LoginAttempts WHERE nickname = ? AND time > '$valid_attempts'")) {
         $stmt->bind_param('s', $nickname);
         $stmt->execute();
         $stmt->store_result();
