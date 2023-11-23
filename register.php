@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nickname"])
     $stmt->bind_param("ssssssssss", $nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
     $stmt->execute();
     if ($stmt->affected_rows > 0) {
+        $_SESSION["nickname"] = $nickname;
         echo "Profile created successfully.";
     } else {
         echo "Failed to create profile.";
@@ -40,6 +41,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["nickname"])
     $stmt->close();
     $mysqli->close();
     
-var_dump($_SESSION);
 }
 ?>

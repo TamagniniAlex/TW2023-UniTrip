@@ -6,7 +6,7 @@ USE UniTrip;
 
 CREATE TABLE Profile (
   nickname VARCHAR(20) PRIMARY KEY,
-  mail VARCHAR(150),
+  mail VARCHAR(150) UNIQUE,
   password CHAR(128) NOT NULL, 
   salt CHAR(128) NOT NULL,
   name VARCHAR(20),
@@ -138,7 +138,7 @@ CREATE TABLE PostFavourites (
 );
 
 CREATE TABLE LoginAttempts (
-  user_id INT(11) NOT NULL,
+  nickname INT(11) NOT NULL,
   time VARCHAR(30) NOT NULL 
 );
 
@@ -163,7 +163,7 @@ INSERT INTO City (region, name) VALUES ('Provence', 'Marseille');
 INSERT INTO City (region, name) VALUES ('Catalonia', 'Barcelona');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
-VALUES ('a', 'a@example.com', 'faceb2153f201fbb3ae1dc926822281e1398670a9e4edcad3f6f31e8434f7ebc330511c6c5de1162a77919c1bcd0e3632ff2a18a70d5bb62925f64ecc83508e3',
+VALUES ('a', 'a@a.com', 'faceb2153f201fbb3ae1dc926822281e1398670a9e4edcad3f6f31e8434f7ebc330511c6c5de1162a77919c1bcd0e3632ff2a18a70d5bb62925f64ecc83508e3',
  '3efebc57f4f5f445c88e904737c9182dfb43c3863f1958d340dc57eaaf3ba6d9cd7c4ec6473aa75ab9eb3b3f3b67eafa129aa2e2a29e961e544771077d6c7cb0', 'a', 'a', 'img/profile/a.jpg',
   'A.', '1990-01-01', '2023-11-21');
 

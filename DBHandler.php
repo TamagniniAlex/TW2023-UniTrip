@@ -11,15 +11,24 @@ function sec_session_start()
     session_start();
     session_regenerate_id();
 }
-function login($email, $password, $mysqli)
+function login($nickname_mail, $password, $mysqli)
 {
     // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
     $nickname = "";
     $db_password = "";
     $salt = "";
+
+    if (!strstr($nickname_mail, '@')) { 
+        if($stmt = $mysqli->prepare("SELECT mail FROM profile WHERE nickname = ? LIMIT 1")){
+            $stmt->bind_param('s', $nickname_mail); $stmt->execute(); // esegue la query appena creata. 
+            $stmt->store_result(); $stmt->bind_result($nickname_mail); // recupera il risultato della query e lo memorizza nelle relative variabili. 
+            $stmt->fetch(); 
+        }
+    } 
+
     if ($stmt = $mysqli->prepare("SELECT nickname, password, salt FROM profile WHERE mail = ? LIMIT 1")) {
-         // esegue il bind del parametro '$email'.
-        $stmt->bind_param('s', $email);
+        // esegue il bind del parametro '$email'.
+        $stmt->bind_param('s', $nickname_mail);
         $stmt->execute(); // esegue la query appena creata.
         $stmt->store_result();
         $stmt->bind_result($nickname, $db_password, $salt); // recupera il risultato della query e lo memorizza nelle relative variabili.
@@ -30,7 +39,6 @@ function login($email, $password, $mysqli)
             if (checkbrute($nickname, $mysqli) == true) {
                 // Account disabilitato
                 // Invia un e-mail all'utente avvisandolo che il suo account è stato disabilitato.
-                
                 return false;
             } else {
                 if ($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
@@ -44,12 +52,11 @@ function login($email, $password, $mysqli)
                     return true;
                 } else {
                     $now = time();
-                    $mysqli->query("INSERT INTO LoginAttempts (user_id, time) VALUES ('$nickname', '$now')");
+                    $mysqli->query("INSERT INTO LoginAttempts (nickname, time) VALUES ('$nickname', '$now')");
                     return false;
                 }
             }
         } else {
-            return $email;
             // L'utente inserito non esiste.
             return false;
         }
@@ -72,6 +79,7 @@ function checkbrute($nickname, $mysqli)
         }
     }
 }
+/* TODO non viene usata
 function login_check($mysqli)
 {
     // Verifica che tutte le variabili di sessione siano impostate correttamente
@@ -96,3 +104,4 @@ function login_check($mysqli)
     else
  return false;
 }
+*/
