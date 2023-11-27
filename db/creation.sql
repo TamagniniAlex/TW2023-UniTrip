@@ -53,11 +53,13 @@ CREATE TABLE Trip (
 
 CREATE TABLE Post (
   id INT PRIMARY KEY AUTO_INCREMENT,
+  author VARCHAR(255),
   trip_id INT,
   photo_url VARCHAR(255),
   description VARCHAR(255),
   city VARCHAR(255),
   FOREIGN KEY (trip_id) REFERENCES Trip(id),
+  FOREIGN KEY (author) REFERENCES Profile(nickname),
   FOREIGN KEY (city) REFERENCES City(name)
 );
 
@@ -179,14 +181,16 @@ VALUES ('c', 'c@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58a
 INSERT INTO Follow (from_username, to_username) VALUES ('a', 'b');
 INSERT INTO Follow (from_username, to_username) VALUES ('b', 'c');
 
-INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'b', 'img/black.jpg', 'Milan trip');
-INSERT INTO Post (trip_id, photo_url, description, city) VALUES (1, 'img/black.jpg', 'Post of b', 'Milan');
+INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'a', 'img/trip/milan.jpg', 'Milan trip');
+INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Florence', 'a', 'img/trip/florence.jpg', 'Florence trip');
+INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Marseille', 'c', 'img/trip/marseille.jpg', 'Marseille trip');
+INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Barcelona', 'b', 'img/trip/barcelona.jpg', 'Barcelona trip');
 
-INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'b', 'img/black.jpg', '321321321 trip');
-INSERT INTO Post (trip_id, photo_url, description, city) VALUES (2, 'img/black.jpg', 'Post of b', 'Milan');
-
-INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'a', 'img/black.jpg', '321321321 trip');
-INSERT INTO Post (trip_id, photo_url, description, city) VALUES (3, 'img/black.jpg', 'Post of a', 'Milan');
-
-INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'c', 'img/black.jpg', 'Milan trip');
-INSERT INTO Post (trip_id, photo_url, description, city) VALUES (4, 'img/black.jpg', 'Post of c', 'Milan');
+INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('a', 1, 'img/post/milan1.jpg', 'Milan post 1', 'Milan');
+INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('a', 1, 'img/post/milan2.jpg', 'Milan post 2', 'Milan');
+INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('a', 2, 'img/post/florence1.jpg', 'Florence post 1', 'Florence');
+INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('a', 2, 'img/post/florence2.jpg', 'Florence post 2', 'Florence');
+INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('c', 3, 'img/post/marseille1.jpg', 'Marseille post 1', 'Marseille');
+INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('c', 3, 'img/post/marseille2.jpg', 'Marseille post 2', 'Marseille');
+INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('b', 4, 'img/post/barcelona1.jpg', 'Barcelona post 1', 'Barcelona');
+INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('b', 4, 'img/post/barcelona2.jpg', 'Barcelona post 2', 'Barcelona');

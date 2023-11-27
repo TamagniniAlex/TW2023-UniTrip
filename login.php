@@ -10,7 +10,7 @@ $nickname_mail = $_POST['nickname_mail'];
 $password = $_POST['password'];
 if (login($nickname_mail, $password, $mysqli)) {
    // Redirect to the home page with a success message
-   header("Location: feed.html?login=success");
+   header("Location: feed.php?login=success");
 } else {
    // Redirect back to the login page with an error message
    header("Location: login.html?error=assente");
