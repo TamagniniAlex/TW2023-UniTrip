@@ -21,6 +21,22 @@ class DatabaseHelper {
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    //get all posts follower by user
+    public function getPostsFollower($nickname, $limit) {
+        $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
+            profile.nickname, post.date, post.description, post.trip_id FROM Post 
+            JOIN Trip ON Post.trip_id = Trip.id 
+            JOIN Follow ON Trip.organizer_username = Follow.to_username 
+            JOIN Profile ON Trip.organizer_username = Profile.nickname
+            WHERE Follow.from_username = ? LIMIT ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("si", $nickname, $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        //echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }    
     //get all posts by category
     public function getPostsByCategory($category, $limit) {
         $query = "SELECT * FROM post WHERE categoria = ?  LIMIT ?";

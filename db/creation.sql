@@ -58,6 +58,7 @@ CREATE TABLE Post (
   photo_url VARCHAR(255),
   description VARCHAR(255),
   city VARCHAR(255),
+  date DATE DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (trip_id) REFERENCES Trip(id),
   FOREIGN KEY (author) REFERENCES Profile(nickname),
   FOREIGN KEY (city) REFERENCES City(name)
@@ -165,17 +166,17 @@ INSERT INTO City (region, name) VALUES ('Catalonia', 'Barcelona');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('a', 'a@a.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/a.jpg',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/gray.jpg',
   'A.', '1990-01-01', '2023-11-21');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('b', 'b@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/a.jpg',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/gray.jpg',
   'A.', '1990-01-01', '2023-11-21');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('c', 'c@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/a.jpg',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/gray.jpg',
   'A.', '1990-01-01', '2023-11-21');
 
 INSERT INTO Follow (from_username, to_username) VALUES ('a', 'b');

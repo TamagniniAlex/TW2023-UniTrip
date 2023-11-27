@@ -38,28 +38,67 @@
                 </div>
             </div>
             <hr>
-            <!--Post 1-->
-            
-            <?php require_once("feed-follower.php") ?>
+
+            <!--Dynamic Posts--> 
+            <?php require_once("feed-follower.php"); ?>
             <?php foreach($posts as $post): ?>
             <div class="row mb-3">
                 <div class="col-2 col-lg-1 text-center">
-                    <a href="#"><img src="img/profile/gray.jpg" alt="Account Image" class="img-fluid rounded-circle"></a>
+                    <a href="#">
+                        <img src= <?php echo $post['photo_url'] ?> alt="Account Image" class="img-fluid rounded-circle">
+                    </a>
                 </div>
                 <div class="col-7 col-lg-9 align-self-center">
-                    <a href="#" class="btn text-muted p-0"><?php echo $post['author']?></a>
-                    <a href="#" class="btn text-muted p-0">@riccardo_il_moro</a>
-                    <a class="btn disabled text-muted p-0 px-3">&#9679 1d</a>
-                </div>
+                    <a href="#" class="btn text-muted p-0"><?php echo $post['name']; echo " "; echo $post['surname']?></a>
+                    <a href="#" class="btn text-muted p-0">@<?php echo $post['nickname']?></a>
+                    <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['date']?></a>
+                </div>          
+                <!--TODO non in questa pagina
                 <div class="col-3 col-lg-2 align-self-center text-center">
                     <button type="submit" class="btn btn-secondary form-control">Segui</button>
+                </div>
+                -->
+            </div>
+            <div class="row mb-2">
+                <div class="col-10 col-lg-11 align-self-center ms-auto">
+                    <!--TODO-->
+                    <img src="img/black.jpg" alt="Account Image" class="img-fluid rounded">
                 </div>
             </div>
             <div class="row mb-2">
                 <div class="col-10 col-lg-11 align-self-center ms-auto">
-                    <img src="img/black.jpg" alt="Account Image" class="img-fluid rounded">
+                    <!--TODO hashtag-->
+                    <p class="lh-sm"><?php echo $post['description']?></p>
                 </div>
             </div>
+            <div class="row mb-4">
+                <div class="col-2 offset-2">
+                    <a href="itinerary.html?id_trip=<?php echo $post['trip_id']; ?>" class="btn text-muted p-0">
+                        <i class="fa fa-map-o"></i>
+                    </a>
+                </div>
+                <div class="col-2 text-center">
+                    <a href="comment.html?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
+                        <!--TODO commenti anche in sql-->
+                        <i class="fa fa-comment-o"></i> 432                     
+                    </a>
+                </div>
+                <div class="col-2 text-center">
+                    <!--TODO-->
+                    <a href="#" class="btn text-muted p-0">
+                        <i class="fa fa-heart-o"></i> 4k
+                    </a>
+                </div>
+                <div class="col-2 text-center">
+                    <!--TODO-->
+                    <a href="#" class="btn text-muted p-0"><i class="fa fa-star-o"></i> 43</a>
+                </div>
+                <div class="col-2 text-end">
+                    <!--TODO-->
+                    <a href="#" class="btn text-muted p-0 px-3"><i class="fa fa-share"></i></a>
+                </div>
+            </div>
+            <hr>
             <?php endforeach; ?>
             
         </div>
