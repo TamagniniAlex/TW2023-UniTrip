@@ -29,99 +29,60 @@ CREATE TABLE Country (
   name VARCHAR(255) PRIMARY KEY
 );
 
-CREATE TABLE Region (
+CREATE TABLE City (
   country varchar(255),
-  name VARCHAR(255) PRIMARY KEY,
+  name VARCHAR(255) PRIMARY KEY ,
   FOREIGN KEY (country) REFERENCES Country(name)
 );
 
-CREATE TABLE City (
-  region varchar(255),
-  name VARCHAR(255) PRIMARY KEY ,
-  FOREIGN KEY (region) REFERENCES Region(name)
-);
-
-CREATE TABLE Trip (
+CREATE TABLE Itinerary (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  city varchar(255),
   organizer_username VARCHAR(255),
-  photo_url VARCHAR(255),
   description VARCHAR(255),
-  FOREIGN KEY (city) REFERENCES City(name),
   FOREIGN KEY (organizer_username) REFERENCES Profile(nickname)
 );
 
-CREATE TABLE Post (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  author VARCHAR(255),
-  trip_id INT,
-  photo_url VARCHAR(255),
-  description VARCHAR(255),
-  city VARCHAR(255),
-  date DATE DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (trip_id) REFERENCES Trip(id),
-  FOREIGN KEY (author) REFERENCES Profile(nickname),
-  FOREIGN KEY (city) REFERENCES City(name)
-);
-
-CREATE TABLE Itinerary (
-  id INT PRIMARY KEY AUTO_INCREMENT
-);
-
-CREATE TABLE TripBetweenCities (
-  id INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE ItineraryBetweenCities (
   itinerary_id INT,
   departure_city VARCHAR(255),
   departure_time TIME,
   arrival_city VARCHAR(255),
   arrival_time TIME,
+  PRIMARY KEY (itinerary_id, departure_city),
   FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id),
   FOREIGN KEY (departure_city) REFERENCES City(name),
   FOREIGN KEY (arrival_city) REFERENCES City(name)
 );
 
-CREATE TABLE Chat (
-  from_username VARCHAR(255),
-  to_username VARCHAR(255),
-  PRIMARY KEY (from_username, to_username),
-  FOREIGN KEY (from_username) REFERENCES Profile(nickname),
-  FOREIGN KEY (to_username) REFERENCES Profile(nickname)
-);
-
-CREATE TABLE Activity (
+CREATE TABLE Post (
   id INT PRIMARY KEY AUTO_INCREMENT,
+  author VARCHAR(255),
   itinerary_id INT,
-  start_time TIME,
-  end_time TIME,
   description VARCHAR(255),
-  FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id)
+  city VARCHAR(255),
+  date DATE DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id),
+  FOREIGN KEY (author) REFERENCES Profile(nickname),
+  FOREIGN KEY (city) REFERENCES City(name)
 );
 
-CREATE TABLE Groups (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(255),
-  description VARCHAR(255)
+CREATE TABLE PostPhoto (
+  post_id INT,
+  photo_url VARCHAR(255),
+  FOREIGN KEY (post_id) REFERENCES Post(id),
+  PRIMARY KEY (post_id, photo_url)
 );
 
-CREATE TABLE Messages (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  from_username VARCHAR(255),
-  to_username varchar(255) NULL,
-  message VARCHAR(255),
-  group_id INT NULL,
-  datetime DATETIME,
-  FOREIGN KEY (from_username) REFERENCES Chat(from_username),
-  FOREIGN KEY (to_username) REFERENCES Chat(to_username),
-  FOREIGN KEY (group_id) REFERENCES Groups(id)
+CREATE TABLE PostComment (
+  post_id INT,
+  author VARCHAR(255),
+  comment VARCHAR(255),
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (post_id, author, datetime),
+  FOREIGN KEY (post_id) REFERENCES Post(id),
+  FOREIGN KEY (author) REFERENCES Profile(nickname)
 );
 
-CREATE TABLE GroupParticipations (
-  profile_username VARCHAR(255),
-  group_id INT,
-  FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
-  FOREIGN KEY (group_id) REFERENCES Groups(id),
-  PRIMARY KEY (profile_username, group_id)
-);
 
 CREATE TABLE PostLikes (
   post_id INT,
@@ -139,8 +100,36 @@ CREATE TABLE PostFavourites (
   PRIMARY KEY (profile_username, post_id)
 );
 
+CREATE TABLE Groups (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  organizer_user VARCHAR(255),
+  name VARCHAR(255),
+  description VARCHAR(255),
+  FOREIGN KEY (organizer_user) REFERENCES Profile(nickname)
+);
+
+CREATE TABLE Messages (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  from_username VARCHAR(255),
+  to_username varchar(255) NULL,
+  group_id INT NULL,
+  message VARCHAR(255),
+  datetime DATETIME,
+  FOREIGN KEY (from_username) REFERENCES Profile(nickname),
+  FOREIGN KEY (to_username) REFERENCES Profile(nickname),
+  FOREIGN KEY (group_id) REFERENCES Groups(id)
+);
+
+CREATE TABLE GroupParticipations (
+  partecipant_user VARCHAR(255),
+  group_id INT,
+  FOREIGN KEY (partecipant_user) REFERENCES Profile(nickname),
+  FOREIGN KEY (group_id) REFERENCES Groups(id),
+  PRIMARY KEY (partecipant_user, group_id)
+);
+
 CREATE TABLE LoginAttempts (
-  nickname INT(11) NOT NULL,
+  nickname VARCHAR(50) NOT NULL,
   time VARCHAR(30) NOT NULL 
 );
 
@@ -152,17 +141,12 @@ INSERT INTO Country (name) VALUES ('Italy');
 INSERT INTO Country (name) VALUES ('France');
 INSERT INTO Country (name) VALUES ('Spain');
 
-INSERT INTO Region (country, name) VALUES ('Italy', 'Lombardy');
-INSERT INTO Region (country, name) VALUES ('Italy', 'Tuscany');
-INSERT INTO Region (country, name) VALUES ('France', 'Provence');
-INSERT INTO Region (country, name) VALUES ('Spain', 'Catalonia');
-
-INSERT INTO City (region, name) VALUES ('Lombardy', 'Milan');
-INSERT INTO City (region, name) VALUES ('Lombardy', 'Bergamo');
-INSERT INTO City (region, name) VALUES ('Tuscany', 'Florence');
-INSERT INTO City (region, name) VALUES ('Tuscany', 'Pisa');
-INSERT INTO City (region, name) VALUES ('Provence', 'Marseille');
-INSERT INTO City (region, name) VALUES ('Catalonia', 'Barcelona');
+INSERT INTO City (country, name) VALUES ('Italy', 'Milan');
+INSERT INTO City (country, name) VALUES ('Italy', 'Bergamo');
+INSERT INTO City (country, name) VALUES ('Italy', 'Florence');
+INSERT INTO City (country, name) VALUES ('Italy', 'Pisa');
+INSERT INTO City (country, name) VALUES ('France', 'Marseille');
+INSERT INTO City (country, name) VALUES ('Spain', 'Barcelona');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('a', 'a@a.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
@@ -182,16 +166,29 @@ VALUES ('c', 'c@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58a
 INSERT INTO Follow (from_username, to_username) VALUES ('a', 'b');
 INSERT INTO Follow (from_username, to_username) VALUES ('b', 'c');
 
-INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Milan', 'a', 'img/trip/milan.jpg', 'Milan trip');
-INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Florence', 'a', 'img/trip/florence.jpg', 'Florence trip');
-INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Marseille', 'c', 'img/trip/marseille.jpg', 'Marseille trip');
-INSERT INTO Trip (city, organizer_username, photo_url, description) VALUES ('Barcelona', 'b', 'img/trip/barcelona.jpg', 'Barcelona trip');
+INSERT INTO Itinerary (organizer_username, description) VALUES ('a', 'Milan trip');
+INSERT INTO Itinerary (organizer_username, description) VALUES ('a', 'Florence trip');
+INSERT INTO Itinerary (organizer_username, description) VALUES ('c', 'Marseille trip');
+INSERT INTO Itinerary (organizer_username, description) VALUES ('b', 'Barcelona trip');
 
-INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('a', 1, 'img/post/milan1.jpg', 'Milan post 1', 'Milan');
-INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('a', 1, 'img/post/milan2.jpg', 'Milan post 2', 'Milan');
-INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('a', 2, 'img/post/florence1.jpg', 'Florence post 1', 'Florence');
-INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('a', 2, 'img/post/florence2.jpg', 'Florence post 2', 'Florence');
-INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('c', 3, 'img/post/marseille1.jpg', 'Marseille post 1', 'Marseille');
-INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('c', 3, 'img/post/marseille2.jpg', 'Marseille post 2', 'Marseille');
-INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('b', 4, 'img/post/barcelona1.jpg', 'Barcelona post 1', 'Barcelona');
-INSERT INTO Post (author, trip_id, photo_url, description, city) VALUES ('b', 4, 'img/post/barcelona2.jpg', 'Barcelona post 2', 'Barcelona');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Milan', '2018-01-01 10:00:00', 'Bergamo', '2018-01-01 11:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Bergamo', '2018-01-01 12:00:00', 'Milan', '2018-01-01 13:00:00');
+
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 1, 'Milan post 1', 'Milan');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 1, 'Milan post 2', 'Milan');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 2, 'Florence post 1', 'Florence');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 2, 'Florence post 2', 'Florence');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('c', 3, 'Marseille post 1', 'Marseille');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('c', 3, 'Marseille post 2', 'Marseille');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('b', 4, 'Barcelona post 1', 'Barcelona');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('b', 4, 'Barcelona post 2', 'Barcelona');
+
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, 'img/post/milan1.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, 'img/post/milan2.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, 'img/post/milan3.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, 'img/post/milan4.jpg');
+
+INSERT INTO PostLikes (post_id, profile_username) VALUES (5, 'a');
+INSERT INTO PostLikes (post_id, profile_username) VALUES (6, 'a');
+
+INSERT INTO PostFavourites (post_id, profile_username) VALUES (5, 'a');
