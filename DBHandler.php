@@ -27,10 +27,11 @@ function login($nickname_mail, $password, $mysqli)
             $stmt->fetch(); 
         }
     } 
+    $nickname = $nickname_mail;
 
     if ($stmt = $mysqli->prepare("SELECT nickname, password, salt FROM profile WHERE mail = ? LIMIT 1")) {
         // esegue il bind del parametro '$email'.
-        $stmt->bind_param('s', $nickname_mail);
+        $stmt->bind_param('s', $nickname);
         $stmt->execute(); // esegue la query appena creata.
         $stmt->store_result();
         $stmt->bind_result($nickname, $db_password, $salt); // recupera il risultato della query e lo memorizza nelle relative variabili.
@@ -46,7 +47,6 @@ function login($nickname_mail, $password, $mysqli)
                 if ($db_password == $password) { // Verifica che la password memorizzata nel database corrisponda alla password fornita dall'utente.
                     // Password corretta!            
                     $user_browser = $_SERVER['HTTP_USER_AGENT']; // Recupero il parametro 'user-agent' relativo all'utente corrente.
-
                     $nickname = preg_replace("/[^a-zA-Z0-9_\-]+/", "", $nickname); // ci proteggiamo da un attacco XSS
                     $_SESSION['nickname'] = $nickname;
                     $_SESSION['login_string'] = hash('sha512', $password . $user_browser);
