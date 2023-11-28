@@ -45,11 +45,12 @@
             <div class="row mb-3">
                 <div class="col-2 col-lg-1 text-center">
                     <a href="#">
-                        <img src= <?php echo $post['photo_url'] ?> alt="Account Image" class="img-fluid rounded-circle">
+                        <!--TODO-->
+                        <img src="img/profile/gray.jpg" alt="Account Image" class="img-fluid rounded-circle">
                     </a>
                 </div>
                 <div class="col-7 col-lg-9 align-self-center">
-                    <a href="#" class="btn text-muted p-0"><?php echo $post['name']; echo " "; echo $post['surname']?></a>
+                    <a href="#" class="btn p-0"><?php echo $post['name']; echo " "; echo $post['surname']?></a>
                     <a href="#" class="btn text-muted p-0">@<?php echo $post['nickname']?></a>
                     <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['date']?></a>
                 </div>          
@@ -73,7 +74,7 @@
             </div>
             <div class="row mb-4">
                 <div class="col-2 offset-2">
-                    <a href="itinerary.html?id_trip=<?php echo $post['trip_id']; ?>" class="btn text-muted p-0">
+                    <a href="itinerary.html?id_trip=<?php echo $post['itinerary_id']; ?>" class="btn text-muted p-0">
                         <i class="fa fa-map-o"></i>
                     </a>
                 </div>

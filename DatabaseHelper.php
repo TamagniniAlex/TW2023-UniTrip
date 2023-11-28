@@ -24,10 +24,10 @@ class DatabaseHelper {
     //get all posts follower by user
     public function getPostsFollower($nickname, $limit) {
         $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
-            profile.nickname, post.date, post.description, post.trip_id FROM Post 
-            JOIN Trip ON Post.trip_id = Trip.id 
-            JOIN Follow ON Trip.organizer_username = Follow.to_username 
-            JOIN Profile ON Trip.organizer_username = Profile.nickname
+            profile.nickname, post.date, post.description, post.itinerary_id FROM Post 
+            JOIN Itinerary ON Post.Itinerary_id = Itinerary.id 
+            JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
+            JOIN Profile ON Itinerary.organizer_username = Profile.nickname
             WHERE Follow.from_username = ? LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("si", $nickname, $limit);
