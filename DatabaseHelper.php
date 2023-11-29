@@ -68,6 +68,48 @@ class DatabaseHelper {
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    //given the id of a post get how many likes it has
+    public function getLikeCount($post_id) {
+        $query = "SELECT COUNT(*) as likeCount FROM PostLike WHERE post_id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $post_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_assoc()['likeCount'];
+    }
+    //given the id of a post get how many comments it has
+    public function getCommentCount($post_id) {
+        $query = "SELECT COUNT(*) as commentCount FROM PostComment WHERE post_id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $post_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return ($result->fetch_assoc())['commentCount'];
+    }
+    //given the id of a post get all it's postFavourites
+    public function getFavouriteCount($post_id) {
+        $query = "SELECT * FROM PostFavourites WHERE post_id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $post_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //given the id of a post get all it's comments
+    public function getCommentsByPost($post_id) {
+        $query = "SELECT * FROM PostComment WHERE post_id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $post_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    
 }
 
 ?>
