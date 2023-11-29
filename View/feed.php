@@ -39,7 +39,7 @@
             <hr>
 
             <!--Dynamic Posts-->
-            <?php require_once("feed-follower.php"); ?>
+            <?php require_once("../feed-follower.php"); ?>
             <?php foreach ($posts as $post) : ?>
                 <div class="row mb-3">
                     <div class="col-2 col-lg-1 text-center">

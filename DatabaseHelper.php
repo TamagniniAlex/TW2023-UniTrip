@@ -97,7 +97,7 @@ class DatabaseHelper {
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return ($result->fetch_assoc())['PostFavourites'];
     }
     //given the id of a post get all it's comments
     public function getCommentsByPost($post_id) {
@@ -109,7 +109,32 @@ class DatabaseHelper {
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    
+    //checks if user already exists
+    public function check_user($nickname, $email)
+    {
+        $query = "SELECT count(*) as users FROM Profile WHERE nickname = ? OR mail = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("ss", $nickname, $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return ($result->fetch_assoc())['users'];
+    }
+    //inserts a new user
+    public function insert_user($nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date) {
+        $query = "INSERT INTO profile (nickname, password, salt, mail, name, surname, photo_url, description, birth_date, join_date) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $this->mysqli->prepare($query);
+    $salt = "";
+    $stmt->bind_param("ssssssssss", $nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
+    $stmt->execute();
+    if ($stmt->affected_rows > 0) {
+        $_SESSION["nickname"] = $nickname;
+    }
+    $stmt->close();
+    return isset($_SESSION["nickname"]);
+    }
 }
 
 ?>
