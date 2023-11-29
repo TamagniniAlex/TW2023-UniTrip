@@ -84,7 +84,7 @@ CREATE TABLE PostComment (
 );
 
 
-CREATE TABLE PostLikes (
+CREATE TABLE PostLike (
   post_id INT,
   profile_username VARCHAR(50),
   FOREIGN KEY (post_id) REFERENCES Post(id),
@@ -188,7 +188,12 @@ INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, 'img/post/milan2.jpg');
 INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, 'img/post/milan3.jpg');
 INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, 'img/post/milan4.jpg');
 
-INSERT INTO PostLikes (post_id, profile_username) VALUES (5, 'a');
-INSERT INTO PostLikes (post_id, profile_username) VALUES (6, 'a');
+INSERT INTO PostLike (post_id, profile_username) VALUES (1, 'a');
+INSERT INTO PostLike (post_id, profile_username) VALUES (2, 'a');
+INSERT INTO PostLike (post_id, profile_username) VALUES (8, 'a');
+INSERT INTO PostLike (post_id, profile_username) VALUES (7, 'a');
 
 INSERT INTO PostFavourites (post_id, profile_username) VALUES (5, 'a');
+INSERT INTO PostComment (post_id, author, comment) VALUES (7, 'a', 'Nice post!');
+INSERT INTO PostComment (post_id, author, comment) VALUES (8, 'b', 'From the river to the sea!');
+INSERT INTO PostComment (post_id, author, comment) VALUES (3, 'c', 'I love Marseille!');
