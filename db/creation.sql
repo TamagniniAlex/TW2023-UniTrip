@@ -138,63 +138,61 @@ GRANT SELECT, INSERT, UPDATE ON `unitrip`.* TO 'secure_user'@'localhost';
 GRANT DELETE ON `unitrip`.`PostLike` TO 'secure_user'@'localhost';
 GRANT DELETE ON `unitrip`.`PostFavourites` TO 'secure_user'@'localhost';
 
+INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
+VALUES ('a', 'a@a.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'ANome', 'ACognome', '../img/profile/gray.jpg',
+  'A.', '1990-01-01', '2023-11-21');
+
+INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
+VALUES ('b', 'b@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'BNome', 'BCognome', '../img/profile/gray.jpg',
+  'A.', '1990-01-01', '2023-11-21');
+
+INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
+VALUES ('c', 'c@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'CNome', 'CCognome', '../img/profile/gray.jpg',
+  'A.', '1990-01-01', '2023-11-21');
+
+INSERT INTO Follow (from_username, to_username) VALUES ('a', 'b');
+INSERT INTO Follow (from_username, to_username) VALUES ('a', 'c');
+
 INSERT INTO Country (name) VALUES ('Italy');
 INSERT INTO Country (name) VALUES ('France');
 INSERT INTO Country (name) VALUES ('Spain');
 
 INSERT INTO City (country, name) VALUES ('Italy', 'Milan');
 INSERT INTO City (country, name) VALUES ('Italy', 'Bergamo');
-INSERT INTO City (country, name) VALUES ('Italy', 'Florence');
-INSERT INTO City (country, name) VALUES ('Italy', 'Pisa');
 INSERT INTO City (country, name) VALUES ('France', 'Marseille');
+INSERT INTO City (country, name) VALUES ('France', 'Paris');
+INSERT INTO City (country, name) VALUES ('Spain', 'Madrid');
 INSERT INTO City (country, name) VALUES ('Spain', 'Barcelona');
 
-INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
-VALUES ('a', 'a@a.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'ANome', 'ACognome', 'img/profile/gray.jpg',
-  'A.', '1990-01-01', '2023-11-21');
-
-INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
-VALUES ('b', 'b@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'BNome', 'BCognome', 'img/profile/gray.jpg',
-  'A.', '1990-01-01', '2023-11-21');
-
-INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
-VALUES ('c', 'c@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'CNome', 'CCognome', 'img/profile/gray.jpg',
-  'A.', '1990-01-01', '2023-11-21');
-
-INSERT INTO Follow (from_username, to_username) VALUES ('a', 'b');
-INSERT INTO Follow (from_username, to_username) VALUES ('b', 'c');
-
 INSERT INTO Itinerary (organizer_username, description) VALUES ('a', 'Milan trip');
-INSERT INTO Itinerary (organizer_username, description) VALUES ('a', 'Florence trip');
-INSERT INTO Itinerary (organizer_username, description) VALUES ('c', 'Marseille trip');
-INSERT INTO Itinerary (organizer_username, description) VALUES ('b', 'Barcelona trip');
+INSERT INTO Itinerary (organizer_username, description) VALUES ('b', 'Marseille trip');
+INSERT INTO Itinerary (organizer_username, description) VALUES ('c', 'Madrid trip');
 
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (4, 'Milan', '2018-01-01 10:00:00', 'Bergamo', '2018-01-01 11:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (4, 'Bergamo', '2018-01-01 12:00:00', 'Milan', '2018-01-01 13:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Milan', '2018-01-01 10:00:00', 'Bergamo', '2018-01-01 11:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Bergamo', '2018-01-01 12:00:00', 'Milan', '2018-01-01 13:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (2, 'Marseille', '2018-01-01 10:00:00', 'Paris', '2018-01-01 11:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (2, 'Paris', '2018-01-01 12:00:00', 'Marseille', '2018-01-01 13:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (3, 'Madrid', '2018-01-01 10:00:00', 'Barcelona', '2018-01-01 11:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (3, 'Barcelona', '2018-01-01 12:00:00', 'Madrid', '2018-01-01 13:00:00');
 
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 1, 'Milan post 1', 'Milan');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 1, 'Milan post 2', 'Milan');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 2, 'Florence post 1', 'Florence');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 2, 'Florence post 2', 'Florence');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('c', 3, 'Marseille post 1', 'Marseille');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('c', 3, 'Marseille post 2', 'Marseille');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('b', 4, 'Barcelona post 1', 'Barcelona');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('b', 4, 'Barcelona post 2', 'Barcelona');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 1, 'Milan-Bergamo', 'Milan');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('b', 2, 'Marseille-Paris', 'Marseille');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('b', 2, 'Marseille-Paris 2', 'Marseille');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('c', 3, 'Madrid-Barcelona', 'Madrid');
+INSERT INTO Post (author, itinerary_id, description, city) VALUES ('c', 3, 'Madrid-Barcelona 2', 'Madrid');
 
-INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, 'img/post/milan1.jpg');
-INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, 'img/post/milan2.jpg');
-INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, 'img/post/milan3.jpg');
-INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, 'img/post/milan4.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, '../img/post/gray.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, '../img/post/gray.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (3, '../img/post/gray.jpg');
 
-INSERT INTO PostLike (post_id, profile_username) VALUES (1, 'a');
 INSERT INTO PostLike (post_id, profile_username) VALUES (2, 'a');
-INSERT INTO PostLike (post_id, profile_username) VALUES (8, 'a');
-INSERT INTO PostLike (post_id, profile_username) VALUES (7, 'a');
+INSERT INTO PostLike (post_id, profile_username) VALUES (3, 'a');
 
-INSERT INTO PostFavourites (post_id, profile_username) VALUES (5, 'a');
-INSERT INTO PostComment (post_id, author, comment) VALUES (7, 'a', 'Nice post!');
-INSERT INTO PostComment (post_id, author, comment) VALUES (8, 'b', 'From the river to the sea!');
-INSERT INTO PostComment (post_id, author, comment) VALUES (3, 'c', 'I love Marseille!');
+INSERT INTO PostFavourites (post_id, profile_username) VALUES (2, 'a');
+
+INSERT INTO PostComment (post_id, author, comment) VALUES (2, 'a', 'Nice post!');
+INSERT INTO PostComment (post_id, author, comment) VALUES (2, 'b', 'From the river to the sea!');
+INSERT INTO PostComment (post_id, author, comment) VALUES (2, 'c', 'I love Marseille!');

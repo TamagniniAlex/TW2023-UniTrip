@@ -21,46 +21,49 @@
 <body>
     <div class="container mt-4">
         <div class="row justify-content-center">
+            <?php require_once("../Controller/feedController.php"); ?>
             <h1 class="text-center mb-4">UniTrip</h1>
             <div class="row mb-4">
                 <div class="col-2 col-lg-1 text-center">
-                    <!-- TODO oi, qui è sempre gray -->
-                    <a href="#"><img src="../img/profile/gray.jpg" alt="Account Image" class="img-fluid rounded-circle"></a>
+                    <a href=<?php echo "profile.html?nickname=" . $_SESSION["nickname"]; ?>>
+                        <img src=<?php echo $photo_url; ?> alt="Account Image" class="img-fluid rounded-circle">
+                    </a>
                 </div>
                 <div class="col-4 col-lg-5 align-self-center text-end">
+                    <!--TODO-->
                     <a href="#" class="btn">Suggeriti</a>
                 </div>
                 <div class="col-4 col-lg-5 align-self-center text-justify">
-                    <a href="#" class="btn">Seguiti</a>
+                    <!--TODO-->
+                    <a href="#" class="btn active">Seguiti</a>
                 </div>
                 <div class="col-2 col-lg-1 align-self-center text-center fs-3">
+                    <!--TODO-->
                     <a href="#" class="text-dark"><i class="fa fa-star-o"></i></a>
                 </div>
             </div>
             <hr>
 
             <!--Dynamic Posts-->
-            <?php require_once("../Controller/feedController.php"); ?>
             <?php foreach ($posts as $post) : ?>
                 <div class="row mb-3">
                     <div class="col-2 col-lg-1 text-center">
-                        <a href="#">
-                            <!--TODO-->
-                            <img src="../img/profile/gray.jpg" alt="Account Image" class="img-fluid rounded-circle">
+                        <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>">
+                            <img src=<?php echo $post['photo_url']; ?> alt="Account Image" class="img-fluid rounded-circle">
                         </a>
                     </div>
                     <div class="col-7 col-lg-9 align-self-center">
-                        <a href="#" class="btn p-0"><?php echo $post['name'];
-                                                    echo " ";
-                                                    echo $post['surname'] ?></a>
-                        <a href="#" class="btn text-muted p-0">@<?php echo $post['nickname'] ?></a>
+                        <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn p-0"><?php echo $post['name'];
+                                    echo " "; echo $post['surname'] ?>
+                        </a>
+                        <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn text-muted p-0">@<?php echo $post['nickname'] ?></a>
                         <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['date'] ?></a>
                     </div>
                     <!--TODO non in questa pagina
-                <div class="col-3 col-lg-2 align-self-center text-center">
-                    <button type="submit" class="btn btn-secondary form-control">Segui</button>
-                </div>
-                -->
+                    <div class="col-3 col-lg-2 align-self-center text-center">
+                        <button type="submit" class="btn btn-secondary form-control">Segui</button>
+                    </div>
+                    -->
                 </div>
                 <div class="row mb-2">
                     <div class="col-10 col-lg-11 align-self-center ms-auto">
@@ -71,7 +74,7 @@
                 <div class="row mb-2">
                     <div class="col-10 col-lg-11 align-self-center ms-auto">
                         <!--TODO hashtag-->
-                        <p class="lh-sm"><?php echo $post['id'] ?></p>
+                        <p class="lh-sm"><?php echo $post['description'] ?></p>
                     </div>
                 </div>
                 <div class="row mb-4">
@@ -83,30 +86,19 @@
                     <div class="col-2 text-center">
                         <a href="comment.html?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
                             <i class="fa fa-comment-o"></i>
-                            <?php
-                            $comments = $feed->db->getCommentCount($post['id']);
-                            echo $comments;
-                            ?>
+                            <?php $comments = $feed->db->getCommentCount($post['id']); echo $comments; ?>
                         </a>
                     </div>
                     <div class="col-2 text-center">
                         <!--TODO with js-->
                         <a href="../Controller/postLikeController.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
-                            <i class="fa fa-heart-o"></i>
-                            <?php
-                            $likes = $feed->db->getLikeCount($post['id']);
-                            echo $likes;
-                            ?>
+                            <i class="fa fa-heart-o"></i> <?php $likes = $feed->db->getLikeCount($post['id']); echo $likes; ?>
                         </a>
                     </div>
                     <div class="col-2 text-center">
                         <!--TODO with js-->
                         <a href="../Controller/postFavouriteController.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
-                            <i class="fa fa-star-o"></i>
-                            <?php
-                            $favorites = $feed->db->getFavouriteCount($post['id']);
-                            echo $favorites;
-                            ?>
+                            <i class="fa fa-star-o"></i> <?php $favorites = $feed->db->getFavouriteCount($post['id']); echo $favorites; ?>
                         </a>
                     </div>
                     <div class="col-2 text-end">

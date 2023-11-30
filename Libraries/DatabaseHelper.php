@@ -1,20 +1,37 @@
 <?php
 require_once("DBHandler.php");
 //create dataBaseHelper class
-class DatabaseHelper {
-
+class DatabaseHelper
+{
     public $mysqli;
-    public function __construct(){
+    public function __construct()
+    {
         session_start();
-        define("HOST", "localhost"); 
-        define("USER", "secure_user"); 
+        define("HOST", "localhost");
+        define("USER", "secure_user");
         define("PASSWORD", "roHdLmnCs35P0Ssl2Q4");
-        define("DATABASE", "unitrip"); 
+        define("DATABASE", "unitrip");
         $this->mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
     }
+    //get profile photo
+    public function getProfilePhoto($nickname)
+    {
+        $query = "SELECT photo_url FROM Profile WHERE nickname = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $nickname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        if ($row = $result->fetch_assoc()) {
+            return "../" . $row['photo_url'];
+        } else {
+            return '../img/profile/gray.jpg';
+        }
+    }
     //get all posts
-    public function getPosts($limit) {
-        $query = "SELECT * FROM post  LIMIT ?";
+    public function getPosts($limit)
+    {
+        $query = "SELECT * FROM post LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $limit);
         $stmt->execute();
@@ -23,13 +40,14 @@ class DatabaseHelper {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //get all posts follower by user
-    public function getPostsFollower($nickname, $limit) {
+    public function getPostsFollower($nickname, $limit)
+    {
         $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
             profile.nickname, post.date, post.description, post.itinerary_id FROM Post 
             JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
             JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
             JOIN Profile ON Itinerary.organizer_username = Profile.nickname
-            WHERE Follow.from_username = ? LIMIT ?";
+            WHERE Follow.from_username = ? ORDER BY post.date ASC LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("si", $nickname, $limit);
         $stmt->execute();
@@ -37,9 +55,10 @@ class DatabaseHelper {
         $stmt->close();
         //echo json_encode($result->fetch_all(MYSQLI_ASSOC));
         return $result->fetch_all(MYSQLI_ASSOC);
-    }    
+    }
     //get all posts by category
-    public function getPostsByCategory($category, $limit) {
+    public function getPostsByCategory($category, $limit)
+    {
         $query = "SELECT * FROM post WHERE categoria = ?  LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("si", $category, $limit);
@@ -49,7 +68,8 @@ class DatabaseHelper {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //get all posts by author
-    public function getPostsByAuthor($author, $limit) {
+    public function getPostsByAuthor($author, $limit)
+    {
         $query = "SELECT * FROM post WHERE autore = ?  LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("si", $author, $limit);
@@ -57,10 +77,11 @@ class DatabaseHelper {
         $result = $stmt->get_result();
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
-        
+
     }
     //get all posts by author and category
-    public function getPostsByAuthorAndCategory($author, $category, $limit) {
+    public function getPostsByAuthorAndCategory($author, $category, $limit)
+    {
         $query = "SELECT * FROM post WHERE autore = ? AND categoria = ?  LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("ssi", $author, $category, $limit);
@@ -70,7 +91,8 @@ class DatabaseHelper {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //given the id of a post get how many likes it has
-    public function getLikeCount($post_id) {
+    public function getLikeCount($post_id)
+    {
         $query = "SELECT COUNT(*) as likeCount FROM PostLike WHERE post_id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $post_id);
@@ -78,11 +100,13 @@ class DatabaseHelper {
         $result = $stmt->get_result();
         $stmt->close();
         $result = $result->fetch_assoc();
-        if( $result== null) return 0;
+        if ($result == null)
+            return 0;
         return $result['likeCount'];
     }
     //check if user has already liked post
-    public function checkLike($nickname, $post_id) {
+    public function checkLike($nickname, $post_id)
+    {
         $query = "SELECT COUNT(*) as likeCount FROM PostLike WHERE post_id = ? AND profile_username = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("is", $post_id, $nickname);
@@ -90,11 +114,13 @@ class DatabaseHelper {
         $result = $stmt->get_result();
         $stmt->close();
         $result = $result->fetch_assoc();
-        if( $result== null) return 0;
+        if ($result == null)
+            return 0;
         return $result['likeCount'];
     }
     //add like to post
-    public function addLike($nickname, $post_id) {
+    public function addLike($nickname, $post_id)
+    {
         $query = "INSERT INTO PostLike (post_id, profile_username) VALUES (?, ?)";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("is", $post_id, $nickname);
@@ -102,7 +128,8 @@ class DatabaseHelper {
         $stmt->close();
     }
     //remove like from post
-    public function removeLike($nickname, $post_id) {
+    public function removeLike($nickname, $post_id)
+    {
         $query = "DELETE FROM PostLike WHERE post_id = ? AND profile_username = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("is", $post_id, $nickname);
@@ -110,7 +137,8 @@ class DatabaseHelper {
         $stmt->close();
     }
     //given the id of a post get how many comments it has
-    public function getCommentCount($post_id) {
+    public function getCommentCount($post_id)
+    {
         $query = "SELECT COUNT(*) as commentCount FROM PostComment WHERE post_id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $post_id);
@@ -118,11 +146,13 @@ class DatabaseHelper {
         $result = $stmt->get_result();
         $stmt->close();
         $result = $result->fetch_assoc();
-        if( $result== null) return 0;
+        if ($result == null)
+            return 0;
         return ($result)['commentCount'];
     }
     //given the id of a post get all it's postFavourites
-    public function getFavouriteCount($post_id) {
+    public function getFavouriteCount($post_id)
+    {
         $query = "SELECT COUNT(*) as favouriteCount FROM PostFavourites WHERE post_id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $post_id);
@@ -130,11 +160,13 @@ class DatabaseHelper {
         $result = $stmt->get_result();
         $stmt->close();
         $result = $result->fetch_assoc();
-        if( $result== null) return 0;
+        if ($result == null)
+            return 0;
         return ($result)['favouriteCount'];
     }
     //check if user has already favourited post
-    public function checkFavourite($nickname, $post_id) {
+    public function checkFavourite($nickname, $post_id)
+    {
         $query = "SELECT COUNT(*) as favouriteCount FROM PostFavourites WHERE post_id = ? AND profile_username = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("is", $post_id, $nickname);
@@ -142,11 +174,13 @@ class DatabaseHelper {
         $result = $stmt->get_result();
         $stmt->close();
         $result = $result->fetch_assoc();
-        if( $result== null) return 0;
+        if ($result == null)
+            return 0;
         return $result['favouriteCount'];
     }
     //add favourite to post
-    public function addFavourite($nickname, $post_id) {
+    public function addFavourite($nickname, $post_id)
+    {
         $query = "INSERT INTO PostFavourites (post_id, profile_username) VALUES (?, ?)";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("is", $post_id, $nickname);
@@ -154,7 +188,8 @@ class DatabaseHelper {
         $stmt->close();
     }
     //remove favourite from post
-    public function removeFavourite($nickname, $post_id) {
+    public function removeFavourite($nickname, $post_id)
+    {
         $query = "DELETE FROM PostFavourites WHERE post_id = ? AND profile_username = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("is", $post_id, $nickname);
@@ -162,7 +197,8 @@ class DatabaseHelper {
         $stmt->close();
     }
     //given the id of a post get all it's comments
-    public function getCommentsByPost($post_id) {
+    public function getCommentsByPost($post_id)
+    {
         $query = "SELECT * FROM PostComment WHERE post_id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $post_id);
@@ -183,7 +219,8 @@ class DatabaseHelper {
         return ($result->fetch_assoc())['users'];
     }
     //inserts a new user
-    public function insert_user($nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date) {
+    public function insert_user($nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date)
+    {
         $query = "INSERT INTO profile (nickname, password, salt, mail, name, surname, photo_url, description, birth_date, join_date) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->mysqli->prepare($query);
@@ -197,7 +234,8 @@ class DatabaseHelper {
         return isset($_SESSION["nickname"]);
     }
     //get itinerary information
-    public function getItineraryInformation($itinerary_id) {
+    public function getItineraryInformation($itinerary_id)
+    {
         $query = "SELECT Profile.name, Profile.surname, Itinerary.organizer_username, Itinerary.description FROM Itinerary 
             JOIN Profile ON Itinerary.organizer_username = Profile.nickname WHERE Itinerary.id = ?";
         $stmt = $this->mysqli->prepare($query);
@@ -208,7 +246,8 @@ class DatabaseHelper {
         return $result->fetch_assoc();
     }
     //get itinerary between cities
-    public function getItineraryBetweenCities($itinerary_id) {
+    public function getItineraryBetweenCities($itinerary_id)
+    {
         $query = "SELECT * FROM ItineraryBetweenCities WHERE itinerary_id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $itinerary_id);
