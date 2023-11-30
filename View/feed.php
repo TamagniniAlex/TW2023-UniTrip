@@ -100,7 +100,8 @@
                         </a>
                     </div>
                     <div class="col-2 text-center">
-                        <a href="#" class="btn text-muted p-0">
+                        <!--TODO with js-->
+                        <a href="../Controller/postFavouriteController.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
                             <i class="fa fa-star-o"></i>
                             <?php
                             $favorites = $feed->db->getFavouriteCount($post['id']);

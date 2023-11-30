@@ -135,7 +135,8 @@ CREATE TABLE LoginAttempts (
 DROP USER 'secure_user'@'localhost';
 CREATE USER 'secure_user'@'localhost' IDENTIFIED BY 'roHdLmnCs35P0Ssl2Q4';
 GRANT SELECT, INSERT, UPDATE ON `unitrip`.* TO 'secure_user'@'localhost';
-GRANT DELETE ON `unitrip`.`postlike` TO 'secure_user'@'localhost';
+GRANT DELETE ON `unitrip`.`PostLike` TO 'secure_user'@'localhost';
+GRANT DELETE ON `unitrip`.`PostFavourites` TO 'secure_user'@'localhost';
 
 INSERT INTO Country (name) VALUES ('Italy');
 INSERT INTO Country (name) VALUES ('France');

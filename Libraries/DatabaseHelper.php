@@ -123,7 +123,7 @@ class DatabaseHelper {
     }
     //given the id of a post get all it's postFavourites
     public function getFavouriteCount($post_id) {
-        $query = "SELECT * FROM PostFavourites WHERE post_id = ?";
+        $query = "SELECT COUNT(*) as favouriteCount FROM PostFavourites WHERE post_id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $post_id);
         $stmt->execute();
@@ -131,7 +131,35 @@ class DatabaseHelper {
         $stmt->close();
         $result = $result->fetch_assoc();
         if( $result== null) return 0;
-        return ($result)['PostFavourites'];
+        return ($result)['favouriteCount'];
+    }
+    //check if user has already favourited post
+    public function checkFavourite($nickname, $post_id) {
+        $query = "SELECT COUNT(*) as favouriteCount FROM PostFavourites WHERE post_id = ? AND profile_username = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("is", $post_id, $nickname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $result = $result->fetch_assoc();
+        if( $result== null) return 0;
+        return $result['favouriteCount'];
+    }
+    //add favourite to post
+    public function addFavourite($nickname, $post_id) {
+        $query = "INSERT INTO PostFavourites (post_id, profile_username) VALUES (?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("is", $post_id, $nickname);
+        $stmt->execute();
+        $stmt->close();
+    }
+    //remove favourite from post
+    public function removeFavourite($nickname, $post_id) {
+        $query = "DELETE FROM PostFavourites WHERE post_id = ? AND profile_username = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("is", $post_id, $nickname);
+        $stmt->execute();
+        $stmt->close();
     }
     //given the id of a post get all it's comments
     public function getCommentsByPost($post_id) {
