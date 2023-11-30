@@ -1,4 +1,5 @@
 <?php
+require_once("../libraries/Model.php");
 class RegisterModel extends Model
 {
     public function __construct()
@@ -7,8 +8,7 @@ class RegisterModel extends Model
     }
     public function check_user($nickname, $email)
     {
-        $result = $this->db->check_user($nickname, $email);
-        $count = count($result);
+        $count = $this->db->check_user($nickname, $email);
         return $count;
 
     }

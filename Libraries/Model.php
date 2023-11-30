@@ -1,6 +1,5 @@
 <?php
-
-require_once('db-conn.php');
+require_once("../libraries/DatabaseHelper.php");
 abstract class Model{
     public $db;
     public function __construct()

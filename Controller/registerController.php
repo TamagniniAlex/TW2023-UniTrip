@@ -1,5 +1,6 @@
 <?php
-
+require_once("../model/registerModel.php");
+require_once("../Libraries/Controller.php");
 $register = new Controller(new registerModel());
 
 if (dataIsCorrect()) {
