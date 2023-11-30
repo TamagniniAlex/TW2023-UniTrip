@@ -26,7 +26,7 @@ class DatabaseHelper {
     public function getPostsFollower($nickname, $limit) {
         $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
             profile.nickname, post.date, post.description, post.itinerary_id FROM Post 
-            JOIN Itinerary ON Post.Itinerary_id = Itinerary.id 
+            JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
             JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
             JOIN Profile ON Itinerary.organizer_username = Profile.nickname
             WHERE Follow.from_username = ? LIMIT ?";
@@ -69,7 +69,6 @@ class DatabaseHelper {
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
     //given the id of a post get how many likes it has
     public function getLikeCount($post_id) {
         $query = "SELECT COUNT(*) as likeCount FROM PostLike WHERE post_id = ?";
@@ -81,6 +80,34 @@ class DatabaseHelper {
         $result = $result->fetch_assoc();
         if( $result== null) return 0;
         return $result['likeCount'];
+    }
+    //check if user has already liked post
+    public function checkLike($nickname, $post_id) {
+        $query = "SELECT COUNT(*) as likeCount FROM PostLike WHERE post_id = ? AND profile_username = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("is", $post_id, $nickname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $result = $result->fetch_assoc();
+        if( $result== null) return 0;
+        return $result['likeCount'];
+    }
+    //add like to post
+    public function addLike($nickname, $post_id) {
+        $query = "INSERT INTO PostLike (post_id, profile_username) VALUES (?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("is", $post_id, $nickname);
+        $stmt->execute();
+        $stmt->close();
+    }
+    //remove like from post
+    public function removeLike($nickname, $post_id) {
+        $query = "DELETE FROM PostLike WHERE post_id = ? AND profile_username = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("is", $post_id, $nickname);
+        $stmt->execute();
+        $stmt->close();
     }
     //given the id of a post get how many comments it has
     public function getCommentCount($post_id) {
