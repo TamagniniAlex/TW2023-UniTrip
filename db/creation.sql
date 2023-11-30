@@ -61,7 +61,7 @@ CREATE TABLE Post (
   title VARCHAR(255),
   description VARCHAR(255),
   city VARCHAR(255),
-  date DATE DEFAULT CURRENT_TIMESTAMP,
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id),
   FOREIGN KEY (author) REFERENCES Profile(nickname),
   FOREIGN KEY (city) REFERENCES City(name)
