@@ -28,6 +28,19 @@ class DatabaseHelper
             return '../img/profile/gray.jpg';
         }
     }
+    //get post by post_id
+    public function getPostById($id)
+    {
+        $query = "SELECT profile.photo_url, profile.name, profile.surname, 
+            profile.nickname, post.date, post.title, post.description, post.itinerary_id FROM Post 
+            JOIN Profile ON Post.author = Profile.nickname WHERE Post.id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_assoc();
+    }
     //get all posts
     public function getPosts($limit)
     {
@@ -149,6 +162,19 @@ class DatabaseHelper
         if ($result == null)
             return 0;
         return ($result)['commentCount'];
+    }
+    //get Comments By Post Id 
+    public function getCommentsByPostId($post_id)
+    {
+        $query = "SELECT profile.photo_url, profile.name, profile.surname, 
+            profile.nickname, postcomment.datetime, postcomment.comment FROM Postcomment 
+            JOIN Profile ON Postcomment.author = Profile.nickname WHERE Postcomment.post_id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $post_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     //given the id of a post get all it's postFavourites
     public function getFavouriteCount($post_id)

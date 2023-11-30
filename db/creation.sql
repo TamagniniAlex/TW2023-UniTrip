@@ -58,6 +58,7 @@ CREATE TABLE Post (
   id INT PRIMARY KEY AUTO_INCREMENT,
   author VARCHAR(255),
   itinerary_id INT,
+  title VARCHAR(255),
   description VARCHAR(255),
   city VARCHAR(255),
   date DATE DEFAULT CURRENT_TIMESTAMP,
@@ -178,11 +179,11 @@ INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time
 INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (3, 'Madrid', '2018-01-01 10:00:00', 'Barcelona', '2018-01-01 11:00:00');
 INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (3, 'Barcelona', '2018-01-01 12:00:00', 'Madrid', '2018-01-01 13:00:00');
 
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 1, 'Milan-Bergamo', 'Milan');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('b', 2, 'Marseille-Paris', 'Marseille');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('b', 2, 'Marseille-Paris 2', 'Marseille');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('c', 3, 'Madrid-Barcelona', 'Madrid');
-INSERT INTO Post (author, itinerary_id, description, city) VALUES ('c', 3, 'Madrid-Barcelona 2', 'Madrid');
+INSERT INTO Post (author, itinerary_id, title, description, city) VALUES ('a', 1, 'Milan-Bergamo', 'Milan-Bergamo desc', 'Milan');
+INSERT INTO Post (author, itinerary_id, title, description, city) VALUES ('b', 2, 'Marseille-Paris', 'Marseille-Paris desc', 'Marseille');
+INSERT INTO Post (author, itinerary_id, title, description, city) VALUES ('b', 2, 'Marseille-Paris 2', 'Marseille-Paris 2 desc', 'Marseille');
+INSERT INTO Post (author, itinerary_id, title, description, city) VALUES ('c', 3, 'Madrid-Barcelona', 'Madrid-Barcelona desc', 'Madrid');
+INSERT INTO Post (author, itinerary_id, title, description, city) VALUES ('c', 3, 'Madrid-Barcelona 2', 'Madrid-Barcelona 2 desc', 'Madrid');
 
 INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, '../img/post/gray.jpg');
 INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, '../img/post/gray.jpg');
