@@ -1,6 +1,5 @@
 <?php
 require_once("../model/feedModel.php");
-require_once("../Libraries/Model.php");
 
 $feed = new FeedModel();
 $posts =[];

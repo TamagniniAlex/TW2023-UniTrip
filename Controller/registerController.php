@@ -1,8 +1,7 @@
 <?php
 require_once("../model/registerModel.php");
-require_once("../Libraries/Controller.php");
-$register = new registerModel();
 
+$register = new registerModel();
 
 $password = $_POST["password"];
 $nickname = $_POST["nickname"];

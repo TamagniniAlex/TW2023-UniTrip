@@ -12,13 +12,11 @@ class LoginModel extends Model
     {
         $count = $this->db->user_exists($nickname, $password);
         return $count;
-
     }
     public function login($nickname_mail, $password)
     {
         return login($nickname_mail, $password, $this->db->mysqli);
     }
 }
-
 
 ?>
