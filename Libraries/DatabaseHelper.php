@@ -186,16 +186,36 @@ class DatabaseHelper {
     public function insert_user($nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date) {
         $query = "INSERT INTO profile (nickname, password, salt, mail, name, surname, photo_url, description, birth_date, join_date) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $this->mysqli->prepare($query);
-    $salt = "";
-    $stmt->bind_param("ssssssssss", $nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
-    $stmt->execute();
-    if ($stmt->affected_rows > 0) {
-        $_SESSION["nickname"] = $nickname;
+        $stmt = $this->mysqli->prepare($query);
+        $salt = "";
+        $stmt->bind_param("ssssssssss", $nickname, $password, $random_salt, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
+        $stmt->execute();
+        if ($stmt->affected_rows > 0) {
+            $_SESSION["nickname"] = $nickname;
+        }
+        $stmt->close();
+        return isset($_SESSION["nickname"]);
     }
-    $stmt->close();
-    return isset($_SESSION["nickname"]);
+    //get itinerary information
+    public function getItineraryInformation($itinerary_id) {
+        $query = "SELECT Profile.name, Profile.surname, Itinerary.organizer_username, Itinerary.description FROM Itinerary 
+            JOIN Profile ON Itinerary.organizer_username = Profile.nickname WHERE Itinerary.id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $itinerary_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_assoc();
+    }
+    //get itinerary between cities
+    public function getItineraryBetweenCities($itinerary_id) {
+        $query = "SELECT * FROM ItineraryBetweenCities WHERE itinerary_id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $itinerary_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 }
 

@@ -151,17 +151,17 @@ INSERT INTO City (country, name) VALUES ('Spain', 'Barcelona');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('a', 'a@a.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/gray.jpg',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'ANome', 'ACognome', 'img/profile/gray.jpg',
   'A.', '1990-01-01', '2023-11-21');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('b', 'b@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/gray.jpg',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'BNome', 'BCognome', 'img/profile/gray.jpg',
   'A.', '1990-01-01', '2023-11-21');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('c', 'c@b.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'a', 'a', 'img/profile/gray.jpg',
+  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'CNome', 'CCognome', 'img/profile/gray.jpg',
   'A.', '1990-01-01', '2023-11-21');
 
 INSERT INTO Follow (from_username, to_username) VALUES ('a', 'b');
@@ -172,8 +172,8 @@ INSERT INTO Itinerary (organizer_username, description) VALUES ('a', 'Florence t
 INSERT INTO Itinerary (organizer_username, description) VALUES ('c', 'Marseille trip');
 INSERT INTO Itinerary (organizer_username, description) VALUES ('b', 'Barcelona trip');
 
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Milan', '2018-01-01 10:00:00', 'Bergamo', '2018-01-01 11:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Bergamo', '2018-01-01 12:00:00', 'Milan', '2018-01-01 13:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (4, 'Milan', '2018-01-01 10:00:00', 'Bergamo', '2018-01-01 11:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (4, 'Bergamo', '2018-01-01 12:00:00', 'Milan', '2018-01-01 13:00:00');
 
 INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 1, 'Milan post 1', 'Milan');
 INSERT INTO Post (author, itinerary_id, description, city) VALUES ('a', 1, 'Milan post 2', 'Milan');

@@ -76,7 +76,7 @@
                 </div>
                 <div class="row mb-4">
                     <div class="col-2 offset-2">
-                        <a href="itinerary.html?id_trip=<?php echo $post['itinerary_id']; ?>" class="btn text-muted p-0">
+                        <a href="itinerary.php?itinerary_id=<?php echo $post['itinerary_id']; ?>" class="btn text-muted p-0">
                             <i class="fa fa-map-o"></i>
                         </a>
                     </div>
