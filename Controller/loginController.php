@@ -5,13 +5,12 @@ $login = new loginModel();
 
 $nickname_mail = $_POST['nickname_mail'];
 $password = $_POST['password'];
-if ($login->login($nickname_mail, $password) ){
+
+if ($login->login($nickname_mail, $password)) {
     $_SESSION["nickname"] = $nickname_mail;
     header('location: ../view/feed.php?login=1');
-}
-else{
+} else {
     header('location:../view/index.html?error=1');
 }
-exit();
 
 ?>

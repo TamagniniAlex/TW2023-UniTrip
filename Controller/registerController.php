@@ -20,16 +20,15 @@ if ($_FILES['image']['error'] === UPLOAD_ERR_OK && is_uploaded_file($_FILES['ima
     $photo_url = "img/profile/gray.jpg";
 }
 
-$count = $register->user_exists($nickname, $mail);
-
-if ($count > 0) {
-    header('location: ../view/index.html?error=1');
+if (dataIsCorrect()) {
+    $count = $register->user_exists($nickname, $mail);
+    if ($count > 0) {
+        header('location: ../view/index.html?error=1');
+    } else {
+        $register->insert_user($nickname, $password, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
+        header('location:../view/index.html?error=0');
+    }
 }
-else{
-    $register->insert_user($nickname, $password, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
-    header('location:../view/index.html?error=0');
-}
-exit();
 
 function dataIsCorrect()
 {
@@ -39,3 +38,5 @@ function dataIsCorrect()
         return false;
     }
 }
+
+?>

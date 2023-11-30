@@ -2,7 +2,9 @@
 require_once("../model/feedModel.php");
 
 $feed = new FeedModel();
-$posts =[];
+
+$posts = [];
+
 //TODO mettere che se sei loggato droppa roba diversa
 if (isset($_SESSION["nickname"])) {
     $posts = $feed->getPostsFollower($_SESSION["nickname"], 4);
@@ -11,4 +13,5 @@ if (isset($_SESSION["nickname"])) {
 } else {
 
 }
+
 ?>
