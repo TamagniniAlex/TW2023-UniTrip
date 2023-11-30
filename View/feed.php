@@ -24,7 +24,8 @@
             <h1 class="text-center mb-4">UniTrip</h1>
             <div class="row mb-4">
                 <div class="col-2 col-lg-1 text-center">
-                    <a href="#"><img src="img/profile/gray.jpg" alt="Account Image" class="img-fluid rounded-circle"></a>
+                    <!-- TODO oi, qui è sempre gray -->
+                    <a href="#"><img src="../img/profile/gray.jpg" alt="Account Image" class="img-fluid rounded-circle"></a>
                 </div>
                 <div class="col-4 col-lg-5 align-self-center text-end">
                     <a href="#" class="btn">Suggeriti</a>
@@ -45,7 +46,7 @@
                     <div class="col-2 col-lg-1 text-center">
                         <a href="#">
                             <!--TODO-->
-                            <img src="img/profile/gray.jpg" alt="Account Image" class="img-fluid rounded-circle">
+                            <img src="../img/profile/gray.jpg" alt="Account Image" class="img-fluid rounded-circle">
                         </a>
                     </div>
                     <div class="col-7 col-lg-9 align-self-center">
@@ -64,7 +65,7 @@
                 <div class="row mb-2">
                     <div class="col-10 col-lg-11 align-self-center ms-auto">
                         <!--TODO-->
-                        <img src="img/black.jpg" alt="Account Image" class="img-fluid rounded">
+                        <img src="../img/black.jpg" alt="Account Image" class="img-fluid rounded">
                     </div>
                 </div>
                 <div class="row mb-2">
