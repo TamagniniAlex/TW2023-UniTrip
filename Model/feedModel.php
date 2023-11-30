@@ -1,7 +1,5 @@
 <?php
 require_once("../libraries/Model.php");
-require_once('../libraries/DBHandler.php');
-require_once('../libraries/DatabaseHelper.php');
 
 class FeedModel extends Model
 {

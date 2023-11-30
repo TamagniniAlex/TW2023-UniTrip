@@ -1,6 +1,5 @@
 <?php
 require_once("../libraries/Model.php");
-require_once("../Libraries/DBHandler.php");
 
 class LoginModel extends Model
 {

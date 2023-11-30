@@ -1,5 +1,6 @@
 <?php
 require_once("../libraries/Model.php");
+
 class RegisterModel extends Model
 {
     public function __construct()
