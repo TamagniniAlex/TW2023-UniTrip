@@ -6,10 +6,9 @@ abstract class Model{
     {
         $this->db = new DatabaseHelper();
     }
-    public function check_user ($nickname, $email) {
-        return $this->db->check_user($nickname, $email);
+    public function user_exists ($nickname, $email) {
+        return $this->db->user_exists($nickname, $email);
     } 
-    abstract public function insert_user($nickname, $password, $email, $name, $surname, $photo_url, $description, $birth_date, $join_date) ;
 }
 
 ?>

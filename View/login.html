@@ -22,14 +22,14 @@
             <div class="col-10 col-md-6 col-xl-4">
                 <h1 class="text-center mb-4">UniTrip</h1>
                 <p class="text-center mb-5">Accedi</p>
-                <form action="login.php" method="post" enctype="multipart/form-data">
+                <form action="../Controller/loginController.php" method="post" enctype="multipart/form-data">
                     <div class="mb-4">
                         <label for="nickname-mail" class="form-label">Inserisci nickname o mail:</label>
-                        <input type="text" placeholder="Inserisci nickname o mail..." class="form-control" id="nickname-mail" name="nickname_mail">
+                        <input required type="text" placeholder="Inserisci nickname o mail..." class="form-control" id="nickname-mail" name="nickname_mail">
                     </div>
                     <div class="mb-5">
                         <label for="password" class="form-label">Inserisci Password:</label>
-                        <input type="password" placeholder="Inserisci password..." class="form-control" id="password" name="password">
+                        <input required type="password" placeholder="Inserisci password..." class="form-control" id="password" name="password">
                     </div>
                     <div class="mb-5">
                         <button type="submit" class="btn btn-primary form-control">Accedi</button>

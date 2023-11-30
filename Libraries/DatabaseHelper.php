@@ -3,8 +3,9 @@ require_once("DBHandler.php");
 //create dataBaseHelper class
 class DatabaseHelper {
 
-    private $mysqli;
+    public $mysqli;
     public function __construct(){
+        session_start();
         define("HOST", "localhost"); 
         define("USER", "secure_user"); 
         define("PASSWORD", "roHdLmnCs35P0Ssl2Q4");
@@ -77,7 +78,9 @@ class DatabaseHelper {
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        return $result->fetch_assoc()['likeCount'];
+        $result = $result->fetch_assoc();
+        if( $result== null) return 0;
+        return $result['likeCount'];
     }
     //given the id of a post get how many comments it has
     public function getCommentCount($post_id) {
@@ -87,7 +90,9 @@ class DatabaseHelper {
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        return ($result->fetch_assoc())['commentCount'];
+        $result = $result->fetch_assoc();
+        if( $result== null) return 0;
+        return ($result)['commentCount'];
     }
     //given the id of a post get all it's postFavourites
     public function getFavouriteCount($post_id) {
@@ -97,7 +102,9 @@ class DatabaseHelper {
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        return ($result->fetch_assoc())['PostFavourites'];
+        $result = $result->fetch_assoc();
+        if( $result== null) return 0;
+        return ($result)['PostFavourites'];
     }
     //given the id of a post get all it's comments
     public function getCommentsByPost($post_id) {
@@ -110,7 +117,7 @@ class DatabaseHelper {
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //checks if user already exists
-    public function check_user($nickname, $email)
+    public function user_exists($nickname, $email)
     {
         $query = "SELECT count(*) as users FROM Profile WHERE nickname = ? OR mail = ?";
         $stmt = $this->mysqli->prepare($query);

@@ -6,9 +6,9 @@ class RegisterModel extends Model
     {
         parent::__construct();
     }
-    public function check_user($nickname, $email)
+    public function user_exists($nickname, $email)
     {
-        $count = $this->db->check_user($nickname, $email);
+        $count = $this->db->user_exists($nickname, $email);
         return $count;
 
     }

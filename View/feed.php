@@ -39,7 +39,7 @@
             <hr>
 
             <!--Dynamic Posts-->
-            <?php require_once("../feed-follower.php"); ?>
+            <?php require_once("../Controller/feedController.php"); ?>
             <?php foreach ($posts as $post) : ?>
                 <div class="row mb-3">
                     <div class="col-2 col-lg-1 text-center">
@@ -83,7 +83,7 @@
                         <a href="comment.html?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
                             <i class="fa fa-comment-o"></i>
                             <?php
-                            $comments = $db->getCommentCount($post['id']);
+                            $comments = $feed->db->getCommentCount($post['id']);
                             echo $comments;
                             ?>
                         </a>
@@ -92,7 +92,7 @@
                         <a href="#" class="btn text-muted p-0">
                             <i class="fa fa-heart-o"></i>
                             <?php
-                            $likes = $db->getLikeCount($post['id']);
+                            $likes = $feed->db->getLikeCount($post['id']);
                             echo $likes;
                             ?>
                         </a>
@@ -101,7 +101,7 @@
                         <a href="#" class="btn text-muted p-0">
                             <i class="fa fa-star-o"></i>
                             <?php
-                            $favorites = $db->getFavouriteCount($post['id']);
+                            $favorites = $feed->db->getFavouriteCount($post['id']);
                             echo $favorites;
                             ?>
                         </a>
