@@ -13,6 +13,52 @@ class DatabaseHelper
         define("DATABASE", "unitrip");
         $this->mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
     }
+    //change datetime format array
+    function formatDateArray($array)
+    {
+        foreach ($array as &$value) {
+            $datetime_value = new DateTime($value['datetime']);
+            $datetime_now = new DateTime();
+            $diff = $datetime_now->diff($datetime_value);
+            if ($diff->y > 0) {
+                $result = $diff->y . " anni";
+            } elseif ($diff->m > 0) {
+                $result = $diff->m . " mesi";
+            } elseif ($diff->d > 0) {
+                $result = $diff->d . " giorni";
+            } elseif ($diff->h > 0) {
+                $result = $diff->h . " ore";
+            } elseif ($diff->i > 0) {
+                $result = $diff->i . " minuti";
+            } else {
+                $result = $diff->s . " secondi";
+            }
+            $value['datetime'] = $result;
+        }
+        return $array;
+    }
+    //change datetime format single
+    function formatDateSingle($value)
+    {
+        $datetime_value = new DateTime($value['datetime']);
+        $datetime_now = new DateTime();
+        $diff = $datetime_now->diff($datetime_value);
+        if ($diff->y > 0) {
+            $result = $diff->y . " anni";
+        } elseif ($diff->m > 0) {
+            $result = $diff->m . " mesi";
+        } elseif ($diff->d > 0) {
+            $result = $diff->d . " giorni";
+        } elseif ($diff->h > 0) {
+            $result = $diff->h . " ore";
+        } elseif ($diff->i > 0) {
+            $result = $diff->i . " minuti";
+        } else {
+            $result = $diff->s . " secondi";
+        }
+        $value['datetime'] = $result;
+        return $value;
+    }
     //get profile photo
     public function getProfilePhoto($nickname)
     {
@@ -32,14 +78,14 @@ class DatabaseHelper
     public function getPostById($id)
     {
         $query = "SELECT profile.photo_url, profile.name, profile.surname, 
-            profile.nickname, post.date, post.title, post.description, post.itinerary_id FROM Post 
+            profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
             JOIN Profile ON Post.author = Profile.nickname WHERE Post.id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        return $result->fetch_assoc();
+        return $this->formatDateSingle($result->fetch_assoc());
     }
     //get all posts
     public function getPosts($limit)
@@ -56,18 +102,17 @@ class DatabaseHelper
     public function getPostsFollower($nickname, $limit)
     {
         $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
-            profile.nickname, post.date, post.description, post.itinerary_id FROM Post 
+            profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
             JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
             JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
             JOIN Profile ON Itinerary.organizer_username = Profile.nickname
-            WHERE Follow.from_username = ? ORDER BY post.date ASC LIMIT ?";
+            WHERE Follow.from_username = ? ORDER BY post.datetime ASC LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("si", $nickname, $limit);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        //echo json_encode($result->fetch_all(MYSQLI_ASSOC));
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
     }
     //get all posts by category
     public function getPostsByCategory($category, $limit)
@@ -174,7 +219,7 @@ class DatabaseHelper
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        return $result->fetch_all(MYSQLI_ASSOC);
+        return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
     }
     //given the id of a post get all it's postFavourites
     public function getFavouriteCount($post_id)

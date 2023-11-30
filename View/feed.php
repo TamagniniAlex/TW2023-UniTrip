@@ -46,24 +46,28 @@
 
             <!--Dynamic Posts-->
             <?php foreach ($posts as $post) : ?>
-                <div class="row mb-3">
+                <div class="row mb-2">
                     <div class="col-2 col-lg-1 text-center">
                         <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>">
                             <img src=<?php echo $post['photo_url']; ?> alt="Account Image" class="img-fluid rounded-circle">
                         </a>
                     </div>
                     <div class="col-7 col-lg-9 align-self-center">
-                        <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn p-0"><?php echo $post['name'];
-                                    echo " "; echo $post['surname'] ?>
+                        <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn p-0"><?php echo $post['name'] . " " . $post['surname'] ?>
                         </a>
                         <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn text-muted p-0">@<?php echo $post['nickname'] ?></a>
-                        <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['date'] ?></a>
+                        <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['datetime'] ?></a>
                     </div>
                     <!--TODO non in questa pagina
                     <div class="col-3 col-lg-2 align-self-center text-center">
                         <button type="submit" class="btn btn-secondary form-control">Segui</button>
                     </div>
                     -->
+                </div>
+                <div class="row mb-2">
+                    <div class="col-10 col-lg-11 align-self-center ms-auto">
+                        <h5><?php echo $post['title'] ?></h5>
+                    </div>
                 </div>
                 <div class="row mb-2">
                     <div class="col-10 col-lg-11 align-self-center ms-auto">
@@ -84,20 +88,23 @@
                         </a>
                     </div>
                     <div class="col-2 text-center">
-                        <a href="comment.html?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
+                        <a href="comment.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
                             <i class="fa fa-comment-o"></i>
+                            <!--TODO MORETTI, STAI CHIAMANDO IL MODEL DALLA VIEW?!?!?!?!?-->
                             <?php $comments = $feed->db->getCommentCount($post['id']); echo $comments; ?>
                         </a>
                     </div>
                     <div class="col-2 text-center">
                         <!--TODO with js-->
                         <a href="../Controller/postLikeController.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
+                            <!--TODO MORETTI, STAI CHIAMANDO IL MODEL DALLA VIEW?!?!?!?!?-->
                             <i class="fa fa-heart-o"></i> <?php $likes = $feed->db->getLikeCount($post['id']); echo $likes; ?>
                         </a>
                     </div>
                     <div class="col-2 text-center">
                         <!--TODO with js-->
                         <a href="../Controller/postFavouriteController.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
+                            <!--TODO MORETTI, STAI CHIAMANDO IL MODEL DALLA VIEW?!?!?!?!?-->
                             <i class="fa fa-star-o"></i> <?php $favorites = $feed->db->getFavouriteCount($post['id']); echo $favorites; ?>
                         </a>
                     </div>

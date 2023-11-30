@@ -34,7 +34,7 @@
                         echo " "; echo $post['surname'] ?>
                     </a>
                     <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn text-muted p-0">@<?php echo $post['nickname'] ?></a>
-                    <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['date'] ?></a>
+                    <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['datetime'] ?></a>
                 </div>
                 <!--TODO non in questa pagina
                 <div class="col-3 col-lg-2 align-self-center text-center">
