@@ -17,5 +17,4 @@ class ItineraryModel extends Model
     }
 }
 
-
 ?>

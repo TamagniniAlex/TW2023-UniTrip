@@ -13,5 +13,4 @@ class FeedModel extends Model
     }
 }
 
-
 ?>
