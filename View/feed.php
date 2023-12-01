@@ -73,9 +73,12 @@
                     <div class="col-10 col-lg-11 align-self-center ms-auto">
                         <div id="carouselExampleIndicators<?php echo $count; ?>" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" data-bs-slide-to="0" aria-label="Slide 1" class="active" aria-current="true" ></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                <?php $firstPhoto = true; $count_button = 0; foreach ($post['photos'] as $photo) : ?>
+                                    <button type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" 
+                                        data-bs-slide-to="<?php echo $count_button; ?>" aria-label="Slide <?php echo $count_button++; ?>" 
+                                        class="<?php echo $firstPhoto ? 'active' : ''; ?>" aria-current="<?php echo $firstPhoto ? 'true' : ''; ?>">
+                                    </button>
+                                <?php $firstPhoto = false; endforeach; ?>
                             </div>
                             <div class="carousel-inner rounded">
                                 <?php $firstPhoto = true; foreach ($post['photos'] as $photo) : ?>
