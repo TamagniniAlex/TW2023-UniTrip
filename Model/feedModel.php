@@ -15,7 +15,10 @@ class FeedModel extends Model
     {
         return $this->db->getProfilePhoto($nickname);
     }
-
+    public function getPostsPhoto($id)
+    {
+        return $this->db->getPostsPhoto($id);
+    }
 }
 
 ?>

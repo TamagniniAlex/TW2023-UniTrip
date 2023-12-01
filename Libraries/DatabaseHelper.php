@@ -69,7 +69,7 @@ class DatabaseHelper
         $result = $stmt->get_result();
         $stmt->close();
         if ($row = $result->fetch_assoc()) {
-            return "../" . $row['photo_url'];
+            return $row['photo_url'];
         } else {
             return '../img/profile/gray.jpg';
         }
@@ -143,6 +143,17 @@ class DatabaseHelper
         $query = "SELECT * FROM post WHERE autore = ? AND categoria = ?  LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("ssi", $author, $category, $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //get all Posts Photo
+    public function getPostsPhoto($id)
+    {
+        $query = "SELECT photo_url FROM PostPhoto WHERE post_id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();

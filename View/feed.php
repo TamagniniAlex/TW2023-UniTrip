@@ -45,7 +45,9 @@
             <hr>
 
             <!--Dynamic Posts-->
-            <?php foreach ($posts as $post) : ?>
+            <?php foreach ($posts as $post) : ?> 
+                <!-- TODO Non stampa giusto (il penultimo post lo stampa due volte, e non stampa l'ultimo) -->
+                <?php echo json_encode($post); ?>
                 <div class="row mb-2">
                     <div class="col-2 col-lg-1 text-center">
                         <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>">
@@ -71,8 +73,28 @@
                 </div>
                 <div class="row mb-2">
                     <div class="col-10 col-lg-11 align-self-center ms-auto">
-                        <!--TODO-->
-                        <img src="../img/black.jpg" alt="Account Image" class="img-fluid rounded">
+                        <div id="carouselExampleIndicators<?php echo $count; ?>" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">
+                                <button type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" data-bs-slide-to="0" aria-label="Slide 1" class="active" aria-current="true" ></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                <button type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                            </div>
+                            <div class="carousel-inner rounded">
+                                <?php $firstPhoto = true; foreach ($post['photos'] as $photo) : ?>
+                                    <div class="carousel-item <?php echo $firstPhoto ? 'active' : ''; ?>">
+                                        <img src="<?php echo $photo['photo_url']?>" class="d-block w-100" alt="Post image">
+                                    </div>
+                                <?php $firstPhoto = false; endforeach; ?>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators<?php echo $count++; ?>" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-2">

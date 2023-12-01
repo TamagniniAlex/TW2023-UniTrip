@@ -185,9 +185,21 @@ INSERT INTO Post (author, itinerary_id, title, description, city) VALUES ('b', 2
 INSERT INTO Post (author, itinerary_id, title, description, city) VALUES ('c', 3, 'Madrid-Barcelona', 'Madrid-Barcelona desc', 'Madrid');
 INSERT INTO Post (author, itinerary_id, title, description, city) VALUES ('c', 3, 'Madrid-Barcelona 2', 'Madrid-Barcelona 2 desc', 'Madrid');
 
-INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, '../img/post/gray.jpg');
-INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, '../img/post/gray.jpg');
-INSERT INTO PostPhoto (post_id, photo_url) VALUES (3, '../img/post/gray.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, '../img/post/red.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, '../img/post/blue.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (1, '../img/post/black.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, '../img/post/red.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, '../img/post/blue.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (2, '../img/post/black.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (3, '../img/post/red.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (3, '../img/post/blue.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (3, '../img/post/black.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (4, '../img/post/red.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (4, '../img/post/blue.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (4, '../img/post/black.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (5, '../img/post/red.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (5, '../img/post/blue.jpg');
+INSERT INTO PostPhoto (post_id, photo_url) VALUES (5, '../img/post/black.jpg');
 
 INSERT INTO PostLike (post_id, profile_username) VALUES (2, 'a');
 INSERT INTO PostLike (post_id, profile_username) VALUES (3, 'a');
