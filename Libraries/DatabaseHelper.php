@@ -106,7 +106,7 @@ class DatabaseHelper
             JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
             JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
             JOIN Profile ON Itinerary.organizer_username = Profile.nickname
-            WHERE Follow.from_username = ? ORDER BY post.datetime ASC LIMIT ?";
+            WHERE Follow.from_username = ? ORDER BY post.datetime DESC LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("si", $nickname, $limit);
         $stmt->execute();
