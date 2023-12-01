@@ -59,6 +59,36 @@ class DatabaseHelper
         $value['datetime'] = $result;
         return $value;
     }
+    //change date format
+    function formatDate($data)
+    {
+        //TODO PFFF
+        $monthsItalian = [
+            '01' => 'Gennaio',
+            '02' => 'Febbraio',
+            '03' => 'Marzo',
+            '04' => 'Aprile',
+            '05' => 'Maggio',
+            '06' => 'Giugno',
+            '07' => 'Luglio',
+            '08' => 'Agosto',
+            '09' => 'Settembre',
+            '10' => 'Ottobre',
+            '11' => 'Novembre',
+            '12' => 'Dicembre',
+        ];
+        $birthDate = DateTime::createFromFormat('Y-m-d', $data['birth_date']);
+        if ($birthDate !== false) {
+            $monthNumber = $birthDate->format('m');
+            $data['birth_date'] = $birthDate->format('d') . ' ' . $monthsItalian[$monthNumber] . ' ' . $birthDate->format('Y');
+        }
+        $joinDate = DateTime::createFromFormat('Y-m-d', $data['join_date']);
+        if ($joinDate !== false) {
+            $monthNumber = $joinDate->format('m');
+            $data['join_date'] = $joinDate->format('d') . ' ' . $monthsItalian[$monthNumber] . ' ' . $joinDate->format('Y');
+        }
+        return $data;
+    }
     //get profile photo
     public function getProfilePhoto($nickname)
     {
@@ -73,6 +103,22 @@ class DatabaseHelper
         } else {
             return '../img/profile/gray.jpg';
         }
+    }
+    //get profile data
+    public function getProfileData($nickname)
+    {
+        $query = "SELECT profile.name, profile.surname, profile.description, profile.birth_date, 
+            profile.join_date, COUNT(follower.from_username) AS followers_count, 
+            COUNT(following.to_username) AS following_count FROM Profile profile
+            LEFT JOIN Follow follower ON profile.nickname = follower.to_username
+            LEFT JOIN Follow following ON profile.nickname = following.from_username
+            WHERE profile.nickname = ? GROUP BY profile.nickname;";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $nickname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $this->formatDate($result->fetch_assoc());
     }
     //get post by post_id
     public function getPostById($id)
@@ -128,14 +174,13 @@ class DatabaseHelper
     //get all posts by author
     public function getPostsByAuthor($author, $limit)
     {
-        $query = "SELECT * FROM post WHERE autore = ?  LIMIT ?";
+        $query = "SELECT * FROM post WHERE author = ?  LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("si", $author, $limit);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
-
     }
     //get all posts by author and category
     public function getPostsByAuthorAndCategory($author, $category, $limit)

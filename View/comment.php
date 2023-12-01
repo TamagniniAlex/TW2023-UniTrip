@@ -25,15 +25,15 @@
             <h1 class="text-center mb-4">UniTrip</h1>
             <div class="row mb-5 mt-3">
                 <div class="col-2 col-lg-1 text-center">
-                    <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>">
+                    <a href="<?php echo "profile.php?nickname=" . $post['nickname']; ?>">
                         <img src=<?php echo $post['photo_url']; ?> alt="Account Image" class="img-fluid rounded-circle">
                     </a>                
                 </div>
                 <div class="col-7 col-lg-9 align-self-center">
-                    <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn p-0"><?php echo $post['name'];
+                    <a href="<?php echo "profile.php?nickname=" . $post['nickname']; ?>" class="btn p-0"><?php echo $post['name'];
                         echo " "; echo $post['surname'] ?>
                     </a>
-                    <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn text-muted p-0">@<?php echo $post['nickname'] ?></a>
+                    <a href="<?php echo "profile.php?nickname=" . $post['nickname']; ?>" class="btn text-muted p-0">@<?php echo $post['nickname'] ?></a>
                     <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['datetime'] ?></a>
                 </div>
                 <!--TODO non in questa pagina
@@ -55,15 +55,15 @@
             <?php foreach ($comments as $comment) : ?>
             <div class="row">
                 <div class="col-2 col-lg-1 text-center">
-                    <a href="<?php echo "profile.html?nickname=" . $comment['nickname']; ?>">
+                    <a href="<?php echo "profile.php?nickname=" . $comment['nickname']; ?>">
                         <img src=<?php echo $comment['photo_url']; ?> alt="Account Image" class="img-fluid rounded-circle">
                     </a>                
                 </div>
                 <div class="col-10 col-lg-11 align-self-center">
-                    <a href="<?php echo "profile.html?nickname=" . $comment['nickname']; ?>" class="btn p-0"><?php echo $comment['name'];
+                    <a href="<?php echo "profile.php?nickname=" . $comment['nickname']; ?>" class="btn p-0"><?php echo $comment['name'];
                         echo " "; echo $comment['surname'] ?>
                     </a>
-                    <a href="<?php echo "profile.html?nickname=" . $comment['nickname']; ?>" class="btn text-muted p-0">@<?php echo $comment['nickname'] ?></a>
+                    <a href="<?php echo "profile.php?nickname=" . $comment['nickname']; ?>" class="btn text-muted p-0">@<?php echo $comment['nickname'] ?></a>
                     <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $comment['datetime'] ?></a>
                 </div>
             </div>

@@ -25,7 +25,7 @@
             <h1 class="text-center mb-4">UniTrip</h1>
             <div class="row mb-4">
                 <div class="col-2 col-lg-1 text-center">
-                    <a href=<?php echo "profile.html?nickname=" . $_SESSION["nickname"]; ?>>
+                    <a href=<?php echo "profile.php?nickname=" . $_SESSION["nickname"]; ?>>
                         <img src=<?php echo $photo_url; ?> alt="Account Image" class="img-fluid rounded-circle">
                     </a>
                 </div>
@@ -48,14 +48,14 @@
             <?php foreach ($posts as $post) : ?> 
                 <div class="row mb-2">
                     <div class="col-2 col-lg-1 text-center">
-                        <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>">
+                        <a href="<?php echo "profile.php?nickname=" . $post['nickname']; ?>">
                             <img src=<?php echo $post['photo_url']; ?> alt="Account Image" class="img-fluid rounded-circle">
                         </a>
                     </div>
                     <div class="col-7 col-lg-9 align-self-center">
-                        <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn p-0"><?php echo $post['name'] . " " . $post['surname'] ?>
+                        <a href="<?php echo "profile.php?nickname=" . $post['nickname']; ?>" class="btn p-0"><?php echo $post['name'] . " " . $post['surname'] ?>
                         </a>
-                        <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>" class="btn text-muted p-0">@<?php echo $post['nickname'] ?></a>
+                        <a href="<?php echo "profile.php?nickname=" . $post['nickname']; ?>" class="btn text-muted p-0">@<?php echo $post['nickname'] ?></a>
                         <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['datetime'] ?></a>
                     </div>
                     <!--TODO non in questa pagina
