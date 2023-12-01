@@ -8,11 +8,6 @@ $count = 0;
 if (isset($_SESSION["nickname"])) {
     $photo_url = $feed->getProfilePhoto($_SESSION["nickname"]);
     $posts = $feed->getPostsFollower($_SESSION["nickname"], 10);
-    foreach ($posts as &$post) {
-        $post['photos'] = $feed->getPostsPhoto($post['id']);
-    }    
-    //TODO qui però è corretto
-    echo json_encode($posts);
 } else {
 
 }

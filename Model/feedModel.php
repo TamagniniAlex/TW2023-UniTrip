@@ -7,17 +7,17 @@ class FeedModel extends Model
     {
         parent::__construct();
     }
-    public function getPostsFollower($nickname, $limit)
-    {
-        return $this->db->getPostsFollower($nickname, $limit);
-    }
     public function getProfilePhoto($nickname)
     {
         return $this->db->getProfilePhoto($nickname);
     }
-    public function getPostsPhoto($id)
+    public function getPostsFollower($nickname, $limit)
     {
-        return $this->db->getPostsPhoto($id);
+        $posts = $this->db->getPostsFollower($nickname, $limit);
+        foreach ($posts as &$post) {
+            $post['photos'] = $this->db->getPostsPhoto($post['id']);
+        }
+        return $posts;
     }
 }
 

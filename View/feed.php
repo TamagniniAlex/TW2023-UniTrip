@@ -46,8 +46,6 @@
 
             <!--Dynamic Posts-->
             <?php foreach ($posts as $post) : ?> 
-                <!-- TODO Non stampa giusto (il penultimo post lo stampa due volte, e non stampa l'ultimo) -->
-                <?php echo json_encode($post); ?>
                 <div class="row mb-2">
                     <div class="col-2 col-lg-1 text-center">
                         <a href="<?php echo "profile.html?nickname=" . $post['nickname']; ?>">
