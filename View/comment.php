@@ -44,8 +44,31 @@
             </div>
             <div class="col-12 col-lg-9 px-5">
                 <h5><?php echo $post['title'] ?></h5>
-                <!--TODO-->
-                <img src="../img/black.jpg" alt="Account Image" class="img-fluid rounded mb-2 mt-2">
+                <div id="carouselExampleIndicators<?php echo $count; ?>" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <?php $firstPhoto = true; $count_button = 0; foreach ($post['photos'] as $photo) : ?>
+                                <button type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" 
+                                    data-bs-slide-to="<?php echo $count_button; ?>" aria-label="Slide <?php echo $count_button++; ?>" 
+                                    class="<?php echo $firstPhoto ? 'active' : ''; ?>" aria-current="<?php echo $firstPhoto ? 'true' : ''; ?>">
+                                </button>
+                            <?php $firstPhoto = false; endforeach; ?>
+                        </div>
+                        <div class="carousel-inner rounded">
+                            <?php $firstPhoto = true; foreach ($post['photos'] as $photo) : ?>
+                                <div class="carousel-item <?php echo $firstPhoto ? 'active' : ''; ?>">
+                                    <img src="<?php echo $photo['photo_url']?>" class="d-block w-100" alt="Post image">
+                                </div>
+                            <?php $firstPhoto = false; endforeach; ?>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators<?php echo $count; ?>" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators<?php echo $count++; ?>" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 <!--TODO hastag-->
                 <p class="lh-sm"> <?php echo $post['description'] ?> </p>
             </div>

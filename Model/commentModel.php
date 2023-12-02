@@ -9,7 +9,9 @@ class CommentModel extends Model
     }
     public function getPostById($post_id)
     {
-        return $this->db->getPostById($post_id);
+        $post = $this->db->getPostById($post_id);
+        $post['photos'] = $this->db->getPostsPhoto($post_id);
+        return $post;
     }
     public function getCommentsByPostId($post_id)
     {
