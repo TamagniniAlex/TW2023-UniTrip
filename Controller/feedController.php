@@ -19,4 +19,19 @@ if (isset($_SESSION["nickname"])) {
     }
 }
 
+function getCommentCount($post_id)
+{
+    global $feed;
+    return $feed->db->getCommentCount($post_id);
+}
+function getLikeCount($post_id)
+{    
+    global $feed;
+    return $feed->db->getLikeCount($post_id);
+}
+function getFavouriteCount($post_id)
+{    
+    global $feed;
+    return $feed->db->getFavouriteCount($post_id);
+}
 ?>

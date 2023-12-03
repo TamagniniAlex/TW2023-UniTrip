@@ -137,8 +137,7 @@
                         <div class="col-2 text-center">
                             <a href="comment.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
                                 <i class="fa fa-comment-o"></i>
-                                <!--TODO MORETTI, STAI CHIAMANDO IL MODEL DALLA VIEW?!?!?!?!?-->
-                                <?php $comments = $feed->db->getCommentCount($post['id']);
+                                <?php $comments = getCommentCount($post['id']);
                                 echo $comments; ?>
                             </a>
                         </div>
@@ -146,9 +145,8 @@
                             <!--TODO with js-->
                             <a href="../Controller/postLikeController.php?post_id=<?php echo $post['id']; ?>"
                                 class="btn text-muted p-0">
-                                <!--TODO MORETTI, STAI CHIAMANDO IL MODEL DALLA VIEW?!?!?!?!?-->
                                 <i class="fa fa-heart-o"></i>
-                                <?php $likes = $feed->db->getLikeCount($post['id']);
+                                <?php $likes = getLikeCount($post['id']);
                                 echo $likes; ?>
                             </a>
                         </div>
@@ -156,9 +154,8 @@
                             <!--TODO with js-->
                             <a href="../Controller/postFavouriteController.php?post_id=<?php echo $post['id']; ?>"
                                 class="btn text-muted p-0">
-                                <!--TODO MORETTI, STAI CHIAMANDO IL MODEL DALLA VIEW?!?!?!?!?-->
                                 <i class="fa fa-star-o"></i>
-                                <?php $favorites = $feed->db->getFavouriteCount($post['id']);
+                                <?php $favorites = getFavouriteCount($post['id']);
                                 echo $favorites; ?>
                             </a>
                         </div>
