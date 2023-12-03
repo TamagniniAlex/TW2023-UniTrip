@@ -70,29 +70,3 @@ function checkbrute($nickname, $mysqli)
         }
     }
 }
-/* TODO non viene usata
-function login_check($mysqli)
-{
-    // Verifica che tutte le variabili di sessione siano impostate correttamente
-    if (!isset($_SESSION['user_id'], $_SESSION['username'], $_SESSION['login_string'])) return false;
-    $password="";
-    $user_id = $_SESSION['user_id'];
-    $login_string = $_SESSION['login_string'];
-    $username = $_SESSION['username'];
-    $user_browser = $_SERVER['HTTP_USER_AGENT']; // reperisce la stringa 'user-agent' dell'utente.
-    if (!$stmt = $mysqli->prepare("SELECT password FROM members WHERE id = ? LIMIT 1")) return false;
-    $stmt->bind_param('i', $user_id); // esegue il bind del parametro '$user_id'.
-    $stmt->execute(); // Esegue la query creata.
-    $stmt->store_result();
-
-    if ($stmt->num_rows != 1) return false;
-    $stmt->bind_result($password); // recupera le variabili dal risultato ottenuto.
-    $stmt->fetch();
-    $login_check = hash('sha512', $password . $user_browser);
-    if ($login_check == $login_string)
-        // Login eseguito!!!!
-        return true;
-    else
- return false;
-}
-*/
