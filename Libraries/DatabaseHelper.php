@@ -160,6 +160,38 @@ class DatabaseHelper
         $stmt->close();
         return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
     }
+    //get all posts random logged in
+    public function getPostsRandomLogged($nickname, $limit)
+    {
+        $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
+            profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
+            JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
+            JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
+            JOIN Profile ON Itinerary.organizer_username = Profile.nickname
+            WHERE Profile.nickname != ? ORDER BY RAND() DESC LIMIT ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("si", $nickname, $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
+    }
+    //get all posts random
+    public function getPostsRandom($limit)
+    {
+        $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
+                profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
+                JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
+                JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
+                JOIN Profile ON Itinerary.organizer_username = Profile.nickname
+                ORDER BY RAND() DESC LIMIT ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
+    }
     //get all posts by category
     public function getPostsByCategory($category, $limit)
     {

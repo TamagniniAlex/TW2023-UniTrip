@@ -13,7 +13,7 @@ if (isset($_SESSION['nickname'])) {
     } else {
         $favourite->addFavourite($nickname, $post_id);
     }
-    header("Location: ../View/feed.php");
+    header("Location: ../View/feed.php?follow=1");
 } else {
 
 }

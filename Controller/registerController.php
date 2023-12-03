@@ -26,7 +26,7 @@ if (dataIsCorrect()) {
         header('location: ../view/index.html?error=1');
     } else {
         $register->insert_user($nickname, $password, $mail, $name, $surname, $photo_url, $description, $birth_date, $join_date);
-        header('location:../view/feed.php?error=0');
+        header('location:../view/feed.php?follow=1');
     }
 }
 
