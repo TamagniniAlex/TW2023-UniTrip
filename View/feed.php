@@ -179,7 +179,7 @@
                 <div class="d-flex justify-content-around w-100 fs-3">
                     <a href="#" class="text-center text-dark"><i class="fa fa-home"></i></a>
                     <a href="#" class="text-center text-muted"><i class="fa fa-search"></i></a>
-                    <a href="#" class="text-center text-muted"><i class="fa fa-plus"></i></a>
+                    <a href="addPost.php" class="text-center text-muted"><i class="fa fa-plus"></i></a>
                     <a href="#" class="text-center text-muted"><i class="fa fa-bell-o"></i></a>
                     <a href="#" class="text-center text-muted"><i class="fa fa-envelope-o"></i></a>
                 </div>

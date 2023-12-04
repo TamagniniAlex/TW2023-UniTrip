@@ -69,7 +69,7 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
-                <!--TODO hastag-->
+                <!--TODO hastag sarebbe bello fare una tabella nel db che conta quante volte viene usato un hastag-->
                 <p class="lh-sm"> <?php echo $post['description'] ?> </p>
             </div>
             <hr>

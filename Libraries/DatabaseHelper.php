@@ -62,7 +62,6 @@ class DatabaseHelper
     //change date format
     function formatDate($data)
     {
-        //TODO PFFF
         $monthsItalian = [
             '01' => 'Gennaio',
             '02' => 'Febbraio',
@@ -410,6 +409,16 @@ class DatabaseHelper
         $query = "SELECT * FROM ItineraryBetweenCities WHERE itinerary_id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $itinerary_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //get nations
+    public function getNations()
+    {
+        $query = "SELECT * FROM Country ORDER BY name ASC";
+        $stmt = $this->mysqli->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
