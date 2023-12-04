@@ -114,22 +114,21 @@
                         <div class="col-3 text-end p-0">
                             <a href="comment.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
                                 <i class="fa fa-comment-o"></i>
-                                <!--TODO MORETTI, STAI CHIAMANDO IL MODEL DALLA VIEW?!?!?!?!?-->
-                                <?php $comments = $profile->db->getCommentCount($post['id']); echo $comments; ?>
+                                <?php $comments = getCommentCount($post['id']); echo $comments; ?>
                             </a>                        
                         </div>
                         <div class="col-4 text-center p-0">
                             <!--TODO with js, quando meti like torna ad una pagina sbagliata-->
                             <a href="../Controller/postLikeController.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
-                                <!--TODO MORETTI, STAI CHIAMANDO IL MODEL DALLA VIEW?!?!?!?!?-->
-                                <i class="fa fa-heart-o"></i> <?php $likes = $profile->db->getLikeCount($post['id']); echo $likes; ?>
+                                <i class="fa fa-heart-o"></i> 
+                                <?php $likes = getLikeCount($post['id']); echo $likes; ?>
                             </a>                        
                         </div>
                         <div class="col-3 text-start p-0">
                             <!--TODO with js, quando meti star torna ad una pagina sbagliata-->
                             <a href="../Controller/postFavouriteController.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
-                                <!--TODO MORETTI, STAI CHIAMANDO IL MODEL DALLA VIEW?!?!?!?!?-->
-                                <i class="fa fa-star-o"></i> <?php $favorites = $profile->db->getFavouriteCount($post['id']); echo $favorites; ?>
+                                <i class="fa fa-star-o"></i> 
+                                <?php $favorites = getFavouriteCount($post['id']); echo $favorites; ?>
                             </a>                        
                         </div>
                         <div class="col-1 p-0">
