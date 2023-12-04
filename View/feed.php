@@ -33,11 +33,15 @@
                             </a>
                         </div>
                     <?php endif; ?>
-                    <div class="col-<?php echo isset($_SESSION["nickname"]) ? '4 col-lg-5' : '6'; ?> align-self-center text-end">
-                        <a href="feed.php" class="btn <?php echo !isset($_GET["follow"]) ? 'fw-bold text-decoration-underline' : ''; ?>">Suggeriti</a>
+                    <div
+                        class="col-<?php echo isset($_SESSION["nickname"]) ? '4 col-lg-5' : '6'; ?> align-self-center text-end">
+                        <a href="feed.php"
+                            class="btn <?php echo !isset($_GET["follow"]) ? 'fw-bold text-decoration-underline' : ''; ?>">Suggeriti</a>
                     </div>
-                    <div class="col-<?php echo isset($_SESSION["nickname"]) ? '4 col-lg-5' : '6'; ?> align-self-center text-justify">
-                        <a href="feed.php?follow=1" class="btn <?php echo isset($_GET["follow"]) ? 'fw-bold text-decoration-underline' : ''; ?>">Seguiti</a>
+                    <div
+                        class="col-<?php echo isset($_SESSION["nickname"]) ? '4 col-lg-5' : '6'; ?> align-self-center text-justify">
+                        <a href="feed.php?follow=1"
+                            class="btn <?php echo isset($_GET["follow"]) ? 'fw-bold text-decoration-underline' : ''; ?>">Seguiti</a>
                     </div>
                     <?php if (isset($_SESSION["nickname"])): ?>
                         <div class="col-2 col-lg-1 align-self-center text-center fs-3">
@@ -69,11 +73,11 @@
                                 <?php echo $post['datetime'] ?>
                             </a>
                         </div>
-                        <!--TODO non in questa pagina
-                    <div class="col-3 col-lg-2 align-self-center text-center">
-                        <button type="submit" class="btn btn-secondary form-control">Segui</button>
-                    </div>
-                    -->
+                        <?php if (isset($post['following']) && $post['following'] == 1): ?>
+                            <div class="col-3 col-lg-2 align-self-center text-center">
+                                <button type="submit" class="btn btn-secondary form-control">Segui</button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                     <div class="row mb-2">
                         <div class="col-10 col-lg-11 align-self-center ms-auto">

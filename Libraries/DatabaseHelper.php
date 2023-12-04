@@ -119,6 +119,17 @@ class DatabaseHelper
         $stmt->close();
         return $this->formatDate($result->fetch_assoc());
     }
+    //get a following b
+    public function isFollowing($from_username, $to_username)
+    {
+        $query = "SELECT COUNT(*) as following FROM Follow WHERE from_username = ? AND to_username = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("ss", $from_username, $to_username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return ($result->fetch_assoc())['following'];
+    }
     //get post by post_id
     public function getPostById($id)
     {
