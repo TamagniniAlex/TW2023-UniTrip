@@ -23,6 +23,25 @@ class ProfileModel extends Model
         }
         return $posts;
     }
+    public function getPostsByAuthorLike($nickname, $limit)
+    {
+        $posts = $this->db->getPostsByAuthorLike($nickname, $limit);
+        foreach ($posts as &$post) {
+            $post['photos'] = $this->db->getPostsPhoto($post['id']);
+        }
+        return $posts;
+    }
+    public function getPostsByAuthorFavourite($nickname, $limit)
+    {
+        $posts = $this->db->getPostsByAuthorFavourite($nickname, $limit);
+        foreach ($posts as &$post) {
+            $post['photos'] = $this->db->getPostsPhoto($post['id']);
+        }
+        return $posts;
+    }
+    public function isFollowing($nickname, $follower)
+    {
+        return $this->db->isFollowing($nickname, $follower);
+    }
 }
-
 ?>

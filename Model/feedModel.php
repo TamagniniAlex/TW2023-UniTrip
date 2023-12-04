@@ -16,6 +16,7 @@ class FeedModel extends Model
         $posts = $this->db->getPostsFollower($nickname, $limit);
         foreach ($posts as &$post) {
             $post['photos'] = $this->db->getPostsPhoto($post['id']);
+            $post['following'] = $this->db->isFollowing($nickname, $post['nickname']);
         }
         return $posts;
     }

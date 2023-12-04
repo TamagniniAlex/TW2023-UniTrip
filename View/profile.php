@@ -13,9 +13,6 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!-- Stile Personalizzato -->
-    <link rel="stylesheet" href="style.css">
-
     <title>Profile</title>
 </head>
 
@@ -30,10 +27,21 @@
                         <img src=<?php echo $data['photo']; ?> alt="Account Image" class="img-fluid rounded-circle">
                     </a>
                 </div>
-                <!--TODO da capire-->
+                <?php if (isset($_SESSION["nickname"])): ?>
                 <div class="col-3 col-lg-2 offset-7 offset-lg-9 align-self-center text-center">
-                    <button type="submit" class="btn btn-secondary form-control">Modifica</button>
+                    <a href="<?php echo $nickname == $_SESSION['nickname'] ? "editProfile.html" : "../Controller/followController.php?to=$nickname" ?>" class="btn btn-secondary form-control">
+                    <?php
+                        if ($nickname == $_SESSION['nickname']) {
+                            echo "Modifica";
+                        } elseif (isset($data['following']) && $data['following'] == 1) {
+                            echo "Segui già";
+                        } else {
+                            echo "Segui";
+                        }
+                    ?>
+                    </a>
                 </div>
+                <?php endif; ?>
             </div>
             <div class="row mb-2">
                 <h4 class="fw-bold text-start"><?php echo $data['name'] . " " . $data['surname']?></h4>
@@ -57,20 +65,19 @@
                     <a class="btn text-muted p-0 px-4"> <strong><?php echo $data['followers_count']; ?></strong> Followers</a>  
                 </div>
             </div>
-            <div class="row mb-4 text-center">
-                <!--TODO-->
-                <div class="col-4">
-                    <a class="btn"><strong>Posts</strong></a>
+            <?php if (isset($_SESSION["nickname"]) && $nickname == $_SESSION['nickname']): ?>
+                <div class="row mb-4 text-center">
+                    <div class="col-4">
+                        <a href="profile.php?nickname=<?php echo $_SESSION["nickname"] ?>" class="btn <?php echo !isset($_GET["like"]) && !isset($_GET["favourite"]) ? 'fw-bold text-decoration-underline' : ''; ?>">Posts</a>
+                    </div>
+                    <div class="col-4">
+                        <a href="profile.php?nickname=<?php echo $_SESSION["nickname"] . "&like=true"; ?>" class="btn <?php echo isset($_GET["like"]) && $_GET["like"] == "true" ? 'fw-bold text-decoration-underline' : ''; ?>">Mi piace</a>
+                    </div>
+                    <div class="col-4">
+                        <a href="profile.php?nickname=<?php echo $_SESSION["nickname"] . "&favourite=true"; ?>" class="btn <?php echo isset($_GET["favourite"]) && $_GET["favourite"] == "true" ? 'fw-bold text-decoration-underline' : ''; ?>">Preferiti</a>
+                    </div>
                 </div>
-                <!--TODO-->
-                <div class="col-4">
-                    <a class="btn">Mi piace</a>
-                </div>
-                <!--TODO-->
-                <div class="col-4">
-                    <a class="btn">Preferiti</a>
-                </div>
-            </div>
+            <?php endif; ?>
             <hr>
             <div class="row mb-2 lg-text-center">
                 <?php foreach ($posts as $post) : ?>

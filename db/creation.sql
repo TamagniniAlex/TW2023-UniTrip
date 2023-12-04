@@ -138,6 +138,7 @@ CREATE USER 'secure_user'@'localhost' IDENTIFIED BY 'roHdLmnCs35P0Ssl2Q4';
 GRANT SELECT, INSERT, UPDATE ON `unitrip`.* TO 'secure_user'@'localhost';
 GRANT DELETE ON `unitrip`.`PostLike` TO 'secure_user'@'localhost';
 GRANT DELETE ON `unitrip`.`PostFavourites` TO 'secure_user'@'localhost';
+GRANT DELETE ON `unitrip`.`Follow` TO 'secure_user'@'localhost';
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('a', 'a@a.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',

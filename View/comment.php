@@ -12,9 +12,6 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!-- Stile Personalizzato -->
-    <link rel="stylesheet" href="style.css">
-
     <title>UniTrip</title>
 </head>
 
@@ -36,11 +33,19 @@
                     <a href="<?php echo "profile.php?nickname=" . $post['nickname']; ?>" class="btn text-muted p-0">@<?php echo $post['nickname'] ?></a>
                     <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $post['datetime'] ?></a>
                 </div>
-                <!--TODO non in questa pagina
-                <div class="col-3 col-lg-2 align-self-center text-center">
-                    <button type="submit" class="btn btn-secondary form-control">Segui</button>
-                </div>
-                -->
+                <?php if (isset($_SESSION["nickname"])): ?>
+                    <div class="col-3 col-lg-2 align-self-center text-center">
+                        <a href="<?php echo "../Controller/followController.php?to=" . $post['nickname'] ?>" class="btn btn-secondary form-control">
+                            <?php
+                            if (isset($post['following']) && $post['following'] == 1) {
+                                echo "Segui già";
+                            } else {
+                                echo "Segui";
+                            }
+                            ?>
+                        </a>
+                    </div>
+                <?php endif; ?>
             </div>
             <div class="col-12 col-lg-9 px-5">
                 <h5><?php echo $post['title'] ?></h5>

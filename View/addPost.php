@@ -13,13 +13,7 @@
         <!-- Font Awesome -->
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-        <!--TODO Stile Personalizzato -->
-        <link rel="stylesheet" href="style.css">
-
-        <!--TODO Script Personalizzato -->
-        <script src="../script.js"></script>
-
+            
         <title>Add post</title>
     </head>
 

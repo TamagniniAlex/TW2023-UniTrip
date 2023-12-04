@@ -14,9 +14,6 @@
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <!--TODO Stile Personalizzato -->
-        <link rel="stylesheet" href="style.css">
-
         <title>Feed</title>
     </head>
 
@@ -45,8 +42,8 @@
                     </div>
                     <?php if (isset($_SESSION["nickname"])): ?>
                         <div class="col-2 col-lg-1 align-self-center text-center fs-3">
-                            <!--TODO-->
-                            <a href="#" class="text-dark"><i class="fa fa-star-o"></i></a>
+                            <a href="profile.php?nickname=<?php echo $_SESSION["nickname"] . "&favourite=true"; ?>"
+                                class="text-dark"><i class="fa fa-star-o"></i></a>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -73,9 +70,17 @@
                                 <?php echo $post['datetime'] ?>
                             </a>
                         </div>
-                        <?php if (isset($post['following']) && $post['following'] == 1): ?>
+                        <?php if (isset($_SESSION["nickname"])): ?>
                             <div class="col-3 col-lg-2 align-self-center text-center">
-                                <button type="submit" class="btn btn-secondary form-control">Segui</button>
+                                <a href="<?php echo "../Controller/followController.php?to=" . $post['nickname'] ?>" class="btn btn-secondary form-control">
+                                    <?php
+                                    if (isset($post['following']) && $post['following'] == 1) {
+                                        echo "Segui già";
+                                    } else {
+                                        echo "Segui";
+                                    }
+                                    ?>
+                                </a>
                             </div>
                         <?php endif; ?>
                     </div>
