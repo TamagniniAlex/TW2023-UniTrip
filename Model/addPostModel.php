@@ -11,5 +11,9 @@ class AddPostModel extends Model
     {
         return $this->db->getNations();
     }
+    public function getCitiesByNation($nation)
+    {
+        return $this->db->getCitiesByNation($nation);
+    }
 }
 ?>

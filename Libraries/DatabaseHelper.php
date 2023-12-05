@@ -492,6 +492,17 @@ class DatabaseHelper
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    //get cities 
+    public function getCitiesByNation($nation)
+    {
+        $query = "SELECT * FROM City WHERE country = ? ORDER BY name ASC";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $nation);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 
 ?>
