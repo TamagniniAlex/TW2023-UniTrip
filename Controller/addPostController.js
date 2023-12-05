@@ -41,3 +41,36 @@ $(document).ready(function () {
         });
     });
 });
+
+var stageCount = 1;
+
+function addStage() {
+    var newStageHTML = `
+        <div class="row mb-4">
+            <select id="selectCities${stageCount}" class="form-select" aria-label="Seleziona città di partenza">
+                <option selected disabled>Seleziona città di partenza</option>
+            </select>
+        </div>
+        <div class="row mb-4">
+            <input type="time" class="form-control" id="departureTime${stageCount}" name="departureTime">
+        </div>
+        <div class="row mb-4">
+            <select id="selectCities${stageCount + 1}" class="form-select" aria-label="Seleziona città di arrivo">
+                <option selected disabled>Seleziona città di arrivo</option>
+            </select>
+        </div>
+        <div class="row mb-4">
+            <input type="time" class="form-control" id="arrivalTime${stageCount}" name="arrivalTime">
+        </div>
+        <hr class="row mb-4">
+    `;
+
+    var lastHr = document.querySelectorAll('hr')[document.querySelectorAll('hr').length - 1];
+    
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = newStageHTML;
+
+    lastHr.parentNode.insertBefore(wrapper, lastHr.nextSibling);
+
+    stageCount += 2;
+}
