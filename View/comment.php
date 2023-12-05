@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="container mt-5">
+    <div class="container mt-5 mb-5">
         <div class="row justify-content-center">
             <?php require_once("../Controller/commentController.php"); ?>
             <h1 class="text-center mb-4">UniTrip</h1>
@@ -88,15 +88,11 @@
                     </a>                
                 </div>
                 <div class="col-10 col-lg-11 align-self-center">
-                    <a href="<?php echo "profile.php?nickname=" . $comment['nickname']; ?>" class="btn p-0"><?php echo $comment['name'];
-                        echo " "; echo $comment['surname'] ?>
+                    <a href="<?php echo "profile.php?nickname=" . $comment['nickname']; ?>" class="btn p-0 fw-bold">
+                        <?php echo $comment['name'] . " " . $comment['surname'] ?>
                     </a>
                     <a href="<?php echo "profile.php?nickname=" . $comment['nickname']; ?>" class="btn text-muted p-0">@<?php echo $comment['nickname'] ?></a>
                     <a class="btn disabled text-muted p-0 px-3">&#9679 <?php echo $comment['datetime'] ?></a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-10 offset-2 col-lg-11 offset-lg-1 align-self-center">
                     <p class="lh-sm"><?php echo $comment['comment'] ?></p>
                 </div>
             </div>
@@ -104,7 +100,14 @@
             <?php endforeach; ?>
         </div>
     </div>
-
+    <?php if (isset($_SESSION["nickname"])): ?>
+    <div class="fixed-bottom m-3">
+        <div class="d-flex justify-content-around w-100 fs-3 input-group">
+            <input type="text" placeholder="Inserisci un commento" class="form-control" aria-label="User comment" aria-describedby="User comment">
+            <button class="btn btn-outline-secondary" type="button" id="User comment">Invia</button>
+        </div>
+    </div>
+    <?php endif; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
