@@ -146,13 +146,16 @@ class DatabaseHelper
     {
         if ($this->alreadyFollowing($from_username, $to_username)) {
             $query = "DELETE FROM Follow WHERE from_username = ? AND to_username = ?";
+            $result = 0;
         } else {
             $query = "INSERT INTO Follow (from_username, to_username) VALUES (?, ?)";
+            $result = 1;
         }
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("ss", $from_username, $to_username);
         $stmt->execute();
         $stmt->close();
+        return ($result);
     }
     //get post by post_id
     public function getPostById($id)
@@ -217,7 +220,6 @@ class DatabaseHelper
         $query = "SELECT DISTINCT post.id, profile.photo_url, profile.name, profile.surname, 
                 profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
                 JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
-                JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
                 JOIN Profile ON Itinerary.organizer_username = Profile.nickname
                 ORDER BY RAND() DESC LIMIT ?";
         $stmt = $this->mysqli->prepare($query);

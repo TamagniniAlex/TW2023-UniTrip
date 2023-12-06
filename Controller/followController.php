@@ -6,7 +6,6 @@ $follow = new FollowModel();
 if (isset($_SESSION['nickname']) && isset($_GET['to']) && !empty($_GET['to'])) {
     $nickname = $_SESSION['nickname'];
     $follower = $_GET['to'];
-    $follow->follow($nickname, $follower);
-    header("Location: ../view/profile.php?nickname=$follower");
+    echo json_encode($follow->follow($nickname, $follower));
 }
 ?>

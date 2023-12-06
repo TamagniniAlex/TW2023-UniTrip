@@ -13,6 +13,12 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Script -->
+    <script src="../Controller/feedController.js"></script>
+
     <title>Profile</title>
 </head>
 
@@ -125,18 +131,14 @@
                             </a>                        
                         </div>
                         <div class="col-4 text-center p-0">
-                            <!--TODO with js, quando meti like torna ad una pagina sbagliata-->
-                            <a href="../Controller/postLikeController.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
+                            <button id="likesCount<?php echo $post['id']; ?>" class="btn text-muted p-0" onclick="setLike(<?php echo $post['id']; ?>)">
                                 <i class="fa fa-heart-o"></i> 
-                                <?php $likes = getLikeCount($post['id']); echo $likes; ?>
-                            </a>                        
+                            </button>                    
                         </div>
                         <div class="col-3 text-start p-0">
-                            <!--TODO with js, quando meti star torna ad una pagina sbagliata-->
-                            <a href="../Controller/postFavouriteController.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
+                            <button id="starsCount<?php echo $post['id']; ?>" class="btn text-muted p-0" onclick="setFavourite(<?php echo $post['id']; ?>)">
                                 <i class="fa fa-star-o"></i> 
-                                <?php $favorites = getFavouriteCount($post['id']); echo $favorites; ?>
-                            </a>                        
+                            </button>                      
                         </div>
                         <div class="col-1 p-0">
                             <a href="#" class="btn text-muted p-0"><i class="fa fa-share"></i></a>

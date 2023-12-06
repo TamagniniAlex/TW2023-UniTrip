@@ -9,7 +9,7 @@ class FollowModel extends Model
     }
     public function follow($nickname, $follower)
     {
-        $this->db->followProfile($nickname, $follower);
+        return $this->db->followProfile($nickname, $follower);
     }
 }
 ?>

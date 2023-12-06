@@ -8,7 +8,7 @@ if (isset($_GET["itinerary_id"]) && !empty($_GET["itinerary_id"])) {
     $itinerary_information = $itinerary->getItineraryInformation($itinerary_id);
     $itinerary_between_cities = $itinerary->getItineraryBetweenCities($itinerary_id);
 } else {
-    header("Location: ../view/feed.php");
+    header("Location: ../view/feed.html");
 }
 
 ?>

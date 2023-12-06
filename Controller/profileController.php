@@ -23,22 +23,12 @@ if (isset($_GET["nickname"]) && !empty($_GET["nickname"])) {
         $posts = $profile->getPostsByAuthor($nickname, 10);
     }
 } else {
-    header("Location: feed.php");
+    header("Location: feed.html");
 }
 
 function getCommentCount($post_id)
 {
     global $profile;
     return $profile->db->getCommentCount($post_id);
-}
-function getLikeCount($post_id)
-{
-    global $profile;
-    return $profile->db->getLikeCount($post_id);
-}
-function getFavouriteCount($post_id)
-{
-    global $profile;
-    return $profile->db->getFavouriteCount($post_id);
 }
 ?>
