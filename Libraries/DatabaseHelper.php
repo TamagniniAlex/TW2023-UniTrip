@@ -62,7 +62,6 @@ class DatabaseHelper
     //change date format
     function formatDate($data)
     {
-        //TODO PFFF
         $monthsItalian = [
             '01' => 'Gennaio',
             '02' => 'Febbraio',
@@ -120,6 +119,44 @@ class DatabaseHelper
         $stmt->close();
         return $this->formatDate($result->fetch_assoc());
     }
+    //get a following b
+    public function isFollowing($from_username, $to_username)
+    {
+        $query = "SELECT COUNT(*) as following FROM Follow WHERE from_username = ? AND to_username = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("ss", $from_username, $to_username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return ($result->fetch_assoc())['following'];
+    }
+    //check if user a is following user b
+    public function alreadyFollowing($from_username, $to_username)
+    {
+        $query = "SELECT COUNT(*) as following FROM Follow WHERE from_username = ? AND to_username = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("ss", $from_username, $to_username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return ($result->fetch_assoc())['following'];
+    }
+    //follow a to b, if alredy, remove it
+    public function followProfile($from_username, $to_username)
+    {
+        if ($this->alreadyFollowing($from_username, $to_username)) {
+            $query = "DELETE FROM Follow WHERE from_username = ? AND to_username = ?";
+            $result = 0;
+        } else {
+            $query = "INSERT INTO Follow (from_username, to_username) VALUES (?, ?)";
+            $result = 1;
+        }
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("ss", $from_username, $to_username);
+        $stmt->execute();
+        $stmt->close();
+        return ($result);
+    }
     //get post by post_id
     public function getPostById($id)
     {
@@ -147,7 +184,7 @@ class DatabaseHelper
     //get all posts follower by user
     public function getPostsFollower($nickname, $limit)
     {
-        $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
+        $query = "SELECT DISTINCT post.id, profile.photo_url, profile.name, profile.surname, 
             profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
             JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
             JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
@@ -163,14 +200,15 @@ class DatabaseHelper
     //get all posts random logged in
     public function getPostsRandomLogged($nickname, $limit)
     {
-        $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
+        $query = "SELECT DISTINCT post.id, profile.photo_url, profile.name, profile.surname, 
             profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
             JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
-            JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
             JOIN Profile ON Itinerary.organizer_username = Profile.nickname
-            WHERE Profile.nickname != ? ORDER BY RAND() DESC LIMIT ?";
+            WHERE Profile.nickname != ? AND Profile.nickname NOT IN 
+                (SELECT to_username FROM Follow WHERE from_username = ?) 
+            ORDER BY RAND() DESC LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("si", $nickname, $limit);
+        $stmt->bind_param("ssi", $nickname, $nickname, $limit);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
@@ -179,10 +217,9 @@ class DatabaseHelper
     //get all posts random
     public function getPostsRandom($limit)
     {
-        $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
+        $query = "SELECT DISTINCT post.id, profile.photo_url, profile.name, profile.surname, 
                 profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
                 JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
-                JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
                 JOIN Profile ON Itinerary.organizer_username = Profile.nickname
                 ORDER BY RAND() DESC LIMIT ?";
         $stmt = $this->mysqli->prepare($query);
@@ -213,6 +250,38 @@ class DatabaseHelper
         $result = $stmt->get_result();
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //get all posts by author and like
+    public function getPostsByAuthorLike($author, $limit)
+    {
+        $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
+            profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
+            JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
+            JOIN PostLike ON Post.id = PostLike.post_id 
+            JOIN Profile ON PostLike.profile_username = Profile.nickname
+            WHERE Profile.nickname = ? ORDER BY post.datetime DESC LIMIT ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("si", $author, $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
+    }
+    //get all posts by author and favourite
+    public function getPostsByAuthorFavourite($author, $limit)
+    {
+        $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
+            profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
+            JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
+            JOIN PostFavourites ON Post.id = PostFavourites.post_id 
+            JOIN Profile ON PostFavourites.profile_username = Profile.nickname
+            WHERE Profile.nickname = ? ORDER BY post.datetime DESC LIMIT ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("si", $author, $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
     }
     //get all posts by author and category
     public function getPostsByAuthorAndCategory($author, $category, $limit)
@@ -410,6 +479,27 @@ class DatabaseHelper
         $query = "SELECT * FROM ItineraryBetweenCities WHERE itinerary_id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $itinerary_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //get nations
+    public function getNations()
+    {
+        $query = "SELECT * FROM Country ORDER BY name ASC";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //get cities 
+    public function getCitiesByNation($nation)
+    {
+        $query = "SELECT * FROM City WHERE country = ? ORDER BY name ASC";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $nation);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
