@@ -6,6 +6,7 @@ $addPost = new AddPostModel();
 if (isset($_SESSION["nickname"])) {
     echo json_encode($addPost->getNations());
 } else {
-    header("Location: login.html");
+    echo json_encode("error");
 }
+
 ?>

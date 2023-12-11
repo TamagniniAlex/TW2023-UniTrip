@@ -1,6 +1,6 @@
 <?php
 require_once("../model/loginModel.php");
-
+//TODO
 $login = new loginModel();
 
 $nickname_mail = $_POST['nickname_mail'];

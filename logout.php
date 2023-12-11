@@ -1,5 +1,5 @@
 <?php
-
+//TODO
 // Elimina tutti i valori della sessione.
 $_SESSION = array();
 // Recupera i parametri di sessione.

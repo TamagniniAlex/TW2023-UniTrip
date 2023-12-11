@@ -2,7 +2,7 @@
 require_once("../model/registerModel.php");
 
 $register = new registerModel();
-
+//TODO
 $password = $_POST["password"];
 $nickname = $_POST["nickname"];
 $name = $_POST["name"];

@@ -8,9 +8,13 @@ $(document).ready(function () {
         url: '../Controller/getCountryController.php',
         dataType: 'json',
         success: function (nations) {
-            nations.forEach(function (nation) {
-                selectNations.append('<option value="' + nation.name + '">' + nation.name + '</option>');
-            });
+            if (nations === "error") {
+                window.location.href = "../View/index.html";
+            } else {
+                nations.forEach(function (nation) {
+                    selectNations.append('<option value="' + nation.name + '">' + nation.name + '</option>');
+                });
+            }
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
@@ -27,8 +31,8 @@ $(document).ready(function () {
         // Prende le città della nazione selezionata
         $.ajax({
             type: 'GET',
-            url: '../Controller/getCitiesController.php', 
-            data: { nation: selectedNation }, 
+            url: '../Controller/getCitiesController.php',
+            data: { nation: selectedNation },
             dataType: 'json',
             success: function (cities) {
                 cities.forEach(function (city) {
@@ -66,7 +70,7 @@ function addStage() {
     `;
 
     var lastHr = document.querySelectorAll('hr')[document.querySelectorAll('hr').length - 1];
-    
+
     var wrapper = document.createElement('div');
     wrapper.innerHTML = newStageHTML;
 

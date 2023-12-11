@@ -11,9 +11,11 @@ class ProfileModel extends Model
     {
         return $this->db->getProfilePhoto($nickname);
     }
-    public function getProfileData($nickname)
+    public function getProfileData($nickname, $follower)
     {
-        return $this->db->getProfileData($nickname);
+        $data = $this->db->getProfileData($nickname);
+        $data["following"] = $this->db->isFollowing($follower, $nickname);
+        return $data;
     }
     public function getPostsByAuthor($nickname, $limit)
     {
@@ -38,10 +40,6 @@ class ProfileModel extends Model
             $post['photos'] = $this->db->getPostsPhoto($post['id']);
         }
         return $posts;
-    }
-    public function isFollowing($nickname, $follower)
-    {
-        return $this->db->isFollowing($nickname, $follower);
     }
 }
 ?>

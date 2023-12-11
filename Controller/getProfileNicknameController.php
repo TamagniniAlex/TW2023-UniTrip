@@ -3,9 +3,10 @@ require_once("../model/feedModel.php");
 
 $feed = new FeedModel();
 
-if(isset($_SESSION["nickname"])) {
+if (isset($_SESSION["nickname"])) {
     echo json_encode($_SESSION["nickname"]);
 } else {
     echo json_encode("error");
 }
+
 ?>

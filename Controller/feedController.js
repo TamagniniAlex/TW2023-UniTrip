@@ -20,7 +20,7 @@ $(document).ready(function () {
                 <div class="row mb-4">
                     ${sessionNickname ? `
                         <div class="col-2 col-lg-1 text-center">
-                            <a href="profile.php?nickname=${sessionNickname}">
+                            <a href="profile.html?nickname=${sessionNickname}">
                                 <img id="profilePhoto" src="" alt="Account Image" class="img-fluid rounded-circle">
                             </a>
                         </div>
@@ -33,7 +33,7 @@ $(document).ready(function () {
                     </div>
                     ${sessionNickname ? `
                         <div class="col-2 col-lg-1 align-self-center text-center fs-3">
-                            <a href="profile.php?nickname=${sessionNickname}&favourite=true" class="text-dark"><i class="fa fa-star-o"></i></a>
+                            <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="text-dark"><i class="fa fa-star-o"></i></a>
                         </div>
                     ` : ''}
                 </div>
@@ -69,13 +69,13 @@ $(document).ready(function () {
                     var postHtml = `
                     <div class="row mb-2">
                         <div class="col-2 col-lg-1 text-center">
-                            <a href="profile.php?nickname=${post.nickname}">
+                            <a href="profile.html?nickname=${post.nickname}">
                                 <img src="${post.photo_url}" alt="Account Image" class="img-fluid rounded-circle">
                             </a>
                         </div>
                         <div class="col-7 col-lg-9 align-self-center">
-                            <a href="profile.php?nickname=${post.nickname}" class="btn p-0">${post.name} ${post.surname}</a>
-                            <a href="profile.php?nickname=${post.nickname}" class="btn text-muted p-0">@${post.nickname}</a>
+                            <a href="profile.html?nickname=${post.nickname}" class="btn p-0">${post.name} ${post.surname}</a>
+                            <a href="profile.html?nickname=${post.nickname}" class="btn text-muted p-0">@${post.nickname}</a>
                             <a class="btn disabled text-muted p-0 px-3">&#9679 ${post.datetime}</a>
                         </div>
                         ${post.following != null ?
@@ -129,11 +129,10 @@ $(document).ready(function () {
                             <p class="lh-sm"> ${post.description}</p>
                         </div>
                     </div>
-
                     <div class="row mb-4">
                         <div class="col-2 offset-2">
-                            <a href="itinerary.php?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
-                            <i class="fa fa-map-o"></i>
+                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
+                                <i class="fa fa-map-o"></i>
                             </a>
                         </div>
                         <div class="col-2 text-center">
@@ -213,8 +212,8 @@ function getFavouriteCount(post_id) {
 function setFavourite(post_id) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/postFavouriteController.php?post_id=' + post_id,
-        dataType: 'html',
+        url: '../Controller/setFavouriteController.php?post_id=' + post_id,
+        dataType: 'json',
         success: function () {
             getFavouriteCount(post_id);
         },
@@ -241,8 +240,8 @@ function getLikeCount(post_id) {
 function setLike(post_id) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/postLikeController.php?post_id=' + post_id,
-        dataType: 'html',
+        url: '../Controller/setLikeController.php?post_id=' + post_id,
+        dataType: 'json',
         success: function () {
             getLikeCount(post_id);
         },
@@ -255,7 +254,7 @@ function setLike(post_id) {
 function follow(nickname) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/followController.php?to=' + nickname,
+        url: '../Controller/setFollowController.php?to=' + nickname,
         dataType: 'json',
         success: function (result) {
             var buttons = document.getElementsByClassName("follow" + nickname);

@@ -9,11 +9,12 @@ class ItineraryModel extends Model
     }
     public function getItineraryInformation($itinerary_id)
     {
-        return $this->db->getItineraryInformation($itinerary_id);
-    }
-    public function getItineraryBetweenCities($itinerary_id)
-    {
-        return $this->db->getItineraryBetweenCities($itinerary_id);
+        $itinerary = $this->db->getItineraryInformation($itinerary_id);
+        if (!empty($itinerary)) {
+            $itinerary["cities"] = $this->db->getItineraryBetweenCities($itinerary_id);
+            return $itinerary;
+        }
+        return "error";
     }
 }
 

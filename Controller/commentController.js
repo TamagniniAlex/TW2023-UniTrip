@@ -14,13 +14,13 @@ $(document).ready(function () {
                 var postHtml = `
                 <div class="row mb-2">
                     <div class="col-2 col-lg-1 text-center">
-                        <a href="profile.php?nickname=${response.nickname}">
+                        <a href="profile.html?nickname=${response.nickname}">
                             <img src="${response.photo_url}" alt="Account Image" class="img-fluid rounded-circle">
                         </a>
                     </div>
                     <div class="col-7 col-lg-9 align-self-center">
-                        <a href="profile.php?nickname=${response.nickname}" class="btn p-0">${response.name} ${response.surname}</a>
-                        <a href="profile.php?nickname=${response.nickname}" class="btn text-muted p-0">@${response.nickname}</a>
+                        <a href="profile.html?nickname=${response.nickname}" class="btn p-0">${response.name} ${response.surname}</a>
+                        <a href="profile.html?nickname=${response.nickname}" class="btn text-muted p-0">@${response.nickname}</a>
                         <a class="btn disabled text-muted p-0 px-3">&#9679 ${response.datetime}</a>
                     </div>
                     ${response.following != null ?
@@ -74,7 +74,7 @@ $(document).ready(function () {
                 </div>
                 <div class="row mb-2">
                     <div class="col-2 offset-2">
-                        <a href="itinerary.php?itinerary_id=${response.itinerary_id}" class="btn text-muted p-0">
+                        <a href="itinerary.html?itinerary_id=${response.itinerary_id}" class="btn text-muted p-0">
                             <i class="fa fa-map-o"></i>
                         </a>
                     </div>
@@ -116,15 +116,15 @@ $(document).ready(function () {
                 $('#comments').append(`
                     <div class="row">
                         <div class="col-2 col-lg-1 text-center">
-                            <a href="profile.php?nickname=`+ comment.nickname + `">
+                            <a href="profile.html?nickname=`+ comment.nickname + `">
                                 <img src= `+ comment.photo_url + ` alt="Account Image" class="img-fluid rounded-circle">
                             </a>                
                         </div>
                         <div class="col-10 col-lg-11 align-self-center">
-                            <a href="profile.php?nickname=`+ comment.nickname + `" class="btn p-0">
+                            <a href="profile.html?nickname=`+ comment.nickname + `" class="btn p-0">
                                 ` + comment.name + ` ` + comment.surname + `
                             </a>
-                            <a href="profile.php?nickname=`+ comment.nickname + `" class="btn text-muted p-0">@` + comment.nickname + `</a>
+                            <a href="profile.html?nickname=`+ comment.nickname + `" class="btn text-muted p-0">@` + comment.nickname + `</a>
                             <a class="btn disabled text-muted p-0 px-3">&#9679 ` + comment.datetime + `</a>
                             <p class="lh-sm m-0"> ` + comment.comment + ` </p>
                         </div>
@@ -172,8 +172,8 @@ function getFavouriteCount(post_id) {
 function setFavourite(post_id) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/postFavouriteController.php?post_id=' + post_id,
-        dataType: 'html',
+        url: '../Controller/setFavouriteController.php?post_id=' + post_id,
+        dataType: 'json',
         success: function () {
             getFavouriteCount(post_id);
         },
@@ -200,8 +200,8 @@ function getLikeCount(post_id) {
 function setLike(post_id) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/postLikeController.php?post_id=' + post_id,
-        dataType: 'html',
+        url: '../Controller/setLikeController.php?post_id=' + post_id,
+        dataType: 'json',
         success: function () {
             getLikeCount(post_id);
         },
@@ -214,7 +214,7 @@ function setLike(post_id) {
 function follow(nickname) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/followController.php?to=' + nickname,
+        url: '../Controller/setFollowController.php?to=' + nickname,
         dataType: 'json',
         success: function (result) {
             var buttons = document.getElementsByClassName("follow" + nickname);
@@ -236,7 +236,7 @@ function sendComment($post_id) {
     var comment = document.getElementById("inputComment").value;
     $.ajax({
         type: 'POST',
-        url: '../Controller/postCommentController.php',
+        url: '../Controller/addCommentController.php',
         data: { comment: comment, post_id: $post_id },
         dataType: 'json',
         success: function (result) {
