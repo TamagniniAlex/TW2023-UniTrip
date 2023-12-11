@@ -13,6 +13,7 @@ if (isset($_SESSION['nickname'])) {
     } else {
         $like->addLike($nickname, $post_id);
     }
+    //TODO togliere tutti gli header
     header("Location: ../View/feed.html?follow=1");
 } else {
 

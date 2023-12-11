@@ -130,6 +130,19 @@ class DatabaseHelper
         $stmt->close();
         return ($result->fetch_assoc())['following'];
     }
+    //get a following b
+    public function isFollowingByPost($from_username, $post_id)
+    {
+        $query = "SELECT COUNT(*) as following FROM Follow 
+            JOIN Post ON Follow.to_username = Post.author
+            WHERE Follow.from_username = ? AND Post.id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("ss", $from_username, $post_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return ($result->fetch_assoc())['following'];
+    }
     //check if user a is following user b
     public function alreadyFollowing($from_username, $to_username)
     {
@@ -370,13 +383,24 @@ class DatabaseHelper
     {
         $query = "SELECT profile.photo_url, profile.name, profile.surname, 
             profile.nickname, postcomment.datetime, postcomment.comment FROM Postcomment 
-            JOIN Profile ON Postcomment.author = Profile.nickname WHERE Postcomment.post_id = ?";
+            JOIN Profile ON Postcomment.author = Profile.nickname WHERE Postcomment.post_id = ? 
+            ORDER BY postcomment.datetime DESC";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $post_id);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
+    }
+    //post a commento under post
+    public function postComment($nickname, $post_id, $comment)
+    {
+        $query = "INSERT INTO PostComment (post_id, author, comment) VALUES (?, ?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("iss", $post_id, $nickname, $comment);
+        $stmt->execute();
+        $stmt->close();
+        return "success";
     }
     //given the id of a post get all it's postFavourites
     public function getFavouriteCount($post_id)
@@ -423,17 +447,6 @@ class DatabaseHelper
         $stmt->bind_param("is", $post_id, $nickname);
         $stmt->execute();
         $stmt->close();
-    }
-    //given the id of a post get all it's comments
-    public function getCommentsByPost($post_id)
-    {
-        $query = "SELECT * FROM PostComment WHERE post_id = ?";
-        $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("i", $post_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-        return $result->fetch_all(MYSQLI_ASSOC);
     }
     //checks if user already exists
     public function user_exists($nickname, $email)

@@ -7,20 +7,24 @@ class CommentModel extends Model
     {
         parent::__construct();
     }
-    public function getPostById($post_id)
+    public function getPostById($post_id, $nickname)
     {
         $post = $this->db->getPostById($post_id);
         $post['photos'] = $this->db->getPostsPhoto($post_id);
+        if ($nickname != "") {
+            $post['following'] = $this->db->isFollowingByPost($nickname, $post_id);
+        } else {
+            $post['following'] = null;
+        }
         return $post;
     }
     public function getCommentsByPostId($post_id)
     {
         return $this->db->getCommentsByPostId($post_id);
     }
-    public function getFollowing($nickname,$post_id)
+    public function postComment($nickname, $post_id, $comment)
     {
-        $post = $this->getPostById($post_id);
-        return $this->db->isFollowing($nickname, $post['nickname']);
+        return $this->db->postComment($nickname, $post_id, $comment);
     }
 }
 
