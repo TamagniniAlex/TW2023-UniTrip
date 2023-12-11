@@ -125,7 +125,7 @@
                             </a>                        
                         </div>
                         <div class="col-3 text-end p-0">
-                            <a href="comment.php?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
+                            <a href="comment.html?post_id=<?php echo $post['id']; ?>" class="btn text-muted p-0">
                                 <i class="fa fa-comment-o"></i>
                                 <?php $comments = getCommentCount($post['id']); echo $comments; ?>
                             </a>                        
