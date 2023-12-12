@@ -7,27 +7,30 @@ $(document).ready(function () {
     } else {
         window.location.replace("../View/feed.html");
     }
-    //TODO check if itinerary_id is valid
     $.ajax({
         type: 'GET',
         url: url,
         dataType: 'json',
         success: function (data) {
-            $("#itineraryTitle").append(`<h2 class="text-center">` + data.name + " " + data.surname + " "
-                + data.organizer_username + `</h2>` + `<h3 class="text-center">` + data.description + `</h3>`);
+            if (data === "error") {
+                window.location.replace("feed.html");
+            } else {
+                $("#itineraryTitle").append(`<h2 class="text-center">` + data.name + " " + data.surname + " "
+                    + data.organizer_username + `</h2>` + `<h3 class="text-center">` + data.description + `</h3>`);
 
-            var tableBody = $('#itineraryBodyTable');
-            tableBody.empty(); // Svuota il corpo della tabella
+                var tableBody = $('#itineraryBodyTable');
+                tableBody.empty(); // Svuota il corpo della tabella
 
-            for (var i = 0; i < data.cities.length; i++) {
-                var city = data.cities[i];
-                var row = '<tr>' +
-                    '<td>' + city.departure_city + '</td>' +
-                    '<td>' + city.departure_time + '</td>' +
-                    '<td>' + city.arrival_city + '</td>' +
-                    '<td>' + city.arrival_time + '</td>' +
-                    '</tr>';
-                tableBody.append(row);
+                for (var i = 0; i < data.cities.length; i++) {
+                    var city = data.cities[i];
+                    var row = '<tr>' +
+                        '<td>' + city.departure_city + '</td>' +
+                        '<td>' + city.departure_time + '</td>' +
+                        '<td>' + city.arrival_city + '</td>' +
+                        '<td>' + city.arrival_time + '</td>' +
+                        '</tr>';
+                    tableBody.append(row);
+                }
             }
         },
         error: function (xhr, status, error) {

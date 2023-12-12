@@ -10,6 +10,9 @@ class CommentModel extends Model
     public function getPostById($post_id, $nickname)
     {
         $post = $this->db->getPostById($post_id);
+        if (empty($post)) {
+            return "error";
+        }
         $post['photos'] = $this->db->getPostsPhoto($post_id);
         if ($nickname != "") {
             $post['following'] = $this->db->isFollowingByPost($nickname, $post_id);

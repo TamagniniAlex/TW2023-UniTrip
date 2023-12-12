@@ -117,7 +117,12 @@ class DatabaseHelper
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        return $this->formatDate($result->fetch_assoc());
+        $result = $result->fetch_assoc();
+        if ($result == null) {
+            return null;
+        } else {
+            return $this->formatDate($result);
+        }
     }
     //get a following b
     public function isFollowing($from_username, $to_username)
@@ -181,7 +186,12 @@ class DatabaseHelper
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        return $this->formatDateSingle($result->fetch_assoc());
+        $result = $result->fetch_assoc();
+        if ($result == null) {
+            return null;
+        } else {
+            return $this->formatDateSingle($result);
+        }
     }
     //get all posts
     public function getPosts($limit)

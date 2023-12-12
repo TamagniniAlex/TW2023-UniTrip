@@ -5,7 +5,6 @@ $(document).ready(function () {
     if (post_id == null || post_id == "") {
         window.location.replace("../View/feed.html");
     }
-    //TODO check if post_id exists
     $.ajax({
         type: 'GET',
         url: '../Controller/getPostByIdController.php?post_id=' + post_id,
