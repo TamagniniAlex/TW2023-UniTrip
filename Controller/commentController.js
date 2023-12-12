@@ -171,13 +171,31 @@ function getCommentCount(post_id) {
     });
 }
 
+
+
 function getFavouriteCount(post_id) {
     $.ajax({
         type: 'GET',
         url: '../Controller/getFavouriteCountController.php?post_id=' + post_id,
         dataType: 'json',
         success: function (stars) {
-            document.getElementById("starsCount" + post_id).innerHTML = '<i class="fa fa-star-o"></i> ' + stars;
+            $.ajax({
+            type: 'GET',
+            url: '../Controller/getWasPostStarred.php?post_id=' + post_id,
+            dataType: 'json',
+            success: function (wasStarred) {
+                if(wasStarred == 1){
+                    document.getElementById("starsCount" + post_id).innerHTML = '<i color="yellow" class="fa fa-star-o"></i> ' + stars;
+                }
+                else{
+                    document.getElementById("starsCount" + post_id).innerHTML = '<i class="fa fa-star-o"></i> ' + stars;
+                }
+            },
+        error: function (xhr, status, error) {
+            console.error('Errore nella richiesta AJAX:', status, error);
+            document.getElementById("likesCount" + post_id).innerHTML ="dioca";
+        }
+        });
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
@@ -199,13 +217,30 @@ function setFavourite(post_id) {
     });
 }
 
+
 function getLikeCount(post_id) {
     $.ajax({
         type: 'GET',
         url: '../Controller/getLikeCountController.php?post_id=' + post_id,
         dataType: 'json',
         success: function (likes) {
-            document.getElementById("likesCount" + post_id).innerHTML = '<i class="fa fa-heart-o"></i> ' + likes;
+            $.ajax({
+            type: 'GET',
+            url: '../Controller/getWasPostLiked.php?post_id=' + post_id,
+            dataType: 'json',
+            success: function (wasLiked) {
+                if(wasLiked == 1){
+                    document.getElementById("likesCount" + post_id).innerHTML = '<i color="red" class="fa fa-heart-o"></i> ' + likes;
+                }
+                else{
+                    document.getElementById("likesCount" + post_id).innerHTML = '<i class="fa fa-heart-o"></i> ' + likes;
+                }
+            },
+        error: function (xhr, status, error) {
+            console.error('Errore nella richiesta AJAX:', status, error);
+            document.getElementById("likesCount" + post_id).innerHTML ="dioca";
+        }
+        });
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
@@ -219,7 +254,7 @@ function setLike(post_id) {
         url: '../Controller/setLikeController.php?post_id=' + post_id,
         dataType: 'json',
         success: function () {
-            getLikeCount(post_id);
+           getLikeCount(post_id);
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
