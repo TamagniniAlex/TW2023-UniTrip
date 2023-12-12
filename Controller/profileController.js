@@ -5,7 +5,9 @@ $(document).ready(function () {
     const favourite = urlParams.get('favourite');
     const like = urlParams.get('like');
     var sessionNickname = "";
-
+    if (nickname == null || nickname == "") {
+        window.location.replace("../View/feed.html");
+    }
     $.ajax({
         type: 'GET',
         url: '../Controller/getProfileNicknameController.php',
@@ -43,8 +45,11 @@ $(document).ready(function () {
                         <div class="row mb-2">
                             <h4 class="fw-bold text-start">` + response.name + " " + response.surname + `</h4>
                         </div>
-                        <div class="row mb-3">
+                        <div class="row mb-2">
                             <h6 class="text-muted text-start">@` + nickname + `</h6>
+                        </div>
+                        <div class="row mb-1">
+                            <p class="text-muted text-start">` + response.description + `</p>
                         </div>
                         <div class="row">
                             <div class="col-12">
@@ -58,8 +63,8 @@ $(document).ready(function () {
                         </div>
                         <div class="row mb-4">
                             <div class="col-12">
-                                <a class="btn text-muted p-0"> <strong>` + response.followers_count + `</strong> Following</a> 
-                                <a class="btn text-muted p-0 px-4"> <strong>` + response.following_count + `</strong> Followers</a>  
+                                <a class="btn text-muted p-0"> <strong>` + response.following_count + `</strong> Following</a> 
+                                <a class="btn text-muted p-0 px-4"> <strong>` + response.followers_count + `</strong> Followers</a>  
                             </div>
                         </div>`;
                     if (sessionNickname == nickname) {

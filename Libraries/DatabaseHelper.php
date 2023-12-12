@@ -107,8 +107,8 @@ class DatabaseHelper
     public function getProfileData($nickname)
     {
         $query = "SELECT profile.name, profile.surname, profile.description, profile.birth_date, 
-            profile.join_date, COUNT(follower.from_username) AS followers_count, 
-            COUNT(following.to_username) AS following_count FROM Profile profile
+            profile.join_date, COUNT(DISTINCT follower.from_username) AS followers_count, 
+            COUNT(DISTINCT following.to_username) AS following_count FROM Profile
             LEFT JOIN Follow follower ON profile.nickname = follower.to_username
             LEFT JOIN Follow following ON profile.nickname = following.from_username
             WHERE profile.nickname = ? GROUP BY profile.nickname;";

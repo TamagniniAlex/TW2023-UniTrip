@@ -240,7 +240,6 @@ function sendComment($post_id) {
         data: { comment: comment, post_id: $post_id },
         dataType: 'json',
         success: function (result) {
-            console.log(result);
             if (result === "success") {
                 window.location.reload();
             }
