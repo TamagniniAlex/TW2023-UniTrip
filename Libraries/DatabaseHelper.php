@@ -528,6 +528,19 @@ class DatabaseHelper
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    //get partial search from post title and description
+    public function getPartialSearch($text)
+    {
+        $query = "SELECT * FROM Post WHERE post.title LIKE ? OR post.description LIKE ? 
+            ORDER BY post.datetime DESC LIMIT 10";
+        $stmt = $this->mysqli->prepare($query);
+        $text = "%" . $text . "%";
+        $stmt->bind_param("ss", $text, $text);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
 
 ?>
