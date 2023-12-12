@@ -2,7 +2,10 @@ $(document).ready(function () {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const post_id = urlParams.get('post_id')
-
+    if (post_id == null || post_id == "") {
+        window.location.replace("../View/feed.html");
+    }
+    //TODO check if post_id exists
     $.ajax({
         type: 'GET',
         url: '../Controller/getPostByIdController.php?post_id=' + post_id,
@@ -135,8 +138,22 @@ $(document).ready(function () {
         }
     });
 
-    $("#sendComment").click(function () {
-        sendComment(post_id);
+    $.ajax({
+        type: 'GET',
+        url: '../Controller/getProfileNicknameController.php',
+        dataType: 'json',
+        success: function (response) {
+            $("#sendComment").click(function () {
+                if (response === "error") {
+                    window.location.replace("login.html");
+                } else {
+                    sendComment(post_id);
+                }
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Errore nella richiesta AJAX:', status, error);
+        }
     });
 
 });

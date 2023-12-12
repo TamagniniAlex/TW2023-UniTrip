@@ -7,6 +7,7 @@ $(document).ready(function () {
     } else {
         window.location.replace("../View/feed.html");
     }
+    //TODO check if itinerary_id is valid
     $.ajax({
         type: 'GET',
         url: url,

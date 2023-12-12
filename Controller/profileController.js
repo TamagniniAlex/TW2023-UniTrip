@@ -8,6 +8,7 @@ $(document).ready(function () {
     if (nickname == null || nickname == "") {
         window.location.replace("../View/feed.html");
     }
+    //TODO check if nickname is valid
     $.ajax({
         type: 'GET',
         url: '../Controller/getProfileNicknameController.php',

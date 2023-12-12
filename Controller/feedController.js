@@ -25,10 +25,10 @@ $(document).ready(function () {
                             </a>
                         </div>
                     ` : ''}
-                    <div class="col-4 col-lg-5} align-self-center text-end">
+                    <div class="col-4 col-lg-5 align-self-center text-end">
                         <a href="feed.html" class="btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
                     </div>
-                    <div class="col-4 col-lg-5} align-self-center text-justify">
+                    <div class="col-4 col-lg-5 align-self-center text-justify">
                         <a href="feed.html?follow=1" class="btn ${followParameter ? 'fw-bold text-decoration-underline' : ''}">Seguiti</a>
                     </div>
                     ${sessionNickname ? `
