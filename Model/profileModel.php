@@ -14,6 +14,9 @@ class ProfileModel extends Model
     public function getProfileData($nickname, $follower)
     {
         $data = $this->db->getProfileData($nickname);
+        if (empty($data)) {
+            return "error";
+        }
         $data["following"] = $this->db->isFollowing($follower, $nickname);
         return $data;
     }

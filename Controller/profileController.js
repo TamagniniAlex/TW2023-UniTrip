@@ -8,7 +8,6 @@ $(document).ready(function () {
     if (nickname == null || nickname == "") {
         window.location.replace("../View/feed.html");
     }
-    //TODO check if nickname is valid
     $.ajax({
         type: 'GET',
         url: '../Controller/getProfileNicknameController.php',
@@ -22,27 +21,30 @@ $(document).ready(function () {
                 url: '../Controller/getProfileDataController.php?nickname=' + nickname,
                 dataType: 'json',
                 success: function (response) {
-                    var profileHtml = `
+                    if (response === "error") {
+                        window.location.replace("feed.html");
+                    } else {
+                        var profileHtml = `
                         <div class="row mb-3">
                             <div class="col-2 col-lg-1 text-center"> 
                                 <a href="profile.html?nickname=` + nickname + `">
                                     <img id="profilePhoto" src="" alt="Account Image" class="img-fluid rounded-circle">
                                 </a>
                             </div>`;
-                    getProfilePhoto(nickname);
-                    if (sessionNickname != "" && sessionNickname != nickname) {
-                        profileHtml += `
+                        getProfilePhoto(nickname);
+                        if (sessionNickname != "" && sessionNickname != nickname) {
+                            profileHtml += `
                             <div class="col-3 col-lg-2 offset-7 offset-lg-9 align-self-center text-center">
                                 <button id="follow" onclick="follow('${nickname}')" class="btn btn-secondary form-control">
                                     ${response.following === 1 ? 'Segui già' : 'Segui'}
                                 </button>
                             </div>
                         </div>`;
-                    } else {
-                        profileHtml += ` 
+                        } else {
+                            profileHtml += ` 
                             </div>`;
-                    }
-                    profileHtml += `
+                        }
+                        profileHtml += `
                         <div class="row mb-2">
                             <h4 class="fw-bold text-start">` + response.name + " " + response.surname + `</h4>
                         </div>
@@ -68,8 +70,8 @@ $(document).ready(function () {
                                 <a class="btn text-muted p-0 px-4"> <strong>` + response.followers_count + `</strong> Followers</a>  
                             </div>
                         </div>`;
-                    if (sessionNickname == nickname) {
-                        profileHtml += `
+                        if (sessionNickname == nickname) {
+                            profileHtml += `
                             <div class="row text-center">
                                 <div class="col-4">
                                     <a href="profile.html?nickname=${sessionNickname}" class="btn ${!like && !favourite ? 'fw-bold text-decoration-underline' : ''}">Posts</a>
@@ -81,15 +83,15 @@ $(document).ready(function () {
                                     <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="btn ${favourite === 'true' ? 'fw-bold text-decoration-underline' : ''}">Preferiti</a>
                                 </div>
                             </div>`;
-                    }
-                    $("#userData").append(profileHtml);
-                    $.ajax({
-                        type: 'GET',
-                        url: '../Controller/getProfilePostsController.php?nickname=' + nickname + '&like=' + like + '&favourite=' + favourite,
-                        dataType: 'json',
-                        success: function (response) {
-                            response.forEach(function (post, index) {
-                                var profileHtml = `
+                        }
+                        $("#userData").append(profileHtml);
+                        $.ajax({
+                            type: 'GET',
+                            url: '../Controller/getProfilePostsController.php?nickname=' + nickname + '&like=' + like + '&favourite=' + favourite,
+                            dataType: 'json',
+                            success: function (response) {
+                                response.forEach(function (post, index) {
+                                    var profileHtml = `
                                 <div class="col-12 col-lg-6 col-xxl-4 px-5">
                                     <h5>${post.title}</h5>
                                     <div id="carouselExampleIndicators${index}" class="carousel slide" data-bs-ride="carousel">
@@ -147,13 +149,14 @@ $(document).ready(function () {
                                         </div>
                                     </div>
                                 </div>`;
-                                $("#posts").append(profileHtml);
-                            });
-                        },
-                        error: function (xhr, status, error) {
-                            console.error('Errore nella richiesta AJAX:', status, error);
-                        }
-                    });
+                                    $("#posts").append(profileHtml);
+                                });
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Errore nella richiesta AJAX:', status, error);
+                            }
+                        });
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error('Errore nella richiesta AJAX:', status, error);
