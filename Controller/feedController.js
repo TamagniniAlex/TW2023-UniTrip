@@ -207,7 +207,7 @@ function getFavouriteCount(post_id) {
             dataType: 'json',
             success: function (wasStarred) {
                 if(wasStarred == 1){
-                    document.getElementById("starsCount" + post_id).innerHTML = '<i color="yellow" class="fa fa-star-o"></i> ' + stars;
+                    document.getElementById("starsCount" + post_id).innerHTML = '<i class="text-warning fa fa-star-o"></i> ' + stars;
                 }
                 else{
                     document.getElementById("starsCount" + post_id).innerHTML = '<i class="fa fa-star-o"></i> ' + stars;
@@ -266,7 +266,7 @@ function getLikeCount(post_id) {
             dataType: 'json',
             success: function (wasLiked) {
                 if(wasLiked == 1){
-                    document.getElementById("likesCount" + post_id).innerHTML = '<i color="red" class="fa fa-heart-o"></i> ' + likes;
+                    document.getElementById("likesCount" + post_id).innerHTML = '<i class="text-danger fa fa-heart-o"></i> ' + likes;
                 }
                 else{
                     document.getElementById("likesCount" + post_id).innerHTML = '<i class="fa fa-heart-o"></i> ' + likes;
