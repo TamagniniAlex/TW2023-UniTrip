@@ -146,13 +146,13 @@ $(document).ready(function () {
                             </button>
                         </div>
                         <div class="col-2 text-center">
-                            <button id="starsCount${post.id}" class="btn text-muted p-0" onclick="setFavourite(${post.id})">
+                            <button id="starsCount${post.id}" class="shadow-none btn text-muted p-0" onclick="setFavourite(${post.id})">
                                 ` + getFavouriteCount(post.id) + `
                             </button>
                         </div>
                         <div class="col-2 text-end">
                             <!--TODO-->
-                            <a href="#" class="btn text-muted p-0 px-3"><i class="fa fa-share"></i></a>
+                            <a href="#" class="shadow-none btn text-muted p-0 px-3"><i class="fa fa-share"></i></a>
                         </div>
                     </div>
                     <hr>

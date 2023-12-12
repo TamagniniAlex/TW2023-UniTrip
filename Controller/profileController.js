@@ -124,28 +124,28 @@ $(document).ready(function () {
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-1">
-                                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
+                                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="shadow-none btn text-muted p-0">
                                                 <i class="fa fa-map-o"></i>
                                             </a>                        
                                         </div>
                                         <div class="col-3 text-end p-0">
-                                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="btn text-muted p-0">
+                                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="shadow-none btn text-muted p-0">
                                                 ` + getCommentCount(post.id) + `
                                             </a>                        
                                         </div>
                                         <div class="col-4 text-center p-0">
-                                            <button id="likesCount${post.id}" class="btn text-muted p-0" onclick="setLike(${post.id})">
+                                            <button id="likesCount${post.id}" class="shadow-none btn text-muted p-0" onclick="setLike(${post.id})">
                                                 ` + getLikeCount(post.id) + `
                                             </button>                    
                                         </div>
                                         <div class="col-3 text-start p-0">
-                                            <button id="starsCount${post.id}" class="btn text-muted p-0" onclick="setFavourite(${post.id})">
+                                            <button id="starsCount${post.id}" class="shadow-none btn text-muted p-0" onclick="setFavourite(${post.id})">
                                                 ` + getFavouriteCount(post.id) + `
                                             </button>                      
                                         </div>
                                         <div class="col-1 p-0">
                                             <!--TODO-->
-                                            <a href="#" class="btn text-muted p-0"><i class="fa fa-share"></i></a>
+                                            <a href="#" class="shadow-none btn text-muted p-0"><i class="fa fa-share"></i></a>
                                         </div>
                                     </div>
                                 </div>`;
