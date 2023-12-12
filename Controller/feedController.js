@@ -80,7 +80,7 @@ $(document).ready(function () {
                         </div>
                         ${post.following != null ?
                             `<div class="col-3 col-lg-2 align-self-center text-center">
-                                <button class="follow${post.nickname} btn btn-secondary form-control" onclick="follow('${post.nickname}')">
+                                <button class="shadow-none follow${post.nickname} btn btn-secondary form-control" onclick="follow('${post.nickname}')">
                                     ${post.following == 1 ? 'Segui già' : 'Segui'}
                                 </button>
                             </div>` : ``
@@ -131,17 +131,17 @@ $(document).ready(function () {
                     </div>
                     <div class="row mb-4">
                         <div class="col-2 offset-2">
-                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
+                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="shadow-none btn text-muted p-0">
                                 <i class="fa fa-map-o"></i>
                             </a>
                         </div>
                         <div class="col-2 text-center">
-                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="btn text-muted p-0">
+                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="shadow-none btn text-muted p-0">
                                 ` + getCommentCount(post.id) + `
                             </a>
                         </div>
                         <div class="col-2 text-center">
-                            <button id="likesCount${post.id}" class="btn text-muted p-0" onclick="setLike(${post.id})">
+                            <button id="likesCount${post.id}" class="shadow-none btn text-muted p-0" onclick="setLike(${post.id})">
                                 ` + getLikeCount(post.id) + `
                             </button>
                         </div>
@@ -201,14 +201,29 @@ function getFavouriteCount(post_id) {
         url: '../Controller/getFavouriteCountController.php?post_id=' + post_id,
         dataType: 'json',
         success: function (stars) {
-            document.getElementById("starsCount" + post_id).innerHTML = '<i class="fa fa-star-o"></i> ' + stars;
+            $.ajax({
+            type: 'GET',
+            url: '../Controller/getWasPostStarred.php?post_id=' + post_id,
+            dataType: 'json',
+            success: function (wasStarred) {
+                if(wasStarred == 1){
+                    document.getElementById("starsCount" + post_id).innerHTML = '<i color="yellow" class="fa fa-star-o"></i> ' + stars;
+                }
+                else{
+                    document.getElementById("starsCount" + post_id).innerHTML = '<i class="fa fa-star-o"></i> ' + stars;
+                }
+            },
+        error: function (xhr, status, error) {
+            console.error('Errore nella richiesta AJAX:', status, error);
+            document.getElementById("likesCount" + post_id).innerHTML ="dioca";
+        }
+        });
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
         }
     });
 }
-
 function setFavourite(post_id) {
     $.ajax({
         type: 'GET',
@@ -223,13 +238,13 @@ function setFavourite(post_id) {
     });
 }
 
-function getLikeCount(post_id) {
+function setLike(post_id) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/getLikeCountController.php?post_id=' + post_id,
+        url: '../Controller/setLikeController.php?post_id=' + post_id,
         dataType: 'json',
-        success: function (likes) {
-            document.getElementById("likesCount" + post_id).innerHTML = '<i class="fa fa-heart-o"></i> ' + likes;
+        success: function () {
+           getLikeCount(post_id);
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
@@ -237,19 +252,39 @@ function getLikeCount(post_id) {
     });
 }
 
-function setLike(post_id) {
+
+
+function getLikeCount(post_id) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/setLikeController.php?post_id=' + post_id,
+        url: '../Controller/getLikeCountController.php?post_id=' + post_id,
         dataType: 'json',
-        success: function () {
-            getLikeCount(post_id);
+        success: function (likes) {
+            $.ajax({
+            type: 'GET',
+            url: '../Controller/getWasPostLiked.php?post_id=' + post_id,
+            dataType: 'json',
+            success: function (wasLiked) {
+                if(wasLiked == 1){
+                    document.getElementById("likesCount" + post_id).innerHTML = '<i color="red" class="fa fa-heart-o"></i> ' + likes;
+                }
+                else{
+                    document.getElementById("likesCount" + post_id).innerHTML = '<i class="fa fa-heart-o"></i> ' + likes;
+                }
+            },
+        error: function (xhr, status, error) {
+            console.error('Errore nella richiesta AJAX:', status, error);
+            document.getElementById("likesCount" + post_id).innerHTML ="dioca";
+        }
+        });
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
         }
     });
 }
+
+
 
 function follow(nickname) {
     $.ajax({
