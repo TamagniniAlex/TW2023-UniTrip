@@ -26,10 +26,10 @@ $(document).ready(function () {
                         </div>
                     ` : ''}
                     <div class="col-4 col-lg-5 align-self-center text-end">
-                        <a href="feed.html" class="btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
+                        <a href="feed.html" class="shadow-none btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
                     </div>
                     <div class="col-4 col-lg-5 align-self-center text-justify">
-                        <a href="feed.html?follow=1" class="btn ${followParameter ? 'fw-bold text-decoration-underline' : ''}">Seguiti</a>
+                        <a href="feed.html?follow=1" class="shadow-none btn ${followParameter ? 'fw-bold text-decoration-underline' : ''}">Seguiti</a>
                     </div>
                     ${sessionNickname ? `
                         <div class="col-2 col-lg-1 align-self-center text-center fs-3">
@@ -43,10 +43,10 @@ $(document).ready(function () {
                 var htmlCode = `
                 <div class="row mb-4">
                     <div class="col-6 align-self-center text-end">
-                        <a href="feed.html" class="btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
+                        <a href="feed.html" class="shadow-none btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
                     </div>
                     <div class="col-6 align-self-center text-justify">
-                        <a href="feed.html?follow=1" class="btn ${followParameter ? 'fw-bold text-decoration-underline' : ''}">Seguiti</a>
+                        <a href="feed.html?follow=1" class="shadow-none btn ${followParameter ? 'fw-bold text-decoration-underline' : ''}">Seguiti</a>
                     </div>
                 </div>
                 `;

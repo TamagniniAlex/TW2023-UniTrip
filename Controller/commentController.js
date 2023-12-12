@@ -230,7 +230,7 @@ function getLikeCount(post_id) {
             dataType: 'json',
             success: function (wasLiked) {
                 if(wasLiked == 1){
-                    document.getElementById("likesCount" + post_id).innerHTML = '<i class=" text-danger fa fa-heart"></i> ' + likes;
+                    document.getElementById("likesCount" + post_id).innerHTML = '<i class="text-danger fa fa-heart"></i> ' + likes;
                 }
                 else{
                     document.getElementById("likesCount" + post_id).innerHTML = '<i class="fa fa-heart-o"></i> ' + likes;
