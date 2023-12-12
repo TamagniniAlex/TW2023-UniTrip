@@ -35,7 +35,7 @@ $(document).ready(function () {
                         if (sessionNickname != "" && sessionNickname != nickname) {
                             profileHtml += `
                             <div class="col-3 col-lg-2 offset-7 offset-lg-9 align-self-center text-center">
-                                <button id="follow" onclick="follow('${nickname}')" class="btn btn-secondary form-control">
+                                <button id="follow" onclick="follow('${nickname}')" class="shadow-none btn btn-secondary form-control">
                                     ${response.following === 1 ? 'Segui già' : 'Segui'}
                                 </button>
                             </div>
@@ -64,23 +64,23 @@ $(document).ready(function () {
                                 <i class="fa fa-calendar text-muted"> Registrato il ` + response.join_date + `</i>
                             </div>
                         </div>
-                        <div class="row mb-4">
+                        <div class="row mb-1">
                             <div class="col-12">
-                                <a class="btn text-muted p-0"> <strong>` + response.following_count + `</strong> Following</a> 
-                                <a class="btn text-muted p-0 px-4"> <strong>` + response.followers_count + `</strong> Followers</a>  
+                                <p class="text-muted p-0 d-inline"> <strong>` + response.following_count + `</strong> Following</p> 
+                                <p class="text-muted p-0 px-4 d-inline"> <strong>` + response.followers_count + `</strong> Followers</p>  
                             </div>
                         </div>`;
                         if (sessionNickname == nickname) {
                             profileHtml += `
                             <div class="row text-center">
                                 <div class="col-4">
-                                    <a href="profile.html?nickname=${sessionNickname}" class="btn ${!like && !favourite ? 'fw-bold text-decoration-underline' : ''}">Posts</a>
+                                    <a href="profile.html?nickname=${sessionNickname}" class="shadow-none btn ${!like && !favourite ? 'fw-bold text-decoration-underline' : ''}">Posts</a>
                                 </div>
                                 <div class="col-4">
-                                    <a href="profile.html?nickname=${sessionNickname}&like=true" class="btn ${like === 'true' ? 'fw-bold text-decoration-underline' : ''}">Mi piace</a>
+                                    <a href="profile.html?nickname=${sessionNickname}&like=true" class="shadow-none btn ${like === 'true' ? 'fw-bold text-decoration-underline' : ''}">Mi piace</a>
                                 </div>
                                 <div class="col-4">
-                                    <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="btn ${favourite === 'true' ? 'fw-bold text-decoration-underline' : ''}">Preferiti</a>
+                                    <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="shadow-none btn ${favourite === 'true' ? 'fw-bold text-decoration-underline' : ''}">Preferiti</a>
                                 </div>
                             </div>`;
                         }
