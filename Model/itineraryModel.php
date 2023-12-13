@@ -16,6 +16,18 @@ class ItineraryModel extends Model
         }
         return "error";
     }
+    public function addItinerary($nickname, $itinerary_description, $itinerary_between_cities)
+    {
+        $itinerary_id = $this->db->addItinerary($nickname, $itinerary_description);
+        if ($itinerary_id) {
+            for ($i = 0; $i < count($itinerary_between_cities); $i++) {
+                $this->db->addItineraryBetweenCities($itinerary_id, $itinerary_between_cities[$i][0], $itinerary_between_cities[$i][1],
+                    $itinerary_between_cities[$i][2], $itinerary_between_cities[$i][3]);
+            }
+            return $itinerary_id;
+        }
+        return "error";
+    }
 }
 
 ?>

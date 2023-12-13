@@ -54,32 +54,121 @@ function addStage() {
     stageCount += 2;
 
     var selectNations = $('#selectNations');
-    console.log(selectNations.val());
     getCities(selectNations)
 }
 
 function getCities(selectNations) {
     var selectedNation = $(selectNations).val();
-    for (var i = 1; i <= stageCount; i++) {
-        var selectCities = $('#selectCities' + i);
-        selectCities.empty();
-        selectCities.append('<option value="" disabled selected>Seleziona città</option>');
-    }
-    $.ajax({
-        type: 'GET',
-        url: '../Controller/getCitiesController.php',
-        data: { nation: selectedNation },
-        dataType: 'json',
-        success: function (cities) {
-            cities.forEach(function (city) {
-                for (var i = 1; i <= stageCount; i++) {
-                    var selectCities = $('#selectCities' + i);
-                    selectCities.append('<option value="' + city.name + '">' + city.name + '</option>');
-                }
-            });
-        },
-        error: function (xhr, status, error) {
-            console.error('Errore nella richiesta AJAX:', status, error);
+    if (selectedNation !== null) {
+        for (var i = 1; i <= stageCount; i++) {
+            $('#selectCities' + i).empty().append('<option value="" disabled selected>' +
+                (i % 2 === 0 ? 'Seleziona città di arrivo' : 'Seleziona città di partenza') + '</option>');
         }
-    });
+        $.ajax({
+            type: 'GET',
+            url: '../Controller/getCitiesController.php',
+            data: { nation: selectedNation },
+            dataType: 'json',
+            success: function (cities) {
+                cities.forEach(function (city) {
+                    for (var i = 1; i <= stageCount; i++) {
+                        var selectCities = $('#selectCities' + i);
+                        selectCities.append('<option value="' + city.name + '">' + city.name + '</option>');
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error('Errore nella richiesta AJAX:', status, error);
+            }
+        });
+    }
+}
+
+function addPost() {
+    var title = $('#title').val();
+    var description = $('#description').val();
+    var nation = $('#selectNations').val();
+    var itineraryDescription = $('#itineraryDescription').val();
+    var itineraryBetweenCities = [];
+    if (stageCount > 1 && title !== null && description !== null && nation !== null && itineraryDescription !== null) {
+        for (var i = 1; i < stageCount; i += 2) {
+            var departureCity = $('#selectCities' + i).val();
+            var departureTime = $('#departureTime' + i).val();
+            var arrivalCity = $('#selectCities' + (i + 1)).val();
+            var arrivalTime = $('#arrivalTime' + i).val();
+            if (departureCity !== null && departureTime !== null && arrivalCity !== null && arrivalTime !== null) {
+                var itinerarySegment = [departureCity, departureTime, arrivalCity, arrivalTime];
+                itineraryBetweenCities.push(itinerarySegment);
+            } else {
+                return;
+            }
+        }
+        $.ajax({
+            type: 'POST',
+            url: '../Controller/addItineraryController.php',
+            data: { itinerary_description: itineraryDescription, itinerary_between_cities: itineraryBetweenCities },
+            dataType: 'json',
+            success: function (response) {
+                if (response !== "error") {
+                    $.ajax({
+                        type: 'POST',
+                        url: '../Controller/addPostController.php',
+                        data: { title: title, description: description, country: nation, itinerary_id: response },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response !== "error") {
+                                var post_id = response;
+                                var input = document.getElementById('multipleImage');
+                                var files = input.files;
+                                var formData = new FormData();
+                                for (var i = 0; i < files.length; i++) {
+                                    formData.append('file[]', files[i]);
+                                }
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '../Controller/uploadPhotoController.php?post_id=' + post_id,
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    success: function (response) {
+                                        if (response !== "error") {
+                                            var photos_url = JSON.parse(response);
+                                            console.log(photos_url);
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: '../Controller/addPostPhotoController.php',
+                                                data: { post_id: post_id, photos_url: photos_url },
+                                                dataType: 'json',
+                                                success: function (response) {
+                                                    if (response === "success") {
+                                                        window.location.href = "../View/comment.html?post_id=" + post_id;
+                                                    } else {
+                                                        return;
+                                                    }
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    console.error('Errore nella richiesta AJAX:', status, error);
+                                                }
+                                            });
+                                        }
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error('Errore nella richiesta AJAX:', status, error);
+                                    }
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Errore nella richiesta AJAX:', status, error);
+                        }
+                    });
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Errore nella richiesta AJAX:', status, error);
+            }
+        });
+    } else {
+        return;
+    }
 }

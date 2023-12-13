@@ -175,6 +175,26 @@ class DatabaseHelper
         $stmt->close();
         return ($result);
     }
+    //add post 
+    public function addPost($author, $title, $description, $itinerary_id, $country)
+    {
+        $query = "INSERT INTO Post (author, title, description, itinerary_id, country) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sssis", $author, $title, $description, $itinerary_id, $country);
+        $stmt->execute();
+        $stmt->close();
+        return $this->mysqli->insert_id;
+    }
+    //add post photo
+    public function addPostPhoto($post_id, $photo_url)
+    {
+        $query = "INSERT INTO PostPhoto (post_id, photo_url) VALUES (?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("is", $post_id, $photo_url);
+        $stmt->execute();
+        $stmt->close();
+        return "success";
+    }
     //get post by post_id
     public function getPostById($id)
     {
@@ -483,6 +503,25 @@ class DatabaseHelper
         }
         $stmt->close();
         return isset($_SESSION["nickname"]);
+    }
+    //add Itinerary
+    public function addItinerary($organizer_username, $itinerary_description)
+    {
+        $query = "INSERT INTO Itinerary (organizer_username, description) VALUES (?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("ss", $organizer_username, $itinerary_description);
+        $stmt->execute();
+        $stmt->close();
+        return $this->mysqli->insert_id;
+    }
+    //add Itinerary Between Cities
+    public function addItineraryBetweenCities($itinerary_id, $departure_city, $departure_time, $arrival_city, $arrival_time)
+    {
+        $query = "INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("issss", $itinerary_id, $departure_city, $departure_time, $arrival_city, $arrival_time);
+        $stmt->execute();
+        $stmt->close();
     }
     //get itinerary information
     public function getItineraryInformation($itinerary_id)
