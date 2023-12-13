@@ -18,7 +18,7 @@ $(document).ready(function () {
         }
     });
     selectNations.change(function () {
-        getCities(selectNations);
+        getCities(selectNations, true);
     });
 });
 
@@ -54,15 +54,17 @@ function addStage() {
     stageCount += 2;
 
     var selectNations = $('#selectNations');
-    getCities(selectNations)
+    getCities(selectNations, false)
 }
 
-function getCities(selectNations) {
+function getCities(selectNations, reload) {
     var selectedNation = $(selectNations).val();
     if (selectedNation !== null) {
         for (var i = 1; i <= stageCount; i++) {
-            $('#selectCities' + i).empty().append('<option value="" disabled selected>' +
-                (i % 2 === 0 ? 'Seleziona città di arrivo' : 'Seleziona città di partenza') + '</option>');
+            if ($('#selectCities' + i).val == null || reload) {
+                $('#selectCities' + i).empty().append('<option value="" disabled selected>' +
+                    (i % 2 === 0 ? 'Seleziona città di arrivo' : 'Seleziona città di partenza') + '</option>');
+            }
         }
         $.ajax({
             type: 'GET',

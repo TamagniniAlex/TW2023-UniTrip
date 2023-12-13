@@ -17,7 +17,7 @@ class CommentModel extends Model
         if ($nickname != "") {
             $post['following'] = $this->db->isFollowingByPost($nickname, $post_id);
         } else {
-            $post['following'] = null;
+            $post['following'] = -1;
         }
         return $post;
     }

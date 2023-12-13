@@ -124,6 +124,22 @@ class DatabaseHelper
             return $this->formatDate($result);
         }
     }
+    //get author by post id
+    public function getAuthorByPostId($post_id)
+    {
+        $query = "SELECT author FROM Post WHERE id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $post_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $result = $result->fetch_assoc();
+        if ($result == null) {
+            return null;
+        } else {
+            return $result['author'];
+        }
+    }
     //get a following b
     public function isFollowing($from_username, $to_username)
     {
@@ -138,6 +154,9 @@ class DatabaseHelper
     //get a following b
     public function isFollowingByPost($from_username, $post_id)
     {
+        if ($this->getAuthorByPostId($post_id) == $from_username) {
+            return -1;
+        }
         $query = "SELECT COUNT(*) as following FROM Follow 
             JOIN Post ON Follow.to_username = Post.author
             WHERE Follow.from_username = ? AND Post.id = ?";
