@@ -18,7 +18,7 @@
 
     <!-- Script -->
     <script src="../Controller/addPostController.js"></script>
-    <script src="../Controller/printNavbar.js" focusOn="2"></script>
+    <script src="../Controller/printNavbar.js"></script>
 
     <title>Add post</title>
 </head>
@@ -42,20 +42,14 @@
                         </select>
                     </div>
                     <div class="row mb-4">
-                        <select id="selectCities" class="form-select" aria-label="Seleziona città">
-                            <option selected disabled>Seleziona città</option>
-                        </select>
-                    </div>
-                    <div class="row mb-4">
                         <input class="form-control" type="file" id="formFileMultiple" name="formFileMultiple[]" multiple>
                     </div>
                     <hr class="row mb-4"> 
-                    <!--TODO la descrizione dell'itinerario non ha senso perchè sarebbe la stessa del post, a questo punto conviene farla nell itinerartvreeweencitiess-->
                     <div class="row mb-4">
                         <button type="button" class="btn btn-primary form-control" onclick="addStage()">Aggiungi tappa</button>
                     </div>
                     <div class="row mb-4">
-                        <button type="submit" class="btn btn-primary form-control">Inserisci post</button>
+                        <button type="submit" class="btn btn-primary form-control" onclick="insertPost()">Inserisci post</button>
                     </div>
                 </form>
             </div>
