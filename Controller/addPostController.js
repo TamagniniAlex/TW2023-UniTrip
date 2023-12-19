@@ -135,7 +135,6 @@ function addPost() {
                                     success: function (response) {
                                         if (response !== "error") {
                                             var photos_url = JSON.parse(response);
-                                            console.log(photos_url);
                                             $.ajax({
                                                 type: 'POST',
                                                 url: '../Controller/addPostPhotoController.php',

@@ -132,7 +132,6 @@ function getFavouriteCount(post_id) {
                 },
                 error: function (xhr, status, error) {
                     console.error('Errore nella richiesta AJAX:', status, error);
-                    document.getElementById("likesCount" + post_id).innerHTML = "dioca";
                 }
             });
         },
@@ -176,7 +175,6 @@ function getLikeCount(post_id) {
                 },
                 error: function (xhr, status, error) {
                     console.error('Errore nella richiesta AJAX:', status, error);
-                    document.getElementById("likesCount" + post_id).innerHTML = "dioca";
                 }
             });
         },
