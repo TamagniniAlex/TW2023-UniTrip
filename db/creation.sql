@@ -114,7 +114,9 @@ CREATE TABLE Messages (
   to_username varchar(255) NULL,
   group_id INT NULL,
   message VARCHAR(255),
-  datetime DATETIME,
+  post_id INT NULL,
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (post_id) REFERENCES Post(id),
   FOREIGN KEY (from_username) REFERENCES Profile(nickname),
   FOREIGN KEY (to_username) REFERENCES Profile(nickname),
   FOREIGN KEY (group_id) REFERENCES Groups(id)

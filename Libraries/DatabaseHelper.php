@@ -140,6 +140,18 @@ class DatabaseHelper
             return $result['author'];
         }
     }
+    //get information about followers 
+    public function getFollowerInformation($nickname)
+    {
+        $query = "SELECT profile.photo_url, profile.name, profile.surname, profile.nickname FROM Profile 
+            JOIN Follow ON Follow.to_username = Profile.nickname WHERE Follow.from_username = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $nickname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
     //get a following b
     public function isFollowing($from_username, $to_username)
     {
@@ -598,6 +610,16 @@ class DatabaseHelper
         $result = $stmt->get_result();
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    //add message with post shared
+    public function addMessagePost($from_username, $to_username, $message, $post_id)
+    {
+        $query = "INSERT INTO Messages (from_username, to_username, message, post_id) VALUES (?, ?, ?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sssi", $from_username, $to_username, $message, $post_id);
+        $stmt->execute();
+        $stmt->close();
+        return "success";
     }
 }
 
