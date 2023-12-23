@@ -19,6 +19,7 @@ CREATE TABLE Profile (
 
 CREATE TABLE Notify (
   id INT PRIMARY KEY AUTO_INCREMENT,
+  seen BOOLEAN DEFAULT FALSE,
   from_username VARCHAR(20),
   to_username VARCHAR(20),
   message VARCHAR(255),
@@ -326,3 +327,8 @@ INSERT INTO PostComment (post_id, author, comment) VALUES (4, 'chiara', 'Si, è 
 INSERT INTO PostComment (post_id, author, comment) VALUES (5, 'alessia', 'Molto particolare Innsbruck, mi piacerebbe andarci!');
 INSERT INTO PostComment (post_id, author, comment) VALUES (5, 'roby', 'Si, è molto bella!');
 INSERT INTO PostComment (post_id, author, comment) VALUES (5, 'chiara', 'Viaggio incredibile, ci andrò l''anno prossimo!');
+
+INSERT INTO Notify (from_username, to_username, message) VALUES ('marco','a',  'Ti ha seguito');
+INSERT INTO Notify (from_username, to_username, message) VALUES ('marco','a',  'Ti ha raggiunto');
+INSERT INTO Notify (from_username, to_username, message) VALUES ('marco','a',  'Ti ha preso');
+INSERT INTO Notify (from_username, to_username, message) VALUES ('marco','a',  'Te le sta dando');
