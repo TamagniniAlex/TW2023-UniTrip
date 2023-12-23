@@ -3,9 +3,10 @@ require_once("../model/followModel.php");
 
 $follow = new FollowModel();
 
-if (isset($_SESSION['nickname']) && isset($_GET['to']) && !empty($_GET['to'])) {
+if (isset($_SESSION['nickname'])) {
+    $id = $_GET['post_id'];
     $nickname = $_SESSION['nickname'];
-    $follower = $_GET['to'];
-    echo json_encode($follow->follow($nickname, $follower));
+    $follow->notify($nickname, $_GET['post_id']);
+    echo json_encode($follow->follow($nickname, $id));
 }
 ?>

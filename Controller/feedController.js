@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -80,7 +81,7 @@ $(document).ready(function () {
                         </div>
                         ${post.following != null ?
                             `<div class="col-3 col-lg-2 align-self-center text-center">
-                                <button class="shadow-none follow${post.nickname} btn btn-secondary form-control" onclick="follow('${post.nickname}')">
+                                <button class="shadow-none follow${post.nickname} btn btn-secondary form-control" onclick="follow('${post.nickname}', ${post.id})">
                                     ${post.following == 1 ? 'Segui già' : 'Segui'}
                                 </button>
                             </div>` : ``
@@ -182,6 +183,14 @@ function getProfilePhoto(nickname) {
     });
 }
 
+
+
+
+
+
+
+//TODO move to a specific file, like shared.js
+
 function getCommentCount(post_id) {
     $.ajax({
         type: 'GET',
@@ -282,14 +291,14 @@ function getLikeCount(post_id) {
     });
 }
 
-function follow(nickname) {
+function follow(nickname, id) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/setFollowController.php?to=' + nickname,
+        url: '../Controller/setFollowController.php?post_id='+id,
         dataType: 'json',
         success: function (result) {
-            var buttons = document.getElementsByClassName("follow" + nickname);
-            for (var i = 0; i < buttons.length; i++) {
+            let buttons = document.getElementsByClassName("follow" + nickname);
+            for (let i = 0; i < buttons.length; i++) {
                 if (result === 1) {
                     buttons[i].innerHTML = 'Segui già';
                 } else {

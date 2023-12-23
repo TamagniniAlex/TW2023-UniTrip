@@ -20,6 +20,9 @@ class FavouriteModel extends Model
     {
         $this->db->removeFavourite($nickname, $post_id);
     }
+    public function notify($nickname,$post_id) {
+        $this->db->notify($nickname,$post_id,"$nickname ha aprezzato infinitamente e senza riserve il tuo post!"); 
+    }
 }
 
 ?>

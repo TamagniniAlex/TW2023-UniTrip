@@ -7,9 +7,12 @@ class FollowModel extends Model
     {
         parent::__construct();
     }
-    public function follow($nickname, $follower)
+    public function follow($nickname, $post_id)
     {
-        return $this->db->followProfile($nickname, $follower);
+        return $this->db->followProfile($nickname, $post_id);
+    }
+    public function notify($nickname,$post_id) {
+        $this->db->notify($nickname,$post_id,"$nickname ha iniziato a seguirti!"); 
     }
 }
 ?>

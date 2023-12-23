@@ -191,8 +191,9 @@ class DatabaseHelper
         return ($result->fetch_assoc())['following'];
     }
     //follow a to b, if alredy, remove it
-    public function followProfile($from_username, $to_username)
+    public function followProfile($from_username, $post_id)
     {
+        $to_username = $this->getAuthorByPostId($post_id);
         if ($this->alreadyFollowing($from_username, $to_username)) {
             $query = "DELETE FROM Follow WHERE from_username = ? AND to_username = ?";
             $result = 0;
@@ -620,6 +621,21 @@ class DatabaseHelper
         $stmt->execute();
         $stmt->close();
         return "success";
+    }
+    public function notify($nickname,$post_id,$message){
+        $query = "SELECT * FROM Post WHERE id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("i", $post_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $result = $result->fetch_assoc();
+        $author = $result['author'];
+        $query = "INSERT INTO Notify (from_username, to_username, message) VALUES (?, ?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sss", $nickname, $author, $message);
+        $stmt->execute();
+        $stmt->close();
     }
 }
 

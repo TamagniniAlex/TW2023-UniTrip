@@ -17,6 +17,15 @@ CREATE TABLE Profile (
   join_date DATE
 );
 
+CREATE TABLE Notify (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  from_username VARCHAR(20),
+  to_username VARCHAR(20),
+  message VARCHAR(255),
+  datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (from_username) REFERENCES Profile(nickname),
+  FOREIGN KEY (to_username) REFERENCES Profile(nickname)
+);
 CREATE TABLE Follow (
   from_username VARCHAR(20),
   to_username VARCHAR(20),

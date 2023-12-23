@@ -9,6 +9,7 @@ if (isset($_SESSION['nickname']) && isset($_GET['post_id'])) {
         $like->removeLike($_SESSION['nickname'], $_GET['post_id']);
     } else {
         $like->addLike($_SESSION['nickname'], $_GET['post_id']);
+        $like->notify($_SESSION['nickname'], $_GET['post_id']);
     }
     echo json_encode("ok");
 } else {

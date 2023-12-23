@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -157,6 +159,29 @@ $(document).ready(function () {
     });
 
 });
+function sendComment($post_id) {
+    var comment = document.getElementById("inputComment").value;
+    $.ajax({
+        type: 'POST',
+        url: '../Controller/addCommentController.php',
+        data: { comment: comment, post_id: $post_id },
+        dataType: 'json',
+        success: function (result) {
+            if (result === "success") {
+                window.location.reload();
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Errore nella richiesta AJAX:', status, error);
+        }
+    });
+}
+
+
+
+
+
+//Shared models, TODO
 
 function getCommentCount(post_id) {
     $.ajax({
@@ -184,7 +209,7 @@ function getFavouriteCount(post_id) {
                 dataType: 'json',
                 success: function (wasStarred) {
                     if (wasStarred == 1) {
-                        document.getElementById("starsCount" + post_id).innerHTML = '<i  class="text-warning fa fa-star"></i> ' + stars;
+                        document.getElementById("starsCount" + post_id).innerHTML = '<i class="text-warning fa fa-star"></i> ' + stars;
                     }
                     else {
                         document.getElementById("starsCount" + post_id).innerHTML = '<i class="fa fa-star-o"></i> ' + stars;
@@ -208,6 +233,20 @@ function setFavourite(post_id) {
         dataType: 'json',
         success: function () {
             getFavouriteCount(post_id);
+        },
+        error: function (xhr, status, error) {
+            console.error('Errore nella richiesta AJAX:', status, error);
+        }
+    });
+}
+
+function setLike(post_id) {
+    $.ajax({
+        type: 'GET',
+        url: '../Controller/setLikeController.php?post_id=' + post_id,
+        dataType: 'json',
+        success: function () {
+            getLikeCount(post_id);
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
@@ -244,51 +283,19 @@ function getLikeCount(post_id) {
     });
 }
 
-function setLike(post_id) {
+function follow(nickname, id) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/setLikeController.php?post_id=' + post_id,
-        dataType: 'json',
-        success: function () {
-            getLikeCount(post_id);
-        },
-        error: function (xhr, status, error) {
-            console.error('Errore nella richiesta AJAX:', status, error);
-        }
-    });
-}
-
-function follow(nickname) {
-    $.ajax({
-        type: 'GET',
-        url: '../Controller/setFollowController.php?to=' + nickname,
+        url: '../Controller/setFollowController.php?post_id='+id,
         dataType: 'json',
         success: function (result) {
-            var buttons = document.getElementsByClassName("follow" + nickname);
-            for (var i = 0; i < buttons.length; i++) {
+            let buttons = document.getElementsByClassName("follow" + nickname);
+            for (let i = 0; i < buttons.length; i++) {
                 if (result === 1) {
                     buttons[i].innerHTML = 'Segui già';
                 } else {
                     buttons[i].innerHTML = 'Segui';
                 }
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error('Errore nella richiesta AJAX:', status, error);
-        }
-    });
-}
-
-function sendComment($post_id) {
-    var comment = document.getElementById("inputComment").value;
-    $.ajax({
-        type: 'POST',
-        url: '../Controller/addCommentController.php',
-        data: { comment: comment, post_id: $post_id },
-        dataType: 'json',
-        success: function (result) {
-            if (result === "success") {
-                window.location.reload();
             }
         },
         error: function (xhr, status, error) {
