@@ -7,7 +7,7 @@ $(document).ready(function () {
         <a href="feed.html" class="text-center text-` + (focusOn == "feed" ? "dark" : "muted") + `"><i class="fa fa-home"></i></a>
         <a href="search.html" class="text-center text-` + (focusOn == "search" ? "dark" : "muted") + `"><i class="fa fa-search"></i></a>
         <a href="addPost.html" class="text-center text-` + (focusOn == "addPost" ? "dark" : "muted") + `"><i class="fa fa-plus"></i></a>
-        <a href="#" class="text-center text-` + (focusOn == "notifications" ? "dark" : "muted") + `"><i class="fa fa-bell-o"></i></a>
+        <a href="notify.html" class="text-center text-` + (focusOn == "notifications" ? "dark" : "muted") + `"><i class="fa fa-bell-o"></i></a>
         <a href="messages.html" class="text-center text-` + (focusOn == "messages" ? "dark" : "muted") + `"><i class="fa fa-envelope-o"></i></a>
       </div>
     </div>
