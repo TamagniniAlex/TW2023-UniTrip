@@ -637,6 +637,20 @@ class DatabaseHelper
         $stmt->execute();
         $stmt->close();
     }
+
+    public function getNotifications($nickname)
+    {
+        //TODO cavare sto 10 e mettere roba vera
+        $query = "SELECT Notify.from_username, Notify.message, Notify.datetime, Profile.photo_url FROM Notify 
+            JOIN Profile ON Notify.from_username = Profile.nickname WHERE Notify.to_username = ? 
+            ORDER BY Notify.datetime DESC LIMIT 10";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $nickname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
+        }
 }
 
 ?>
