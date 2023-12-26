@@ -110,34 +110,16 @@ CREATE TABLE PostFavourites (
   PRIMARY KEY (profile_username, post_id)
 );
 
-CREATE TABLE Groups (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  organizer_user VARCHAR(255),
-  name VARCHAR(255),
-  description VARCHAR(255),
-  FOREIGN KEY (organizer_user) REFERENCES Profile(nickname)
-);
-
 CREATE TABLE Messages (
   id INT PRIMARY KEY AUTO_INCREMENT,
   from_username VARCHAR(255),
   to_username varchar(255) NULL,
-  group_id INT NULL,
   message VARCHAR(255),
   post_id INT NULL,
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (post_id) REFERENCES Post(id),
   FOREIGN KEY (from_username) REFERENCES Profile(nickname),
-  FOREIGN KEY (to_username) REFERENCES Profile(nickname),
-  FOREIGN KEY (group_id) REFERENCES Groups(id)
-);
-
-CREATE TABLE GroupParticipations (
-  partecipant_user VARCHAR(255),
-  group_id INT,
-  FOREIGN KEY (partecipant_user) REFERENCES Profile(nickname),
-  FOREIGN KEY (group_id) REFERENCES Groups(id),
-  PRIMARY KEY (partecipant_user, group_id)
+  FOREIGN KEY (to_username) REFERENCES Profile(nickname)
 );
 
 CREATE TABLE LoginAttempts (

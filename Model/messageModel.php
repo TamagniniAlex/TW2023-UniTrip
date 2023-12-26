@@ -11,5 +11,17 @@ class MessageModel extends Model
     {
         return $this->db->addMessagePost($from_username, $to_username, $message, $post_id);
     }
+    public function addMessageChat($from_username, $to_username, $message)
+    {
+        return $this->db->addMessageChat($from_username, $to_username, $message);
+    }
+    public function getChatsAndLastMessage($nickname)
+    {
+        return $this->db->getChatsLastMessage($nickname);
+    }
+    public function getChatsAll($nickname, $chat_with)
+    {
+        return $this->db->getChatsAll($nickname, $chat_with);
+    }
 }
 ?>

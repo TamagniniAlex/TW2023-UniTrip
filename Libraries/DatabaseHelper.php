@@ -622,7 +622,68 @@ class DatabaseHelper
         $stmt->close();
         return "success";
     }
-    public function notify($nickname,$post_id,$message){
+    //add message with chat
+    public function addMessageChat($from_username, $to_username, $message)
+    {
+        $query = "INSERT INTO Messages (from_username, to_username, message) VALUES (?, ?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sss", $from_username, $to_username, $message);
+        $stmt->execute();
+        $stmt->close();
+        return "success";
+    }
+    //get all chats with last message
+    public function getChatsLastMessage($nickname)
+    {
+        $query = "WITH LatestMessages AS (
+                SELECT
+                    CASE
+                        WHEN from_username = ? THEN to_username ELSE from_username
+                    END AS chat_with,
+                    CASE
+                        WHEN from_username = ? THEN 'true' ELSE 'false'
+                    END AS mine,
+                    message,
+                    datetime,
+                    ROW_NUMBER() OVER (PARTITION BY
+                        CASE
+                            WHEN from_username = ? THEN to_username ELSE from_username
+                        END
+                        ORDER BY datetime DESC
+                    ) AS row_num
+                FROM Messages
+                WHERE from_username = ? OR to_username = ?
+            )         
+            SELECT mine, chat_with, message, datetime, P.name, P.surname, P.photo_url FROM LatestMessages LM
+            INNER JOIN Profile P ON LM.chat_with = P.nickname
+            WHERE LM.row_num = 1";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sssss", $nickname, $nickname, $nickname, $nickname, $nickname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
+    }
+    //get chat with all messages
+    public function getChatsAll($nickname, $chat_with)
+    {
+        $query = "SELECT
+            CASE
+                WHEN from_username = ? THEN 'true' ELSE 'false'
+            END AS mine,
+            message, datetime, post_id FROM Messages
+            WHERE (from_username = ? AND to_username = ?)
+            OR (from_username = ? AND to_username = ?)
+            ORDER BY datetime;";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sssss", $nickname, $nickname, $chat_with, $chat_with, $nickname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    public function notify($nickname, $post_id, $message)
+    {
         $query = "SELECT * FROM Post WHERE id = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $post_id);
@@ -650,7 +711,7 @@ class DatabaseHelper
         $result = $stmt->get_result();
         $stmt->close();
         return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
-        }
+    }
 }
 
 ?>
