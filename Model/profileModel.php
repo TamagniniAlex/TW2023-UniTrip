@@ -20,25 +20,25 @@ class ProfileModel extends Model
         $data["following"] = $this->db->isFollowing($follower, $nickname);
         return $data;
     }
-    public function getPostsByAuthor($nickname, $limit)
+    public function getPostsByAuthor($nickname)
     {
-        $posts = $this->db->getPostsByAuthor($nickname, $limit);
+        $posts = $this->db->getPostsByAuthor($nickname);
         foreach ($posts as &$post) {
             $post['photos'] = $this->db->getPostsPhoto($post['id']);
         }
         return $posts;
     }
-    public function getPostsByAuthorLike($nickname, $limit)
+    public function getPostsByAuthorLike($nickname)
     {
-        $posts = $this->db->getPostsByAuthorLike($nickname, $limit);
+        $posts = $this->db->getPostsByAuthorLike($nickname);
         foreach ($posts as &$post) {
             $post['photos'] = $this->db->getPostsPhoto($post['id']);
         }
         return $posts;
     }
-    public function getPostsByAuthorFavourite($nickname, $limit)
+    public function getPostsByAuthorFavourite($nickname)
     {
-        $posts = $this->db->getPostsByAuthorFavourite($nickname, $limit);
+        $posts = $this->db->getPostsByAuthorFavourite($nickname);
         foreach ($posts as &$post) {
             $post['photos'] = $this->db->getPostsPhoto($post['id']);
         }

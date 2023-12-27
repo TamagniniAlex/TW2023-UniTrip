@@ -11,27 +11,27 @@ class FeedModel extends Model
     {
         return $this->db->getProfilePhoto($nickname);
     }
-    public function getPostsFollower($nickname, $limit)
+    public function getPostsFollower($nickname)
     {
-        $posts = $this->db->getPostsFollower($nickname, $limit);
+        $posts = $this->db->getPostsFollower($nickname);
         foreach ($posts as &$post) {
             $post['photos'] = $this->db->getPostsPhoto($post['id']);
             $post['following'] = $this->db->isFollowing($nickname, $post['nickname']);
         }
         return $posts;
     }
-    public function getPostsRandomLogged($nickname, $limit)
+    public function getPostsRandomLogged($nickname)
     {
-        $posts = $this->db->getPostsRandomLogged($nickname, $limit);
+        $posts = $this->db->getPostsRandomLogged($nickname);
         foreach ($posts as &$post) {
             $post['photos'] = $this->db->getPostsPhoto($post['id']);
             $post['following'] = $this->db->isFollowing($nickname, $post['nickname']);
         }
         return $posts;
     }
-    public function getPostsRandom($limit)
+    public function getPostsRandom()
     {
-        $posts = $this->db->getPostsRandom($limit);
+        $posts = $this->db->getPostsRandom();
         foreach ($posts as &$post) {
             $post['photos'] = $this->db->getPostsPhoto($post['id']);
         }

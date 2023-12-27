@@ -246,34 +246,33 @@ class DatabaseHelper
         }
     }
     //get all posts
-    public function getPosts($limit)
+    public function getPosts()
     {
-        $query = "SELECT * FROM post LIMIT ?";
+        $query = "SELECT * FROM post";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("i", $limit);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //get all posts follower by user
-    public function getPostsFollower($nickname, $limit)
+    public function getPostsFollower($nickname)
     {
         $query = "SELECT DISTINCT post.id, profile.photo_url, profile.name, profile.surname, 
             profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
             JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
             JOIN Follow ON Itinerary.organizer_username = Follow.to_username 
             JOIN Profile ON Itinerary.organizer_username = Profile.nickname
-            WHERE Follow.from_username = ? ORDER BY post.datetime DESC LIMIT ?";
+            WHERE Follow.from_username = ? ORDER BY post.datetime DESC";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("si", $nickname, $limit);
+        $stmt->bind_param("s", $nickname);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
     }
     //get all posts random logged in
-    public function getPostsRandomLogged($nickname, $limit)
+    public function getPostsRandomLogged($nickname)
     {
         $query = "SELECT DISTINCT post.id, profile.photo_url, profile.name, profile.surname, 
             profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
@@ -281,89 +280,88 @@ class DatabaseHelper
             JOIN Profile ON Itinerary.organizer_username = Profile.nickname
             WHERE Profile.nickname != ? AND Profile.nickname NOT IN 
                 (SELECT to_username FROM Follow WHERE from_username = ?) 
-            ORDER BY RAND() DESC LIMIT ?";
+            ORDER BY RAND() DESC";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("ssi", $nickname, $nickname, $limit);
+        $stmt->bind_param("ss", $nickname, $nickname);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
     }
     //get all posts random
-    public function getPostsRandom($limit)
+    public function getPostsRandom()
     {
         $query = "SELECT DISTINCT post.id, profile.photo_url, profile.name, profile.surname, 
                 profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
                 JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
                 JOIN Profile ON Itinerary.organizer_username = Profile.nickname
-                ORDER BY RAND() DESC LIMIT ?";
+                ORDER BY RAND() DESC";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("i", $limit);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
     }
     //get all posts by category
-    public function getPostsByCategory($category, $limit)
+    public function getPostsByCategory($category)
     {
-        $query = "SELECT * FROM post WHERE categoria = ?  LIMIT ?";
+        $query = "SELECT * FROM post WHERE categoria = ?";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("si", $category, $limit);
+        $stmt->bind_param("s", $category);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //get all posts by author
-    public function getPostsByAuthor($author, $limit)
+    public function getPostsByAuthor($author)
     {
-        $query = "SELECT * FROM post WHERE author = ?  LIMIT ?";
+        $query = "SELECT * FROM post WHERE author = ?";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("si", $author, $limit);
+        $stmt->bind_param("s", $author);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     //get all posts by author and like
-    public function getPostsByAuthorLike($author, $limit)
+    public function getPostsByAuthorLike($author)
     {
         $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
             profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
             JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
             JOIN PostLike ON Post.id = PostLike.post_id 
             JOIN Profile ON PostLike.profile_username = Profile.nickname
-            WHERE Profile.nickname = ? ORDER BY post.datetime DESC LIMIT ?";
+            WHERE Profile.nickname = ? ORDER BY post.datetime DESC";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("si", $author, $limit);
+        $stmt->bind_param("s", $author);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
     }
     //get all posts by author and favourite
-    public function getPostsByAuthorFavourite($author, $limit)
+    public function getPostsByAuthorFavourite($author)
     {
         $query = "SELECT post.id, profile.photo_url, profile.name, profile.surname, 
             profile.nickname, post.datetime, post.title, post.description, post.itinerary_id FROM Post 
             JOIN Itinerary ON Post.itinerary_id = Itinerary.id 
             JOIN PostFavourites ON Post.id = PostFavourites.post_id 
             JOIN Profile ON PostFavourites.profile_username = Profile.nickname
-            WHERE Profile.nickname = ? ORDER BY post.datetime DESC LIMIT ?";
+            WHERE Profile.nickname = ? ORDER BY post.datetime DESC";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("si", $author, $limit);
+        $stmt->bind_param("s", $author);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
         return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
     }
     //get all posts by author and category
-    public function getPostsByAuthorAndCategory($author, $category, $limit)
+    public function getPostsByAuthorAndCategory($author, $category)
     {
-        $query = "SELECT * FROM post WHERE autore = ? AND categoria = ?  LIMIT ?";
+        $query = "SELECT * FROM post WHERE autore = ? AND categoria = ?";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("ssi", $author, $category, $limit);
+        $stmt->bind_param("ss", $author, $category);
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
@@ -603,7 +601,7 @@ class DatabaseHelper
     public function getPartialSearch($text)
     {
         $query = "SELECT * FROM Post WHERE post.title LIKE ? OR post.description LIKE ? 
-            ORDER BY post.datetime DESC LIMIT 10";
+            ORDER BY post.datetime DESC";
         $stmt = $this->mysqli->prepare($query);
         $text = "%" . $text . "%";
         $stmt->bind_param("ss", $text, $text);
@@ -682,6 +680,7 @@ class DatabaseHelper
         $stmt->close();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    //send notification about post's things (like, favourite, comment)
     public function notify($nickname, $post_id, $message)
     {
         $query = "SELECT * FROM Post WHERE id = ?";
@@ -698,6 +697,7 @@ class DatabaseHelper
         $stmt->execute();
         $stmt->close();
     }
+    //send notification on private message
     public function notifyDirectMessage($from_username, $to_username, $message)
     {
         $query = "INSERT INTO Notify (from_username, to_username, message) VALUES (?, ?, ?)";
@@ -706,14 +706,13 @@ class DatabaseHelper
         $stmt->execute();
         $stmt->close();
     }
-
+    //get all notifications
     public function getNotifications()
     {
         $nickname = $_SESSION['nickname'];
-        //TODO cavare sto 10 e mettere roba vera
         $query = "SELECT Notify.from_username, Notify.message, Notify.datetime, Profile.photo_url FROM Notify 
             JOIN Profile ON Notify.from_username = Profile.nickname WHERE Notify.to_username = ? 
-            ORDER BY Notify.datetime DESC LIMIT 10";
+            ORDER BY Notify.datetime DESC";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("s", $nickname);
         $stmt->execute();
@@ -723,7 +722,9 @@ class DatabaseHelper
         $this->setAllNotificationsSeen();
         return $this->formatDateArray($result);
     }
-    public function setAllNotificationsSeen(){
+    //set all notifications seen
+    public function setAllNotificationsSeen()
+    {
         $nickname = $_SESSION['nickname'];
         $query = "UPDATE Notify SET seen = 1 WHERE to_username = ?";
         $stmt = $this->mysqli->prepare($query);
@@ -731,7 +732,9 @@ class DatabaseHelper
         $stmt->execute();
         $stmt->close();
     }
-    public function getUnreadNotifications(){
+    //get unread notifications
+    public function getUnreadNotifications()
+    {
         $nickname = $_SESSION['nickname'];
         $query = "SELECT COUNT(*) as unread FROM Notify WHERE to_username = ? AND seen = 0";
         $stmt = $this->mysqli->prepare($query);
@@ -741,9 +744,5 @@ class DatabaseHelper
         $stmt->close();
         return ($result->fetch_assoc())['unread'];
     }
-
 }
-
-
-
 ?>
