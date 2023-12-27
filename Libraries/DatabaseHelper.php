@@ -698,9 +698,18 @@ class DatabaseHelper
         $stmt->execute();
         $stmt->close();
     }
-
-    public function getNotifications($nickname)
+    public function notifyDirectMessage($from_username, $to_username, $message)
     {
+        $query = "INSERT INTO Notify (from_username, to_username, message) VALUES (?, ?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sss", $from_username, $to_username, $message);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    public function getNotifications()
+    {
+        $nickname = $_SESSION['nickname'];
         //TODO cavare sto 10 e mettere roba vera
         $query = "SELECT Notify.from_username, Notify.message, Notify.datetime, Profile.photo_url FROM Notify 
             JOIN Profile ON Notify.from_username = Profile.nickname WHERE Notify.to_username = ? 
@@ -710,8 +719,31 @@ class DatabaseHelper
         $stmt->execute();
         $result = $stmt->get_result();
         $stmt->close();
-        return $this->formatDateArray($result->fetch_all(MYSQLI_ASSOC));
+        $result = $result->fetch_all(MYSQLI_ASSOC);
+        $this->setAllNotificationsSeen();
+        return $this->formatDateArray($result);
     }
+    public function setAllNotificationsSeen(){
+        $nickname = $_SESSION['nickname'];
+        $query = "UPDATE Notify SET seen = 1 WHERE to_username = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $nickname);
+        $stmt->execute();
+        $stmt->close();
+    }
+    public function getUnreadNotifications(){
+        $nickname = $_SESSION['nickname'];
+        $query = "SELECT COUNT(*) as unread FROM Notify WHERE to_username = ? AND seen = 0";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $nickname);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        return ($result->fetch_assoc())['unread'];
+    }
+
 }
+
+
 
 ?>
