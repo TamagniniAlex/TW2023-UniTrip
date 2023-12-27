@@ -55,9 +55,9 @@ CREATE TABLE Itinerary (
 CREATE TABLE ItineraryBetweenCities (
   itinerary_id INT,
   departure_city VARCHAR(255),
-  departure_time TIME,
+  departure_time DATETIME,
   arrival_city VARCHAR(255),
-  arrival_time TIME,
+  arrival_time DATETIME,
   PRIMARY KEY (itinerary_id, departure_city),
   FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id),
   FOREIGN KEY (departure_city) REFERENCES City(name),
@@ -234,16 +234,16 @@ INSERT INTO Itinerary (organizer_username, description) VALUES ('francesco', 'Es
 INSERT INTO Itinerary (organizer_username, description) VALUES ('chiara', 'Avventura in Germania');
 INSERT INTO Itinerary (organizer_username, description) VALUES ('roby', 'Scoperta dell''Austria');
 
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Roma', '10:00:00', 'Milano', '12:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Milano', '14:00:00', 'Napoli', '16:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (2, 'Parigi', '10:00:00', 'Marsiglia', '12:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (2, 'Marsiglia', '14:00:00', 'Lione', '16:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (3, 'Madrid', '10:00:00', 'Barcellona', '12:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (3, 'Barcellona', '14:00:00', 'Siviglia', '16:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (4, 'Berlino', '10:00:00', 'Monaco', '12:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (4, 'Monaco', '14:00:00', 'Amburgo', '16:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (5, 'Vienna', '10:00:00', 'Salisburgo', '12:00:00');
-INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (5, 'Salisburgo', '14:00:00', 'Innsbruck', '16:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Roma', '2023-11-20 10:00:00', 'Milano', '2023-11-20 12:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (1, 'Milano', '2023-11-20 14:00:00', 'Napoli', '2023-11-20 16:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (2, 'Parigi', '2023-11-21 10:00:00', 'Marsiglia', '2023-11-21 12:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (2, 'Marsiglia', '2023-11-21 14:00:00', 'Lione', '2023-11-21 16:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (3, 'Madrid', '2023-11-26 10:00:00', 'Barcellona', '2023-11-26 12:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (3, 'Barcellona', '2023-11-26 14:00:00', 'Siviglia', '2023-11-26 16:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (4, 'Berlino', '2023-11-29 10:00:00', 'Monaco', '2023-11-29 12:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (4, 'Monaco', '2023-11-30 09:00:00', 'Amburgo', '2023-11-30 10:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (5, 'Vienna', '2023-12-09 10:00:00', 'Salisburgo', '2023-12-09 12:00:00');
+INSERT INTO ItineraryBetweenCities (itinerary_id, departure_city, departure_time, arrival_city, arrival_time) VALUES (5, 'Salisburgo', '2023-12-09 14:00:00', 'Innsbruck', '2023-12-09 16:00:00');
 
 INSERT INTO Post (author, itinerary_id, title, description, country) VALUES ('marco', 1, 'Esplorando l''Italia', 'Un viaggio attraverso le bellezze d''Italia, visitando Roma, Milano, Napoli.', 'Italia');
 INSERT INTO Post (author, itinerary_id, title, description, country) VALUES ('alessia', 2, 'Tour della Francia', 'Un tour affascinante attraverso la Francia, toccando Parigi, Marsiglia, Lione.', 'Francia');

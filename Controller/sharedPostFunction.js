@@ -99,18 +99,27 @@ function getLikeCount(post_id) {
     });
 }
 
-function follow(nickname, id) {
+function follow(nickname) {
     $.ajax({
         type: 'GET',
-        url: '../Controller/setFollowController.php?post_id='+id,
+        url: '../Controller/setFollowController.php?to_username=' + nickname,
         dataType: 'json',
         success: function (result) {
             let buttons = document.getElementsByClassName("follow" + nickname);
-            for (let i = 0; i < buttons.length; i++) {
+            if (buttons.length === 0) {
+                buttons = document.getElementById("follow");
                 if (result === 1) {
-                    buttons[i].innerHTML = 'Segui già';
+                    buttons.innerHTML = 'Segui già';
                 } else {
-                    buttons[i].innerHTML = 'Segui';
+                    buttons.innerHTML = 'Segui';
+                }
+            } else {
+                for (let i = 0; i < buttons.length; i++) {
+                    if (result === 1) {
+                        buttons[i].innerHTML = 'Segui già';
+                    } else {
+                        buttons[i].innerHTML = 'Segui';
+                    }
                 }
             }
         },

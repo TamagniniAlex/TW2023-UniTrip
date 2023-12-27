@@ -26,23 +26,29 @@ var stageCount = 1;
 
 function addStage() {
     var newStageHTML = `
-        <div class="row mb-4">
-            <div class="col-8 p-0">
+        <div class="row mb-5">
+            <div class="col-12 p-0 mb-2">
                 <select id="selectCities${stageCount}" class="form-select" aria-label="Seleziona città di partenza">
                     <option selected disabled>Seleziona città di partenza</option>
                 </select>
             </div>
-            <div class="col-4 p-0">
+            <div class="col-4 p-0 offset-1">
+                <input type="date" class="form-control" id="departureDate${stageCount}" name="departureDate">
+            </div>
+            <div class="col-4 p-0 offset-2">
                 <input type="time" class="form-control" id="departureTime${stageCount}" name="departureTime">
             </div>
         </div>
         <div class="row mb-4">
-            <div class="col-8 p-0">
+            <div class="col-12 p-0 mb-2">
                 <select id="selectCities${stageCount + 1}" class="form-select" aria-label="Seleziona città di arrivo">
                     <option selected disabled>Seleziona città di arrivo</option>
                 </select>
             </div>
-            <div class="col-4 p-0">
+            <div class="col-4 p-0 offset-1">
+                <input type="date" class="form-control" id="arrivalDate${stageCount}" name="departureDate">
+            </div>
+            <div class="col-4 p-0 offset-2">                
                 <input type="time" class="form-control" id="arrivalTime${stageCount}" name="arrivalTime">
             </div>
         </div>
@@ -95,11 +101,13 @@ function addPost() {
     if (stageCount > 1 && title !== null && description !== null && nation !== null && itineraryDescription !== null) {
         for (var i = 1; i < stageCount; i += 2) {
             var departureCity = $('#selectCities' + i).val();
+            var departureDate = $('#departureDate' + i).val();
             var departureTime = $('#departureTime' + i).val();
             var arrivalCity = $('#selectCities' + (i + 1)).val();
+            var arrivalDate = $('#arrivalDate' + i).val();
             var arrivalTime = $('#arrivalTime' + i).val();
-            if (departureCity !== null && departureTime !== null && arrivalCity !== null && arrivalTime !== null) {
-                var itinerarySegment = [departureCity, departureTime, arrivalCity, arrivalTime];
+            if (departureCity !== null && departureTime !== null && arrivalCity !== null && arrivalTime !== null && departureDate !== null && arrivalDate !== null) {
+                var itinerarySegment = [departureCity, departureDate + " " + departureTime, arrivalCity, arrivalDate + " " + arrivalTime];
                 itineraryBetweenCities.push(itinerarySegment);
             } else {
                 return;

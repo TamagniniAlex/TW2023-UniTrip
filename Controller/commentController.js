@@ -20,7 +20,7 @@ $(document).ready(function () {
                             <img src="${response.photo_url}" alt="Account Image" class="img-fluid rounded-circle">
                         </a>
                     </div>
-                    <div class="col-7 col-lg-9 align-self-center">
+                    <div class="col-${response.following != -1 ? '7' : '10'} col-lg-${response.following != -1 ? '9' : '10'} align-self-center">
                         <a href="profile.html?nickname=${response.nickname}" class="btn p-0">${response.name} ${response.surname}</a>
                         <a href="profile.html?nickname=${response.nickname}" class="btn text-muted p-0">@${response.nickname}</a>
                         <a class="btn disabled text-muted p-0 px-3">&#9679 ${response.datetime}</a>

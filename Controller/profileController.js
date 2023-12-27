@@ -25,8 +25,9 @@ $(document).ready(function () {
                         window.location.replace("feed.html");
                     } else {
                         var profileHtml = `
+                        <div class="col-12 px-5">
                         <div class="row mb-3">
-                            <div class="col-2 col-lg-1 text-center"> 
+                            <div class="col-3 col-lg-1 text-center"> 
                                 <a href="profile.html?nickname=` + nickname + `">
                                     <img id="profilePhoto" src="" alt="Account Image" class="img-fluid rounded-circle">
                                 </a>
@@ -34,7 +35,7 @@ $(document).ready(function () {
                         getProfilePhoto(nickname);
                         if (sessionNickname != "" && sessionNickname != nickname) {
                             profileHtml += `
-                            <div class="col-3 col-lg-2 offset-7 offset-lg-9 align-self-center text-center">
+                            <div class="col-4 col-lg-2 offset-5 offset-lg-9 align-self-center text-center">
                                 <button id="follow" onclick="follow('${nickname}')" class="shadow-none btn btn-secondary form-control">
                                     ${response.following === 1 ? 'Segui già' : 'Segui'}
                                 </button>
@@ -42,8 +43,8 @@ $(document).ready(function () {
                         </div>`;
                         } else {
                             profileHtml += ` 
-                            <div class="col-3 col-lg-2 offset-7 offset-lg-9 align-self-center text-center">
-                                <button onclick="logout()" class="btn btn-danger">
+                            <div class="col-4 col-lg-2 offset-5 offset-lg-9 align-self-center text-center">
+                                <button onclick="logout()" class="btn btn-danger form-control">
                                     Logout
                                 </button>
                             </div>
@@ -89,6 +90,7 @@ $(document).ready(function () {
                                 </div>
                             </div>`;
                         }
+                        profileHtml += `</div>`;
                         $("#userData").append(profileHtml);
                         $.ajax({
                             type: 'GET',

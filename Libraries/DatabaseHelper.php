@@ -191,9 +191,8 @@ class DatabaseHelper
         return ($result->fetch_assoc())['following'];
     }
     //follow a to b, if alredy, remove it
-    public function followProfile($from_username, $post_id)
+    public function followProfile($from_username, $to_username)
     {
-        $to_username = $this->getAuthorByPostId($post_id);
         if ($this->alreadyFollowing($from_username, $to_username)) {
             $query = "DELETE FROM Follow WHERE from_username = ? AND to_username = ?";
             $result = 0;
@@ -205,7 +204,7 @@ class DatabaseHelper
         $stmt->bind_param("ss", $from_username, $to_username);
         $stmt->execute();
         $stmt->close();
-        return ($result);
+        return $result;
     }
     //add post 
     public function addPost($author, $title, $description, $itinerary_id, $country)
@@ -568,7 +567,7 @@ class DatabaseHelper
     //get itinerary between cities
     public function getItineraryBetweenCities($itinerary_id)
     {
-        $query = "SELECT * FROM ItineraryBetweenCities WHERE itinerary_id = ?";
+        $query = "SELECT * FROM ItineraryBetweenCities WHERE itinerary_id = ? ORDER BY departure_time ASC";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("i", $itinerary_id);
         $stmt->execute();
@@ -694,6 +693,15 @@ class DatabaseHelper
         $query = "INSERT INTO Notify (from_username, to_username, message) VALUES (?, ?, ?)";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("sss", $nickname, $author, $message);
+        $stmt->execute();
+        $stmt->close();
+    }
+    //send notification about follow
+    public function notifyFollow($from_username, $to_username, $message)
+    {
+        $query = "INSERT INTO Notify (from_username, to_username, message) VALUES (?, ?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sss", $from_username, $to_username, $message);
         $stmt->execute();
         $stmt->close();
     }
