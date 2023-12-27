@@ -1,5 +1,5 @@
 <?php
-require_once("DBHandler.php");
+require_once("SecureLogin.php");
 //create dataBaseHelper class
 class DatabaseHelper
 {

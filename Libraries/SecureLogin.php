@@ -1,5 +1,4 @@
 <?php
-//TODO unire questo file con DatabaseHelper.php
 function login($nickname_mail, $password, $mysqli)
 {
     // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.
