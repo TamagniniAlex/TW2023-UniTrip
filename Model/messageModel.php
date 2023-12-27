@@ -23,5 +23,9 @@ class MessageModel extends Model
     {
         return $this->db->getChatsAll($nickname, $chat_with);
     }
+    public function sendNotification($from_username, $to_username, $message)
+    {
+        return $this->db->notifyDirectMessage($from_username, $to_username, $message);
+    }
 }
 ?>
