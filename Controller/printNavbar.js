@@ -9,17 +9,15 @@ $(document).ready(function () {
         <a href="addPost.html" class="text-center text-` + (focusOn == "addPost" ? "dark" : "muted") + `"><i class="fa fa-plus"></i></a>
         <a href="notify.html" class="text-center text-` + (focusOn == "notifications" ? "dark" : "muted") + `"><i class="position-relative fa fa-bell-o">
           <span id = "notifications" class="position-absolute top-20 start-100 translate-middle badge rounded-pill ">
-          
-         </span></i></a>
+          </span></i>
+        </a>
         <a href="messages.html" class="text-center text-` + (focusOn == "messages" ? "dark" : "muted") + `"><i class="fa fa-envelope-o"></i></a>
       </div>
     </div>
   </nav>`
   $("#navbar").append(html);
 
-
-  setInterval(function() {
-    //get all notificiations from
+  setInterval(function () {
     $.ajax({
       type: "GET",
       url: "../Controller/getUnreadNotificationsByNickname.php",
@@ -28,14 +26,13 @@ $(document).ready(function () {
         if (response > 0) {
           $("#notifications").text(response);
           $("#notifications").addClass("bg-danger");
-
         } else {
           $("#notifications").text("");
         }
       },
-      error: function (response) {
-        console.log(response);
+      error: function (xhr, status, error) {
+        console.error('Errore nella richiesta AJAX:', status, error);
       }
-    });}, 500);
+    });
+  }, 500);
 });
-
