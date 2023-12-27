@@ -42,7 +42,12 @@ $(document).ready(function () {
                         </div>`;
                         } else {
                             profileHtml += ` 
-                            </div>`;
+                            <div class="col-3 col-lg-2 offset-7 offset-lg-9 align-self-center text-center">
+                                <button onclick="logout()" class="btn btn-danger">
+                                    Logout
+                                </button>
+                            </div>
+                        </div>`;
                         }
                         profileHtml += `
                         <div class="row mb-2">
@@ -352,6 +357,23 @@ function sharePost(to_username, post_id) {
         success: function (result) {
             if (result === "success") {
                 $("#share" + to_username).addClass("disabled");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Errore nella richiesta AJAX:', status, error);
+        }
+    });
+}
+
+function logout() {
+    $.ajax({
+        type: 'GET',
+        url: '../Controller/logoutController.php',
+        dataType: 'json',
+        success: function (result) {
+            console.log(result);
+            if (result === "success") {
+                window.location.replace("index.html");
             }
         },
         error: function (xhr, status, error) {
