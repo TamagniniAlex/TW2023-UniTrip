@@ -1,4 +1,3 @@
-//TODO shadow-none 
 $(document).ready(function () {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -27,14 +26,14 @@ $(document).ready(function () {
                         </div>
                     ` : ''}
                     <div class="col-4 col-lg-5 align-self-center text-end">
-                        <a href="feed.html" class="shadow-none btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
+                        <a href="feed.html" class="btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
                     </div>
                     <div class="col-4 col-lg-5 align-self-center text-justify">
-                        <a href="feed.html?follow=1" class="shadow-none btn ${followParameter ? 'fw-bold text-decoration-underline' : ''}">Seguiti</a>
+                        <a href="feed.html?follow=1" class="btn ${followParameter ? 'fw-bold text-decoration-underline' : ''}">Seguiti</a>
                     </div>
                     ${sessionNickname ? `
                         <div class="col-2 col-lg-1 align-self-center text-center fs-3">
-                            <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="text-dark"><i class="fa fa-star-o"></i></a>
+                            <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="text-dark"><em class="fa fa-star-o"></em></a>
                         </div>
                     ` : ''}
                 </div>
@@ -44,10 +43,10 @@ $(document).ready(function () {
                 var htmlCode = `
                 <div class="row mb-4">
                     <div class="col-6 align-self-center text-end">
-                        <a href="feed.html" class="shadow-none btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
+                        <a href="feed.html" class="btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
                     </div>
                     <div class="col-6 align-self-center text-justify">
-                        <a href="feed.html?follow=1" class="shadow-none btn ${followParameter ? 'fw-bold text-decoration-underline' : ''}">Seguiti</a>
+                        <a href="feed.html?follow=1" class="btn ${followParameter ? 'fw-bold text-decoration-underline' : ''}">Seguiti</a>
                     </div>
                 </div>
                 `;
@@ -81,7 +80,7 @@ $(document).ready(function () {
                         </div>
                         ${post.following != null ?
                             `<div class="col-3 col-lg-2 align-self-center text-center">
-                                <button class="shadow-none follow${post.nickname} btn btn-secondary form-control" onclick="follow('${post.nickname}', ${post.id})">
+                                <button class="follow${post.nickname} btn btn-secondary form-control" onclick="follow('${post.nickname}', ${post.id})">
                                     ${post.following == 1 ? 'Segui già' : 'Segui'}
                                 </button>
                             </div>` : ``
@@ -132,28 +131,28 @@ $(document).ready(function () {
                     </div>
                     <div class="row mb-4">
                         <div class="col-2 offset-2">
-                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="shadow-none btn text-muted p-0">
-                                <i class="fa fa-map-o"></i>
+                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
+                                <em class="fa fa-map-o"></em>
                             </a>
                         </div>
                         <div class="col-2 text-center">
-                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="shadow-none btn text-muted p-0">
+                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="btn text-muted p-0">
                                 ` + getCommentCount(post.id) + `
                             </a>
                         </div>
                         <div class="col-2 text-center">
-                            <button id="likesCount${post.id}" class="shadow-none btn text-muted p-0" onclick="setLike(${post.id})">
+                            <button id="likesCount${post.id}" class="btn text-muted p-0" onclick="setLike(${post.id})">
                                 ` + getLikeCount(post.id) + `
                             </button>
                         </div>
                         <div class="col-2 text-center">
-                            <button id="starsCount${post.id}" class="shadow-none btn text-muted p-0" onclick="setFavourite(${post.id})">
+                            <button id="starsCount${post.id}" class="btn text-muted p-0" onclick="setFavourite(${post.id})">
                                 ` + getFavouriteCount(post.id) + `
                             </button>
                         </div>
                         <div class="col-2 text-end">
-                            <button type="button" class="shadow-none btn text-muted p-0 px-3" data-bs-toggle="modal" data-bs-target="#modal" onclick="getFollower(${post.id})">
-                                <i class="fa fa-share"></i>
+                            <button type="button" class="btn text-muted p-0 px-3" data-bs-toggle="modal" data-bs-target="#modal" onclick="getFollower(${post.id})">
+                                <em class="fa fa-share"></em>
                             </button>
                         </div>
                     </div>

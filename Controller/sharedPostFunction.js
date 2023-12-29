@@ -5,7 +5,7 @@ function getCommentCount(post_id) {
         url: '../Controller/getCommentCountController.php?post_id=' + post_id,
         dataType: 'json',
         success: function (comments) {
-            document.getElementById("commentsCount" + post_id).innerHTML = '<i class="fa fa-comment-o"></i> ' + comments;
+            document.getElementById("commentsCount" + post_id).innerHTML = '<em class="fa fa-comment-o"></em> ' + comments;
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
@@ -25,10 +25,10 @@ function getFavouriteCount(post_id) {
                 dataType: 'json',
                 success: function (wasStarred) {
                     if (wasStarred == 1) {
-                        document.getElementById("starsCount" + post_id).innerHTML = '<i class="text-warning fa fa-star"></i> ' + stars;
+                        document.getElementById("starsCount" + post_id).innerHTML = '<em class="text-warning fa fa-star"></em> ' + stars;
                     }
                     else {
-                        document.getElementById("starsCount" + post_id).innerHTML = '<i class="fa fa-star-o"></i> ' + stars;
+                        document.getElementById("starsCount" + post_id).innerHTML = '<em class="fa fa-star-o"></em> ' + stars;
                     }
                 },
                 error: function (xhr, status, error) {
@@ -82,10 +82,10 @@ function getLikeCount(post_id) {
                 dataType: 'json',
                 success: function (wasLiked) {
                     if (wasLiked == 1) {
-                        document.getElementById("likesCount" + post_id).innerHTML = '<i class="text-danger fa fa-heart"></i> ' + likes;
+                        document.getElementById("likesCount" + post_id).innerHTML = '<em class="text-danger fa fa-heart"></em> ' + likes;
                     }
                     else {
-                        document.getElementById("likesCount" + post_id).innerHTML = '<i class="fa fa-heart-o"></i> ' + likes;
+                        document.getElementById("likesCount" + post_id).innerHTML = '<em class="fa fa-heart-o"></em> ' + likes;
                     }
                 },
                 error: function (xhr, status, error) {
@@ -148,7 +148,7 @@ function getFollower(post_id) {
                             <a href="profile.html?nickname=${follower.nickname}" class="btn text-muted p-0">@${follower.nickname}</a>
                         </div>
                         <div class="col-3 align-self-center text-center">
-                            <button id="share${follower.nickname}" class="shadow-none btn btn-secondary form-control" onclick="sharePost('${follower.nickname}', ${post_id})">
+                            <button id="share${follower.nickname}" class="btn btn-secondary form-control" onclick="sharePost('${follower.nickname}', ${post_id})">
                                 Condividi
                             </button>
                         </div>

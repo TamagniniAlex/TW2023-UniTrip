@@ -4,14 +4,14 @@ $(document).ready(function () {
   <nav class="navbar bg-light fixed-bottom border-top border-2">
     <div class="container">
       <div class="d-flex justify-content-around w-100 fs-3">
-        <a href="feed.html" class="text-center text-` + (focusOn == "feed" ? "dark" : "muted") + `"><i class="fa fa-home"></i></a>
-        <a href="search.html" class="text-center text-` + (focusOn == "search" ? "dark" : "muted") + `"><i class="fa fa-search"></i></a>
-        <a href="addPost.html" class="text-center text-` + (focusOn == "addPost" ? "dark" : "muted") + `"><i class="fa fa-plus"></i></a>
-        <a href="notify.html" class="text-center text-` + (focusOn == "notifications" ? "dark" : "muted") + `"><i class="position-relative fa fa-bell-o">
+        <a href="feed.html" class="text-center text-` + (focusOn == "feed" ? "dark" : "muted") + `"><em  class="fa fa-home"></em></a>
+        <a href="search.html" class="text-center text-` + (focusOn == "search" ? "dark" : "muted") + `"><em  class="fa fa-search"></em></a>
+        <a href="addPost.html" class="text-center text-` + (focusOn == "addPost" ? "dark" : "muted") + `"><em  class="fa fa-plus"></em></a>
+        <a href="notify.html" class="text-center text-` + (focusOn == "notifications" ? "dark" : "muted") + `"><em  class="position-relative fa fa-bell-o">
           <span id = "notifications" class="position-absolute top-20 start-100 translate-middle badge rounded-pill ">
-          </span></i>
+          </span></em>
         </a>
-        <a href="messages.html" class="text-center text-` + (focusOn == "messages" ? "dark" : "muted") + `"><i class="fa fa-envelope-o"></i></a>
+        <a href="messages.html" class="text-center text-` + (focusOn == "messages" ? "dark" : "muted") + `"><em  class="fa fa-envelope-o"></em></a>
       </div>
     </div>
   </nav>`

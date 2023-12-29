@@ -27,7 +27,7 @@ $(document).ready(function () {
                     </div>
                     ${response.following != -1 ?
                         `<div class="col-3 col-lg-2 align-self-center text-center">
-                            <button class="shadow-none follow${response.nickname} btn btn-secondary form-control" onclick="follow('${response.nickname}')">
+                            <button class="follow${response.nickname} btn btn-secondary form-control" onclick="follow('${response.nickname}')">
                                 ${response.following == 1 ? 'Segui già' : 'Segui'}
                             </button>
                         </div>` : ``
@@ -76,28 +76,28 @@ $(document).ready(function () {
                 </div>
                 <div class="row mb-2">
                     <div class="col-2 offset-2">
-                        <a href="itinerary.html?itinerary_id=${response.itinerary_id}" class="shadow-none btn text-muted p-0">
-                            <i class="fa fa-map-o"></i>
+                        <a href="itinerary.html?itinerary_id=${response.itinerary_id}" class="btn text-muted p-0">
+                            <em class="fa fa-map-o"></em>
                         </a>
                     </div>
                     <div class="col-2 text-center">
-                        <a id="commentsCount${post_id}" href="comment.html?post_id=${post_id}" class="shadow-none btn text-muted p-0">
+                        <a id="commentsCount${post_id}" href="comment.html?post_id=${post_id}" class="btn text-muted p-0">
                             ` + getCommentCount(post_id) + `
                         </a>
                     </div>
                     <div class="col-2 text-center">
-                        <button id="likesCount${post_id}" class="shadow-none btn text-muted p-0" onclick="setLike(${post_id})">
+                        <button id="likesCount${post_id}" class="btn text-muted p-0" onclick="setLike(${post_id})">
                             ` + getLikeCount(post_id) + `
                         </button>
                     </div>
                     <div class="col-2 text-center">
-                        <button id="starsCount${post_id}" class="shadow-none btn text-muted p-0" onclick="setFavourite(${post_id})">
+                        <button id="starsCount${post_id}" class="btn text-muted p-0" onclick="setFavourite(${post_id})">
                             ` + getFavouriteCount(post_id) + `
                         </button>
                     </div>
                     <div class="col-2 text-end">
-                        <button type="button" class="shadow-none btn text-muted p-0 px-2" data-bs-toggle="modal" data-bs-target="#modal" onclick="getFollower(${post_id})">
-                            <i class="fa fa-share"></i>
+                        <button type="button" class="btn text-muted p-0 px-2" data-bs-toggle="modal" data-bs-target="#modal" onclick="getFollower(${post_id})">
+                            <em class="fa fa-share"></em>
                         </button>
                     </div>
                 </div>

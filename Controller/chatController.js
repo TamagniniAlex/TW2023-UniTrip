@@ -59,7 +59,7 @@ $(document).ready(function () {
                 for (let i = 0; i < chats.length; i++) {
                     $('#chat').append(`
                         <div class="row">
-                            <div class="align-self-center" ${chats[i].post_id !== null ? "onClick='OpenPost(" + chats[i].post_id + ")'" : ""}>
+                            <div class="align-self-center ${chats[i].post_id !== null ? `clickable" onClick='OpenPost(" + chats[i].post_id + ")'` : `"`}>
                                 <p class="d-inline text-muted m-0 px-3 float-end">&#9679 ` + chats[i].datetime + `</p>
                                 <p class="m-0 px-3"> ${chats[i].mine === "true" ? 'Tu:' : ''} ` + chats[i].message + ` </p>
                             </div>

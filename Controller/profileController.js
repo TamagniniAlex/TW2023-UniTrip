@@ -36,7 +36,7 @@ $(document).ready(function () {
                         if (sessionNickname != "" && sessionNickname != nickname) {
                             profileHtml += `
                             <div class="col-4 col-lg-2 offset-5 offset-lg-9 align-self-center text-center">
-                                <button id="follow" onclick="follow('${nickname}')" class="shadow-none btn btn-secondary form-control">
+                                <button id="follow" onclick="follow('${nickname}')" class="btn btn-secondary form-control">
                                     ${response.following === 1 ? 'Segui già' : 'Segui'}
                                 </button>
                             </div>
@@ -62,12 +62,12 @@ $(document).ready(function () {
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <i class="fa fa-birthday-cake text-muted"> Nato il ` + response.birth_date + `</i>
+                                <em class="fa fa-birthday-cake text-muted"> Nato il ` + response.birth_date + `</em>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-12">
-                                <i class="fa fa-calendar text-muted"> Registrato il ` + response.join_date + `</i>
+                                <em class="fa fa-calendar text-muted"> Registrato il ` + response.join_date + `</em>
                             </div>
                         </div>
                         <div class="row mb-1">
@@ -80,13 +80,13 @@ $(document).ready(function () {
                             profileHtml += `
                             <div class="row text-center">
                                 <div class="col-4">
-                                    <a href="profile.html?nickname=${sessionNickname}" class="shadow-none btn ${!like && !favourite ? 'fw-bold text-decoration-underline' : ''}">Posts</a>
+                                    <a href="profile.html?nickname=${sessionNickname}" class="btn ${!like && !favourite ? 'fw-bold text-decoration-underline' : ''}">Posts</a>
                                 </div>
                                 <div class="col-4">
-                                    <a href="profile.html?nickname=${sessionNickname}&like=true" class="shadow-none btn ${like === 'true' ? 'fw-bold text-decoration-underline' : ''}">Mi piace</a>
+                                    <a href="profile.html?nickname=${sessionNickname}&like=true" class="btn ${like === 'true' ? 'fw-bold text-decoration-underline' : ''}">Mi piace</a>
                                 </div>
                                 <div class="col-4">
-                                    <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="shadow-none btn ${favourite === 'true' ? 'fw-bold text-decoration-underline' : ''}">Preferiti</a>
+                                    <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="btn ${favourite === 'true' ? 'fw-bold text-decoration-underline' : ''}">Preferiti</a>
                                 </div>
                             </div>`;
                         }
@@ -131,28 +131,28 @@ $(document).ready(function () {
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-1">
-                                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="shadow-none btn text-muted p-0">
-                                                <i class="fa fa-map-o"></i>
+                                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
+                                                <em class="fa fa-map-o"></em>
                                             </a>                        
                                         </div>
                                         <div class="col-3 text-end p-0">
-                                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="shadow-none btn text-muted p-0">
+                                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="btn text-muted p-0">
                                                 ` + getCommentCount(post.id) + `
                                             </a>                        
                                         </div>
                                         <div class="col-4 text-center p-0">
-                                            <button id="likesCount${post.id}" class="shadow-none btn text-muted p-0" onclick="setLike(${post.id})">
+                                            <button id="likesCount${post.id}" class="btn text-muted p-0" onclick="setLike(${post.id})">
                                                 ` + getLikeCount(post.id) + `
                                             </button>                    
                                         </div>
                                         <div class="col-3 text-start p-0">
-                                            <button id="starsCount${post.id}" class="shadow-none btn text-muted p-0" onclick="setFavourite(${post.id})">
+                                            <button id="starsCount${post.id}" class="btn text-muted p-0" onclick="setFavourite(${post.id})">
                                                 ` + getFavouriteCount(post.id) + `
                                             </button>                      
                                         </div>
                                         <div class="col-1 p-0">
-                                            <button type="button" class="shadow-none btn text-muted p-0" data-bs-toggle="modal" data-bs-target="#modal" onclick="getFollower(${post.id})">
-                                                <i class="fa fa-share"></i>
+                                            <button type="button" class="btn text-muted p-0" data-bs-toggle="modal" data-bs-target="#modal" onclick="getFollower(${post.id})">
+                                                <em class="fa fa-share"></em>
                                             </button>
                                         </div>
                                     </div>
