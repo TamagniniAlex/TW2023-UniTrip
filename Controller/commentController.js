@@ -76,7 +76,7 @@ $(document).ready(function () {
                 </div>
                 <div class="row mb-2">
                     <div class="col-2 offset-2">
-                        <a href="itinerary.html?itinerary_id=${response.itinerary_id}" class="btn text-muted p-0">
+                        <a title="Comment" href="itinerary.html?itinerary_id=${response.itinerary_id}" class="btn text-muted p-0">
                             <em class="fa fa-map-o"></em>
                         </a>
                     </div>
