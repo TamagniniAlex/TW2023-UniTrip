@@ -106,7 +106,7 @@ $(document).ready(function () {
                                             ${post.photos.map((photo, index) => `
                                                 <button type="button" data-bs-target="#carouselExampleIndicators${index}" 
                                                     data-bs-slide-to="${index}" aria-label="Slide ${index}" 
-                                                    class="${index === 0 ? 'active' : ''}" aria-current="${index === 0 ? 'true' : ''}">
+                                                    class="${index === 0 ? 'active' : ''}" aria-current="${index === 0 ? 'true' : 'false'}">
                                                 </button>
                                             `).join('')}
                                         </div>
