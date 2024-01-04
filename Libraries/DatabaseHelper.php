@@ -715,9 +715,8 @@ class DatabaseHelper
         $stmt->close();
     }
     //get all notifications
-    public function getNotifications()
+    public function getNotifications($nickname)
     {
-        $nickname = $_SESSION['nickname'];
         $query = "SELECT Notify.from_username, Notify.message, Notify.datetime, Profile.photo_url FROM Notify 
             JOIN Profile ON Notify.from_username = Profile.nickname WHERE Notify.to_username = ? 
             ORDER BY Notify.datetime DESC";
@@ -727,13 +726,12 @@ class DatabaseHelper
         $result = $stmt->get_result();
         $stmt->close();
         $result = $result->fetch_all(MYSQLI_ASSOC);
-        $this->setAllNotificationsSeen();
+        $this->setAllNotificationsSeen($nickname);
         return $this->formatDateArray($result);
     }
     //set all notifications seen
-    public function setAllNotificationsSeen()
+    public function setAllNotificationsSeen($nickname)
     {
-        $nickname = $_SESSION['nickname'];
         $query = "UPDATE Notify SET seen = 1 WHERE to_username = ?";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("s", $nickname);
@@ -741,9 +739,8 @@ class DatabaseHelper
         $stmt->close();
     }
     //get unread notifications
-    public function getUnreadNotifications()
+    public function getUnreadNotifications($nickname)
     {
-        $nickname = $_SESSION['nickname'];
         $query = "SELECT COUNT(*) as unread FROM Notify WHERE to_username = ? AND seen = 0";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("s", $nickname);

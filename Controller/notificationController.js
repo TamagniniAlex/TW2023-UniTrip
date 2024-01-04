@@ -1,16 +1,13 @@
 $(document).ready(function () {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-
     $.ajax({
-            type: 'GET',
-            url: '../Controller/getNotificationsByNickname.php',
-            dataType: 'json',
-            success: function (response) {
-                if (response === "error") {
-                    window.location.replace("feed.html");
-                } else {
-                    response.forEach(notification => {
+        type: 'GET',
+        url: '../Controller/getNotificationsByNickname.php',
+        dataType: 'json',
+        success: function (response) {
+            if (response === "error") {
+                window.location.replace("feed.html");
+            } else {
+                response.forEach(notification => {
                     let postHtml = `
                 <div class="row align-items-center border-2">
                     <div class="col-4">
@@ -33,10 +30,11 @@ $(document).ready(function () {
                     `;
                     $("#notify").append(postHtml);
                 }
-                )}
-            },
-            error: function (xhr, status, error) {
-                console.error('Errore nella richiesta AJAX:', status, error);
+                )
             }
-        });
+        },
+        error: function (xhr, status, error) {
+            console.error('Errore nella richiesta AJAX:', status, error);
+        }
+    });
 });

@@ -7,13 +7,13 @@ class NotificationModel extends Model
     {
         parent::__construct();
     }
-    public function getNotifications()
+    public function getNotifications($nickname)
     {
-        return $this->db->getNotifications();
+        return $this->db->getNotifications($nickname);
     }
-    public function getUnreadNotifications()
+    public function getUnreadNotifications($nickname)
     {
-        return $this->db->getUnreadNotifications();
+        return $this->db->getUnreadNotifications($nickname);
     }
 }
 ?>

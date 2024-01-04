@@ -1,5 +1,6 @@
 <?php
 require_once("../model/postLikeModel.php");
+
 $like = new LikeModel();
 
 if (isset($_SESSION['nickname']) && isset($_GET['post_id'])) {
