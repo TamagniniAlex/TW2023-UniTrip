@@ -33,7 +33,7 @@ $(document).ready(function () {
                     </div>
                     ${sessionNickname ? `
                         <div class="col-2 col-lg-1 align-self-center text-center fs-3">
-                            <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="text-dark"><em class="fa fa-star-o"></em></a>
+                            <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="text-dark" title="profile"><em class="fa fa-star-o"></em></a>
                         </div>
                     ` : ''}
                 </div>
@@ -88,7 +88,8 @@ $(document).ready(function () {
                     </div>
                     <div class="row mb-2">
                         <div class="col-10 col-lg-11 align-self-center ms-auto">
-                            <h5>${post.title}</h5>
+                //TODO
+                            <h2>${post.title}</h2>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -131,12 +132,12 @@ $(document).ready(function () {
                     </div>
                     <div class="row mb-4">
                         <div class="col-2 offset-2">
-                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
+                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0" title="itinerary">
                                 <em class="fa fa-map-o"></em>
                             </a>
                         </div>
                         <div class="col-2 text-center">
-                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="btn text-muted p-0">
+                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="btn text-muted p-0" title="comment">
                                 ` + getCommentCount(post.id) + `
                             </a>
                         </div>
