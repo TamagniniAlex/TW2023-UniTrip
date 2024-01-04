@@ -100,7 +100,7 @@ $(document).ready(function () {
                                                 data-bs-slide-to="${photoIndex}" 
                                                 aria-label="Slide ${photoIndex}" 
                                                 class="${photoIndex === 0 ? 'active' : ''}" 
-                                                aria-current="${photoIndex === 0 ? 'true' : ''}">
+                                                aria-current="${photoIndex === 0 ? 'true' : 'false'}">
                                         </button>
                                     `).join('')}
                                 </div>
