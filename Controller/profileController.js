@@ -100,7 +100,7 @@ $(document).ready(function () {
                                 response.forEach(function (post, index) {
                                     var profileHtml = `
                                 <div class="col-12 col-lg-6 col-xxl-4 px-5">
-                                    <h5>${post.title}</h5>
+                                    <h2>${post.title}</h2>
                                     <div id="carouselExampleIndicators${index}" class="carousel slide" data-bs-ride="carousel">
                                         <div class="carousel-indicators">
                                             ${post.photos.map((photo, index) => `

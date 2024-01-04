@@ -35,7 +35,7 @@ $(document).ready(function () {
                 </div>
                 <div class="row mb-2">
                     <div class="col-10 col-lg-11 align-self-center ms-auto">
-                        <h5>${response.title}</h5>
+                        <h2>${response.title}</h2>
                     </div>
                 </div>
                 <div class="row mb-2">
