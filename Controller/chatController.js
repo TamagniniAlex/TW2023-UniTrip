@@ -94,6 +94,7 @@ function sendMessage() {
         dataType: 'json',
         success: function (result) {
             if (result === "success") {
+                $('#inputMessage').value = "";
                 window.location.reload();
             }
         },
