@@ -3,7 +3,7 @@ $(document).ready(function () {
     const urlParams = new URLSearchParams(queryString);
     const post_id = urlParams.get('post_id')
     if (post_id == null || post_id == "") {
-        window.location.replace("../View/feed.html");
+        window.location.href = "../View/feed.html";
     }
     $.ajax({
         type: 'GET',
@@ -11,7 +11,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (response) {
             if (response === "error") {
-                window.location.replace("feed.html");
+                window.location.href = "../View/feed.html";
             } else {
                 var postHtml = `
                 <div class="row mb-2">
@@ -145,7 +145,7 @@ $(document).ready(function () {
         success: function (response) {
             $("#sendComment").click(function () {
                 if (response === "error") {
-                    window.location.replace("login.html");
+                    window.location.href = "../View/login.html";
                 } else {
                     sendComment(post_id);
                 }

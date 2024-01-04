@@ -27,5 +27,9 @@ class MessageModel extends Model
     {
         return $this->db->notifyDirectMessage($from_username, $to_username, $message);
     }
+    public function sendNotificationPost($from_username, $to_username, $message, $post_id)
+    {
+        return $this->db->notifyPostMessage($from_username, $to_username, $message, $post_id);
+    }
 }
 ?>
