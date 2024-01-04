@@ -28,27 +28,33 @@ function addStage() {
     var newStageHTML = `
         <div class="row mb-5">
             <div class="col-12 p-0 mb-2">
+                <label for="selectCities${stageCount}" class="form-label">Tappa ${stageCount}</label>
                 <select id="selectCities${stageCount}" class="form-select" aria-label="Seleziona città di partenza">
                     <option selected disabled>Seleziona città di partenza</option>
                 </select>
             </div>
             <div class="col-4 p-0 offset-1">
+                <label for="departureDate${stageCount}" class="form-label">Data di partenza</label>
                 <input type="date" class="form-control" id="departureDate${stageCount}" name="departureDate">
             </div>
             <div class="col-4 p-0 offset-2">
+                <label for="departureTime${stageCount}" class="form-label">Ora di partenza</label>
                 <input type="time" class="form-control" id="departureTime${stageCount}" name="departureTime">
             </div>
         </div>
         <div class="row mb-4">
             <div class="col-12 p-0 mb-2">
+                <label for="selectCities${stageCount + 1}" class="form-label">Tappa ${stageCount + 1}</label>
                 <select id="selectCities${stageCount + 1}" class="form-select" aria-label="Seleziona città di arrivo">
                     <option selected disabled>Seleziona città di arrivo</option>
                 </select>
             </div>
             <div class="col-4 p-0 offset-1">
+                <label for="arrivalDate${stageCount}" class="form-label">Data di arrivo</label>
                 <input type="date" class="form-control" id="arrivalDate${stageCount}" name="departureDate">
             </div>
-            <div class="col-4 p-0 offset-2">                
+            <div class="col-4 p-0 offset-2">      
+                <label for="arrivalTime${stageCount}" class="form-label">Ora di arrivo</label>            
                 <input type="time" class="form-control" id="arrivalTime${stageCount}" name="arrivalTime">
             </div>
         </div>

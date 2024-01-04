@@ -28,7 +28,7 @@ $(document).ready(function () {
                         <div class="col-12 px-5">
                         <div class="row mb-3">
                             <div class="col-3 col-lg-1 text-center"> 
-                                <a href="profile.html?nickname=` + nickname + `">
+                                <a title="profile" href="profile.html?nickname=` + nickname + `">
                                     <img id="profilePhoto" src="" alt="Account Image" class="img-fluid rounded-circle">
                                 </a>
                             </div>`;
@@ -52,10 +52,10 @@ $(document).ready(function () {
                         }
                         profileHtml += `
                         <div class="row mb-2">
-                            <h4 class="fw-bold text-start">` + response.name + " " + response.surname + `</h4>
+                            <h2 class="fw-bold text-start">` + response.name + " " + response.surname + `</h2>
                         </div>
                         <div class="row mb-2">
-                            <h6 class="text-muted text-start">@` + nickname + `</h6>
+                            <h3 class="text-muted text-start">@` + nickname + `</h3>
                         </div>
                         <div class="row mb-1">
                             <p class="text-muted text-start">` + response.description + `</p>
@@ -80,13 +80,13 @@ $(document).ready(function () {
                             profileHtml += `
                             <div class="row text-center">
                                 <div class="col-4">
-                                    <a href="profile.html?nickname=${sessionNickname}" class="btn ${!like && !favourite ? 'fw-bold text-decoration-underline' : ''}">Posts</a>
+                                    <a title="profile" href="profile.html?nickname=${sessionNickname}" class="btn ${!like && !favourite ? 'fw-bold text-decoration-underline' : ''}">Posts</a>
                                 </div>
                                 <div class="col-4">
-                                    <a href="profile.html?nickname=${sessionNickname}&like=true" class="btn ${like === 'true' ? 'fw-bold text-decoration-underline' : ''}">Mi piace</a>
+                                    <a title="profile" href="profile.html?nickname=${sessionNickname}&like=true" class="btn ${like === 'true' ? 'fw-bold text-decoration-underline' : ''}">Mi piace</a>
                                 </div>
                                 <div class="col-4">
-                                    <a href="profile.html?nickname=${sessionNickname}&favourite=true" class="btn ${favourite === 'true' ? 'fw-bold text-decoration-underline' : ''}">Preferiti</a>
+                                    <a title="profile" href="profile.html?nickname=${sessionNickname}&favourite=true" class="btn ${favourite === 'true' ? 'fw-bold text-decoration-underline' : ''}">Preferiti</a>
                                 </div>
                             </div>`;
                         }
@@ -106,7 +106,7 @@ $(document).ready(function () {
                                             ${post.photos.map((photo, index) => `
                                                 <button type="button" data-bs-target="#carouselExampleIndicators${index}" 
                                                     data-bs-slide-to="${index}" aria-label="Slide ${index}" 
-                                                    class="${index === 0 ? 'active' : ''}" aria-current="${index === 0 ? 'true' : ''}">
+                                                    class="${index === 0 ? 'active' : ''}" aria-current="${index === 0 ? 'true' : 'false'}">
                                                 </button>
                                             `).join('')}
                                         </div>
@@ -131,12 +131,12 @@ $(document).ready(function () {
                                     </div>
                                     <div class="row mb-4">
                                         <div class="col-1">
-                                            <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
+                                            <a title="profile" href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
                                                 <em class="fa fa-map-o"></em>
                                             </a>                        
                                         </div>
                                         <div class="col-3 text-end p-0">
-                                            <a id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="btn text-muted p-0">
+                                            <a title="profile" id="commentsCount${post.id}" href="comment.html?post_id=${post.id}" class="btn text-muted p-0">
                                                 ` + getCommentCount(post.id) + `
                                             </a>                        
                                         </div>
