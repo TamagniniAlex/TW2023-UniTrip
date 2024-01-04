@@ -34,22 +34,27 @@
                     <h1 class="text-center mb-4">UniTrip</h1>
                     <p class="text-center mb-5">Inserisci post</p>
                     <div class="row mb-4">
-                        <input type="text" placeholder="Inserisci titolo del post..." class="form-control" id="title" name="title">
+                        <label for="title" class="form-label">Titolo</label>
+                        <input id="title" type="text" placeholder="Inserisci titolo del post..." class="form-control" id="title" name="title">
                     </div>
                     <div class="row mb-4">
-                        <textarea placeholder="Inserisci descrizione..." class="form-control" rows="3" id="description" name="description"></textarea>
+                        <label for="description" class="form-label">Descrizione</label>
+                        <textarea id="description" placeholder="Inserisci descrizione..." class="form-control" rows="3" id="description" name="description"></textarea>
                     </div>
                     <div class="row mb-4">
+                        <label for="selectNations" class="form-label">Città</label>
                         <select id="selectNations" class="form-select" aria-label="Seleziona nazione">
                             <option selected disabled>Seleziona nazione</option>
                         </select>
                     </div>
                     <div class="row mb-4">
-                        <input class="form-control" type="file" id="multipleImage" name="multipleImage[]" multiple accept="image/png, image/jpeg">
+                        <label for="city" class="form-label">Immagini</label>
+                        <input id="city" class="form-control" type="file" id="multipleImage" name="multipleImage[]" multiple accept="image/png, image/jpeg">
                     </div>
                     <hr class="row mb-4">
                     <div class="row mb-4">
-                        <textarea placeholder="Inserisci descrizione dell'itinerario..." class="form-control" rows="3" id="itineraryDescription" name="description"></textarea>
+                        <label for="itineraryTitle" class="form-label">Titolo itinerario</label>
+                        <textarea id="itineraryTitle" placeholder="Inserisci descrizione dell'itinerario..." class="form-control" rows="3" id="itineraryDescription" name="description"></textarea>
                     </div>
                     <hr class="row mb-4">
                     <div class="row mb-4">
