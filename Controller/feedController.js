@@ -16,7 +16,7 @@ $(document).ready(function () {
         success: function (response) {
             if (response !== "error") {
                 sessionNickname = response;
-                var htmlCode = `
+                let htmlCode = `
                 <div class="row mb-4">
                     ${sessionNickname ? `
                         <div class="col-2 col-lg-1 text-center">
@@ -40,7 +40,7 @@ $(document).ready(function () {
                 `;
                 getProfilePhoto(sessionNickname);
             } else {
-                var htmlCode = `
+                let htmlCode = `
                 <div class="row mb-4">
                     <div class="col-6 align-self-center text-end">
                         <a href="feed.html" class="btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
@@ -66,7 +66,7 @@ $(document).ready(function () {
                 window.location.replace("login.html");
             } else {
                 response.forEach(function (post, index) {
-                    var postHtml = `
+                    let postHtml = `
                     <div class="row mb-2">
                         <div class="col-2 col-lg-1 text-center">
                             <a href="profile.html?nickname=${post.nickname}">

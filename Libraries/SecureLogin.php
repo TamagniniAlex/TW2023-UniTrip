@@ -11,7 +11,7 @@ function login($nickname_mail, $password, $mysqli)
             $stmt->bind_param('s', $nickname_mail); 
             $stmt->execute(); // esegue la query appena creata. 
             $stmt->store_result(); 
-            $stmt->bind_result($nickname_mail); // recupera il risultato della query e lo memorizza nelle relative variabili. 
+            $stmt->bind_result($nickname_mail); // recupera il risultato della query e lo memorizza nelle relative letiabili. 
             $stmt->fetch(); 
         }
     } 
@@ -22,7 +22,7 @@ function login($nickname_mail, $password, $mysqli)
         $stmt->bind_param('s', $nickname);
         $stmt->execute(); // esegue la query appena creata.
         $stmt->store_result();
-        $stmt->bind_result($nickname, $db_password, $salt); // recupera il risultato della query e lo memorizza nelle relative variabili.
+        $stmt->bind_result($nickname, $db_password, $salt); // recupera il risultato della query e lo memorizza nelle relative letiabili.
         $stmt->fetch();
         $password = hash('sha512', $password . $salt); // codifica la password usando una chiave univoca.
         if ($stmt->num_rows == 1) { // se l'utente esiste

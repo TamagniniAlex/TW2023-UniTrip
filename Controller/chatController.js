@@ -80,7 +80,7 @@ function OpenPost($post_id) {
 }
 
 function sendMessage() {
-    var message = document.getElementById("inputMessage").value;
+    let message = document.getElementById("inputMessage").value;
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const chat_with = urlParams.get('chat_with')

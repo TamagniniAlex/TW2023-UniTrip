@@ -5,14 +5,14 @@ CREATE DATABASE IF NOT EXISTS UniTrip;
 USE UniTrip;
 
 CREATE TABLE Profile (
-  nickname VARCHAR(20) PRIMARY KEY,
-  mail VARCHAR(150) UNIQUE,
+  nickname letCHAR(20) PRIMARY KEY,
+  mail letCHAR(150) UNIQUE,
   password CHAR(128) NOT NULL, 
   salt CHAR(128) NOT NULL,
-  name VARCHAR(20),
-  surname VARCHAR(20),
-  photo_url VARCHAR(255),
-  description VARCHAR(500),
+  name letCHAR(20),
+  surname letCHAR(20),
+  photo_url letCHAR(255),
+  description letCHAR(500),
   birth_date DATE,
   join_date DATE
 );
@@ -20,43 +20,43 @@ CREATE TABLE Profile (
 CREATE TABLE Notify (
   id INT PRIMARY KEY AUTO_INCREMENT,
   seen BOOLEAN DEFAULT FALSE,
-  from_username VARCHAR(20),
-  to_username VARCHAR(20),
-  message VARCHAR(255),
+  from_username letCHAR(20),
+  to_username letCHAR(20),
+  message letCHAR(255),
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (from_username) REFERENCES Profile(nickname),
   FOREIGN KEY (to_username) REFERENCES Profile(nickname)
 );
 CREATE TABLE Follow (
-  from_username VARCHAR(20),
-  to_username VARCHAR(20),
+  from_username letCHAR(20),
+  to_username letCHAR(20),
   PRIMARY KEY (from_username, to_username),
   FOREIGN KEY (from_username) REFERENCES Profile(nickname),
   FOREIGN KEY (to_username) REFERENCES Profile(nickname)
 );
 
 CREATE TABLE Country (
-  name VARCHAR(255) PRIMARY KEY
+  name letCHAR(255) PRIMARY KEY
 );
 
 CREATE TABLE City (
-  country varchar(255),
-  name VARCHAR(255) PRIMARY KEY ,
+  country letchar(255),
+  name letCHAR(255) PRIMARY KEY ,
   FOREIGN KEY (country) REFERENCES Country(name)
 );
 
 CREATE TABLE Itinerary (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  organizer_username VARCHAR(255),
-  description VARCHAR(255),
+  organizer_username letCHAR(255),
+  description letCHAR(255),
   FOREIGN KEY (organizer_username) REFERENCES Profile(nickname)
 );
 
 CREATE TABLE ItineraryBetweenCities (
   itinerary_id INT,
-  departure_city VARCHAR(255),
+  departure_city letCHAR(255),
   departure_time DATETIME,
-  arrival_city VARCHAR(255),
+  arrival_city letCHAR(255),
   arrival_time DATETIME,
   PRIMARY KEY (itinerary_id, departure_city),
   FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id),
@@ -66,11 +66,11 @@ CREATE TABLE ItineraryBetweenCities (
 
 CREATE TABLE Post (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  author VARCHAR(255),
+  author letCHAR(255),
   itinerary_id INT,
-  title VARCHAR(255),
-  description VARCHAR(255),
-  country VARCHAR(255),
+  title letCHAR(255),
+  description letCHAR(255),
+  country letCHAR(255),
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id),
   FOREIGN KEY (author) REFERENCES Profile(nickname),
@@ -79,15 +79,15 @@ CREATE TABLE Post (
 
 CREATE TABLE PostPhoto (
   post_id INT,
-  photo_url VARCHAR(255),
+  photo_url letCHAR(255),
   FOREIGN KEY (post_id) REFERENCES Post(id),
   PRIMARY KEY (post_id, photo_url)
 );
 
 CREATE TABLE PostComment (
   post_id INT,
-  author VARCHAR(255),
-  comment VARCHAR(255),
+  author letCHAR(255),
+  comment letCHAR(255),
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (post_id, author, datetime),
   FOREIGN KEY (post_id) REFERENCES Post(id),
@@ -96,7 +96,7 @@ CREATE TABLE PostComment (
 
 CREATE TABLE PostLike (
   post_id INT,
-  profile_username VARCHAR(50),
+  profile_username letCHAR(50),
   FOREIGN KEY (post_id) REFERENCES Post(id),
   FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
   PRIMARY KEY (profile_username, post_id)
@@ -104,7 +104,7 @@ CREATE TABLE PostLike (
 
 CREATE TABLE PostFavourites (
   post_id INT,
-  profile_username VARCHAR(50),
+  profile_username letCHAR(50),
   FOREIGN KEY (post_id) REFERENCES Post(id),
   FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
   PRIMARY KEY (profile_username, post_id)
@@ -112,9 +112,9 @@ CREATE TABLE PostFavourites (
 
 CREATE TABLE Messages (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  from_username VARCHAR(255),
-  to_username varchar(255) NULL,
-  message VARCHAR(255),
+  from_username letCHAR(255),
+  to_username letchar(255) NULL,
+  message letCHAR(255),
   post_id INT NULL,
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (post_id) REFERENCES Post(id),
@@ -123,8 +123,8 @@ CREATE TABLE Messages (
 );
 
 CREATE TABLE LoginAttempts (
-  nickname VARCHAR(50) NOT NULL,
-  time VARCHAR(30) NOT NULL 
+  nickname letCHAR(50) NOT NULL,
+  time letCHAR(30) NOT NULL 
 );
 
 DROP USER 'secure_user'@'localhost';

@@ -138,7 +138,7 @@ function getFollower(post_id) {
             if (result !== "error") {
                 $("#friendList").empty();
                 result.forEach(function (follower, index) {
-                    var modalBody = `
+                    let modalBody = `
                     <div class="row mb-2">
                         <div class="col-2 text-center">
                             <img src="${follower.photo_url}" alt="Account Image" class="img-fluid rounded-circle">

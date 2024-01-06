@@ -4,7 +4,7 @@ $(document).ready(function () {
     const nickname = urlParams.get('nickname');
     const favourite = urlParams.get('favourite');
     const like = urlParams.get('like');
-    var sessionNickname = "";
+    let sessionNickname = "";
     if (nickname == null || nickname == "") {
         window.location.replace("../View/feed.html");
     }
@@ -24,7 +24,7 @@ $(document).ready(function () {
                     if (response === "error") {
                         window.location.replace("feed.html");
                     } else {
-                        var profileHtml = `
+                        let profileHtml = `
                         <div class="col-12 px-5">
                         <div class="row mb-3">
                             <div class="col-3 col-lg-1 text-center"> 
@@ -98,7 +98,7 @@ $(document).ready(function () {
                             dataType: 'json',
                             success: function (response) {
                                 response.forEach(function (post, index) {
-                                    var profileHtml = `
+                                    let profileHtml = `
                                 <div class="col-12 col-lg-6 col-xxl-4 px-5">
                                     <h2>${post.title}</h2>
                                     <div id="carouselExampleIndicators${index}" class="carousel slide" data-bs-ride="carousel">

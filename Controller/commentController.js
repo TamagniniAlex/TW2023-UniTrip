@@ -13,7 +13,7 @@ $(document).ready(function () {
             if (response === "error") {
                 window.location.replace("feed.html");
             } else {
-                var postHtml = `
+                let postHtml = `
                 <div class="row mb-2">
                     <div class="col-2 col-lg-1 text-center">
                         <a href="profile.html?nickname=${response.nickname}">
@@ -158,7 +158,7 @@ $(document).ready(function () {
 });
 
 function sendComment($post_id) {
-    var comment = document.getElementById("inputComment").value;
+    let comment = document.getElementById("inputComment").value;
     $.ajax({
         type: 'POST',
         url: '../Controller/addCommentController.php',

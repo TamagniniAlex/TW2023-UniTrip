@@ -30,7 +30,7 @@ function printPosts() {
         dataType: 'json',
         success: function (result) {
             result.forEach(function (post, index) {
-                var profileHtml = `
+                let profileHtml = `
             <div class="col-12 col-lg-6 col-xxl-4 px-5">
                 <h2>${post.title}</h2>
                 <div id="carouselExampleIndicators${index}" class="carousel slide" data-bs-ride="carousel">

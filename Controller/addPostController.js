@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var selectNations = $('#selectNations');
+    let selectNations = $('#selectNations');
     $.ajax({
         type: 'GET',
         url: '../Controller/getCountryController.php',
@@ -22,10 +22,10 @@ $(document).ready(function () {
     });
 });
 
-var stageCount = 1;
+let stageCount = 1;
 
 function addStage() {
-    var newStageHTML = `
+    let newStageHTML = `
         <div class="row mb-5">
             <div class="col-12 p-0 mb-2">
                 <label for="selectCities${stageCount}" class="form-label">Tappa ${stageCount}</label>
@@ -61,18 +61,18 @@ function addStage() {
         <hr class="row mb-4">
     `;
 
-    var lastHr = document.querySelectorAll('hr')[document.querySelectorAll('hr').length - 1];
+    let lastHr = document.querySelectorAll('hr')[document.querySelectorAll('hr').length - 1];
     lastHr.insertAdjacentHTML('afterend', newStageHTML);
     stageCount += 2;
 
-    var selectNations = $('#selectNations');
+    let selectNations = $('#selectNations');
     getCities(selectNations, false)
 }
 
 function getCities(selectNations, reload) {
-    var selectedNation = $(selectNations).val();
+    let selectedNation = $(selectNations).val();
     if (selectedNation !== null) {
-        for (var i = 1; i <= stageCount; i++) {
+        for (let i = 1; i <= stageCount; i++) {
             if ($('#selectCities' + i).val == null || reload) {
                 $('#selectCities' + i).empty().append('<option value="" disabled selected>' +
                     (i % 2 === 0 ? 'Seleziona città di arrivo' : 'Seleziona città di partenza') + '</option>');
@@ -85,8 +85,8 @@ function getCities(selectNations, reload) {
             dataType: 'json',
             success: function (cities) {
                 cities.forEach(function (city) {
-                    for (var i = 1; i <= stageCount; i++) {
-                        var selectCities = $('#selectCities' + i);
+                    for (let i = 1; i <= stageCount; i++) {
+                        let selectCities = $('#selectCities' + i);
                         selectCities.append('<option value="' + city.name + '">' + city.name + '</option>');
                     }
                 });
@@ -99,21 +99,21 @@ function getCities(selectNations, reload) {
 }
 
 function addPost() {
-    var title = $('#title').val();
-    var description = $('#description').val();
-    var nation = $('#selectNations').val();
-    var itineraryDescription = $('#itineraryDescription').val();
-    var itineraryBetweenCities = [];
+    let title = $('#title').val();
+    let description = $('#description').val();
+    let nation = $('#selectNations').val();
+    let itineraryDescription = $('#itineraryDescription').val();
+    let itineraryBetweenCities = [];
     if (stageCount > 1 && title !== null && description !== null && nation !== null && itineraryDescription !== null) {
-        for (var i = 1; i < stageCount; i += 2) {
-            var departureCity = $('#selectCities' + i).val();
-            var departureDate = $('#departureDate' + i).val();
-            var departureTime = $('#departureTime' + i).val();
-            var arrivalCity = $('#selectCities' + (i + 1)).val();
-            var arrivalDate = $('#arrivalDate' + i).val();
-            var arrivalTime = $('#arrivalTime' + i).val();
+        for (let i = 1; i < stageCount; i += 2) {
+            let departureCity = $('#selectCities' + i).val();
+            let departureDate = $('#departureDate' + i).val();
+            let departureTime = $('#departureTime' + i).val();
+            let arrivalCity = $('#selectCities' + (i + 1)).val();
+            let arrivalDate = $('#arrivalDate' + i).val();
+            let arrivalTime = $('#arrivalTime' + i).val();
             if (departureCity !== null && departureTime !== null && arrivalCity !== null && arrivalTime !== null && departureDate !== null && arrivalDate !== null) {
-                var itinerarySegment = [departureCity, departureDate + " " + departureTime, arrivalCity, arrivalDate + " " + arrivalTime];
+                let itinerarySegment = [departureCity, departureDate + " " + departureTime, arrivalCity, arrivalDate + " " + arrivalTime];
                 itineraryBetweenCities.push(itinerarySegment);
             } else {
                 return;
@@ -133,11 +133,11 @@ function addPost() {
                         dataType: 'json',
                         success: function (response) {
                             if (response !== "error") {
-                                var post_id = response;
-                                var input = document.getElementById('multipleImage');
-                                var files = input.files;
-                                var formData = new FormData();
-                                for (var i = 0; i < files.length; i++) {
+                                let post_id = response;
+                                let input = document.getElementById('multipleImage');
+                                let files = input.files;
+                                let formData = new FormData();
+                                for (let i = 0; i < files.length; i++) {
                                     formData.append('file[]', files[i]);
                                 }
                                 $.ajax({
@@ -148,7 +148,7 @@ function addPost() {
                                     contentType: false,
                                     success: function (response) {
                                         if (response !== "error") {
-                                            var photos_url = JSON.parse(response);
+                                            let photos_url = JSON.parse(response);
                                             $.ajax({
                                                 type: 'POST',
                                                 url: '../Controller/addPostPhotoController.php',

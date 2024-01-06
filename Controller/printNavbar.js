@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  var focusOn = window.location.pathname.split('/').pop().split('.')[0];
+  let focusOn = window.location.pathname.split('/').pop().split('.')[0];
   html = `
   <nav class="navbar bg-light fixed-bottom border-top border-2">
     <div class="container">
