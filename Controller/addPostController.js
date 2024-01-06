@@ -28,33 +28,33 @@ function addStage() {
     let newStageHTML = `
         <div class="row mb-5">
             <div class="col-12 p-0 mb-2">
-                <label for="selectCities${stageCount}" class="form-label">Tappa ${stageCount}</label>
+                <label for="selectCities${stageCount}" class="form-label">Seleziona città di partenza:</label>
                 <select id="selectCities${stageCount}" class="form-select" aria-label="Seleziona città di partenza">
                     <option selected disabled>Seleziona città di partenza</option>
                 </select>
             </div>
             <div class="col-4 p-0 offset-1">
-                <label for="departureDate${stageCount}" class="form-label">Data di partenza</label>
+                <label for="departureDate${stageCount}" class="form-label">Data di partenza:</label>
                 <input type="date" class="form-control" id="departureDate${stageCount}" name="departureDate">
             </div>
             <div class="col-4 p-0 offset-2">
-                <label for="departureTime${stageCount}" class="form-label">Ora di partenza</label>
+                <label for="departureTime${stageCount}" class="form-label">Ora di partenza:</label>
                 <input type="time" class="form-control" id="departureTime${stageCount}" name="departureTime">
             </div>
         </div>
         <div class="row mb-4">
             <div class="col-12 p-0 mb-2">
-                <label for="selectCities${stageCount + 1}" class="form-label">Tappa ${stageCount + 1}</label>
+                <label for="selectCities${stageCount + 1}" class="form-label">Seleziona città di arrivo:</label>
                 <select id="selectCities${stageCount + 1}" class="form-select" aria-label="Seleziona città di arrivo">
                     <option selected disabled>Seleziona città di arrivo</option>
                 </select>
             </div>
             <div class="col-4 p-0 offset-1">
-                <label for="arrivalDate${stageCount}" class="form-label">Data di arrivo</label>
+                <label for="arrivalDate${stageCount}" class="form-label">Data di arrivo:</label>
                 <input type="date" class="form-control" id="arrivalDate${stageCount}" name="departureDate">
             </div>
             <div class="col-4 p-0 offset-2">      
-                <label for="arrivalTime${stageCount}" class="form-label">Ora di arrivo</label>            
+                <label for="arrivalTime${stageCount}" class="form-label">Ora di arrivo:</label>            
                 <input type="time" class="form-control" id="arrivalTime${stageCount}" name="arrivalTime">
             </div>
         </div>
@@ -63,7 +63,7 @@ function addStage() {
 
     let lastHr = document.querySelectorAll('hr')[document.querySelectorAll('hr').length - 1];
     lastHr.insertAdjacentHTML('afterend', newStageHTML);
-    stageCount += 2;
+    stageCount += 1;
 
     let selectNations = $('#selectNations');
     getCities(selectNations, false)
@@ -102,9 +102,10 @@ function addPost() {
     let title = $('#title').val();
     let description = $('#description').val();
     let nation = $('#selectNations').val();
+    let photos = $('#multipleImage')[0];
     let itineraryDescription = $('#itineraryDescription').val();
     let itineraryBetweenCities = [];
-    if (stageCount > 1 && title !== null && description !== null && nation !== null && itineraryDescription !== null) {
+    if (stageCount > 1 && title !== null && description !== null && nation !== null && itineraryDescription !== null && photos.files.length > 0) {
         for (let i = 1; i < stageCount; i += 2) {
             let departureCity = $('#selectCities' + i).val();
             let departureDate = $('#departureDate' + i).val();
@@ -134,8 +135,7 @@ function addPost() {
                         success: function (response) {
                             if (response !== "error") {
                                 let post_id = response;
-                                let input = document.getElementById('multipleImage');
-                                let files = input.files;
+                                let files = photos.files;
                                 let formData = new FormData();
                                 for (let i = 0; i < files.length; i++) {
                                     formData.append('file[]', files[i]);

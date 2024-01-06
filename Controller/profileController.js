@@ -6,7 +6,7 @@ $(document).ready(function () {
     const like = urlParams.get('like');
     let sessionNickname = "";
     if (nickname == null || nickname == "") {
-        window.location.replace("../View/feed.html");
+        window.location.href = "../View/feed.html";
     }
     $.ajax({
         type: 'GET',
@@ -22,7 +22,7 @@ $(document).ready(function () {
                 dataType: 'json',
                 success: function (response) {
                     if (response === "error") {
-                        window.location.replace("feed.html");
+                        window.location.href = "../View/feed.html";
                     } else {
                         let profileHtml = `
                         <div class="col-12 px-5">
@@ -41,7 +41,7 @@ $(document).ready(function () {
                                 </button>
                             </div>
                         </div>`;
-                        } else {
+                        } else if (sessionNickname != "" && sessionNickname == nickname) {
                             profileHtml += ` 
                             <div class="col-4 col-lg-2 offset-5 offset-lg-9 align-self-center text-center">
                                 <button onclick="logout()" class="btn btn-danger form-control">
@@ -49,6 +49,9 @@ $(document).ready(function () {
                                 </button>
                             </div>
                         </div>`;
+                        } else {
+                            profileHtml += ` 
+                            </div>`;
                         }
                         profileHtml += `
                         <div class="row mb-2">
@@ -99,7 +102,7 @@ $(document).ready(function () {
                             success: function (response) {
                                 response.forEach(function (post, index) {
                                     let profileHtml = `
-                                <div class="col-12 col-lg-6 col-xxl-4 px-5">
+                                    <div class="col-12 col-lg-6 col-xxl-4 px-5 mb-3">
                                     <h2>${post.title}</h2>
                                     <div id="carouselExampleIndicators${index}" class="carousel slide" data-bs-ride="carousel">
                                         <div class="carousel-indicators">
@@ -198,7 +201,7 @@ function logout() {
         dataType: 'json',
         success: function (result) {
             if (result === "success") {
-                window.location.replace("index.html");
+                window.location.href = "../View/index.html";
             }
         },
         error: function (xhr, status, error) {

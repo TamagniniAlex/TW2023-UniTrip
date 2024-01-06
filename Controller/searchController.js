@@ -31,7 +31,7 @@ function printPosts() {
         success: function (result) {
             result.forEach(function (post, index) {
                 let profileHtml = `
-            <div class="col-12 col-lg-6 col-xxl-4 px-5">
+                <div class="col-12 col-lg-6 col-xxl-4 px-5 mb-3">
                 <h2>${post.title}</h2>
                 <div id="carouselExampleIndicators${index}" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
@@ -63,7 +63,7 @@ function printPosts() {
                 </div>
                 <div class="row mb-4">
                     <div class="col-1">
-                        <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0">
+                        <a href="itinerary.html?itinerary_id=${post.itinerary_id}" class="btn text-muted p-0" title="itinerary">
                             <em class="fa fa-map-o"></em>
                         </a>                        
                     </div>

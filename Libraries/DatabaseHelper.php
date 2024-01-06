@@ -653,7 +653,7 @@ class DatabaseHelper
             )         
             SELECT mine, chat_with, message, datetime, P.name, P.surname, P.photo_url FROM LatestMessages LM
             INNER JOIN Profile P ON LM.chat_with = P.nickname
-            WHERE LM.row_num = 1";
+            WHERE LM.row_num = 1 ORDER BY datetime DESC";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("sssss", $nickname, $nickname, $nickname, $nickname, $nickname);
         $stmt->execute();
@@ -671,7 +671,7 @@ class DatabaseHelper
             message, datetime, post_id FROM Messages
             WHERE (from_username = ? AND to_username = ?)
             OR (from_username = ? AND to_username = ?)
-            ORDER BY datetime;";
+            ORDER BY datetime";
         $stmt = $this->mysqli->prepare($query);
         $stmt->bind_param("sssss", $nickname, $nickname, $chat_with, $chat_with, $nickname);
         $stmt->execute();
@@ -690,9 +690,9 @@ class DatabaseHelper
         $stmt->close();
         $result = $result->fetch_assoc();
         $author = $result['author'];
-        $query = "INSERT INTO Notify (from_username, to_username, message) VALUES (?, ?, ?)";
+        $query = "INSERT INTO Notify (from_username, to_username, message, post_id) VALUES (?, ?, ?, ?)";
         $stmt = $this->mysqli->prepare($query);
-        $stmt->bind_param("sss", $nickname, $author, $message);
+        $stmt->bind_param("sssi", $nickname, $author, $message, $post_id);
         $stmt->execute();
         $stmt->close();
     }
@@ -714,10 +714,19 @@ class DatabaseHelper
         $stmt->execute();
         $stmt->close();
     }
+    //send notification on post message
+    public function notifyPostMessage($from_username, $to_username, $message, $post_id)
+    {
+        $query = "INSERT INTO Notify (from_username, to_username, message, post_id) VALUES (?, ?, ?, ?)";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sssi", $from_username, $to_username, $message, $post_id);
+        $stmt->execute();
+        $stmt->close();
+    }
     //get all notifications
     public function getNotifications($nickname)
     {
-        $query = "SELECT Notify.from_username, Notify.message, Notify.datetime, Profile.photo_url FROM Notify 
+        $query = "SELECT Notify.from_username, Notify.message, Notify.datetime, Notify.post_id, Profile.photo_url, Profile.name, Profile.surname FROM Notify 
             JOIN Profile ON Notify.from_username = Profile.nickname WHERE Notify.to_username = ? 
             ORDER BY Notify.datetime DESC";
         $stmt = $this->mysqli->prepare($query);

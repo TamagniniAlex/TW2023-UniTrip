@@ -63,7 +63,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (response) {
             if (response === "notlogged") {
-                window.location.replace("login.html");
+                window.location.href = "../View/login.html";
             } else {
                 response.forEach(function (post, index) {
                     let postHtml = `
@@ -76,7 +76,7 @@ $(document).ready(function () {
                         <div class="col-7 col-lg-9 align-self-center">
                             <a href="profile.html?nickname=${post.nickname}" class="btn p-0">${post.name} ${post.surname}</a>
                             <a href="profile.html?nickname=${post.nickname}" class="btn text-muted p-0">@${post.nickname}</a>
-                            <a class="btn disabled text-muted p-0 px-3">&#9679 ${post.datetime}</a>
+                            <p class="btn disabled text-muted m-0">&#9679 ${post.datetime}</p>
                         </div>
                         ${post.following != null ?
                             `<div class="col-3 col-lg-2 align-self-center text-center">
@@ -88,7 +88,6 @@ $(document).ready(function () {
                     </div>
                     <div class="row mb-2">
                         <div class="col-10 col-lg-11 align-self-center ms-auto">
-                //TODO
                             <h2>${post.title}</h2>
                         </div>
                     </div>

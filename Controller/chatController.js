@@ -3,7 +3,7 @@ $(document).ready(function () {
     const urlParams = new URLSearchParams(queryString);
     const chat_with = urlParams.get('chat_with')
     if (chat_with == null || chat_with == "") {
-        window.location.replace("../View/feed.html");
+        window.location.href = "../View/feed.html";
     }
     $.ajax({
         type: 'GET',
@@ -11,7 +11,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data) {
             if (data === "error") {
-                window.location.href = "../View/index.html";
+                window.location.href = "../View/feed.html";
             } else {
                 $.ajax({
                     type: 'GET',
@@ -19,7 +19,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     success: function (photo) {
                         if (photo === "error") {
-                            window.location.href = "../View/index.html";
+                            window.location.href = "../View/feed.html";
                         } else {
                             $('#user').append(`
                                 <div class="row">
@@ -85,7 +85,7 @@ function sendMessage() {
     const urlParams = new URLSearchParams(queryString);
     const chat_with = urlParams.get('chat_with')
     if (chat_with == null || chat_with == "") {
-        window.location.replace("../View/feed.html");
+        window.location.href = "../View/feed.html";
     }
     $.ajax({
         type: 'POST',

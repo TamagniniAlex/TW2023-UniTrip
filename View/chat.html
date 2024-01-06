@@ -28,23 +28,23 @@
     </head>
 
     <body>
-        <div class="container mt-5 mb-5">
-            <div class="row justify-content-center">
+        <div class="container mt-4">
+            <div class="row justify-content-center mb-3">
                 <h1 class="text-center mb-4">UniTrip</h1>
-                <div id="user" class="mb-3"> </div>
-                <hr>
-                <div id="chat"> </div>
+                <div id="user" class="col-12 col-md-10 mb-3"> </div>
+                <hr class="col-12 col-md-10">
+                <div id="chat" class="col-12 col-md-10 mb-2"> </div>
             </div>
-            <div class="m-3">
-                <div class="row mb-5">
-                    <div class="col">
-                        <label for="inputMessage" class="form-label">Messaggio</label>
-                        <input id="inputMessage" type="text" placeholder="Inserisci un messaggio" class="form-control"
-                            aria-label="User message" >
-                    </div>
-                    <div class="col-auto">
-                        <button class="btn btn-outline-secondary" type="button" onclick="sendMessage()">Invia</button>
-                    </div>
+
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10">
+                    <label for="inputMessage" class="form-label">Invia un messaggio:</label>
+                </div>
+                <div class="col-10 col-md-8 col-xl-9 mb-4">
+                    <input id="inputMessage" type="text" placeholder="Inserisci un messaggio" class="form-control" aria-label="User message" >
+                </div>
+                <div class="col-2 col-xl-1">
+                    <button class="btn btn-outline-secondary w-100" type="button" onclick="sendMessage()">Invia</button>
                 </div>
             </div>
         </div>

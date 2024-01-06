@@ -31,3 +31,9 @@ li>a:hover {
 .results ul li:hover {
     background: #ececec
 }
+
+.search-label {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #585858;
+}

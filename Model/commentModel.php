@@ -29,8 +29,9 @@ class CommentModel extends Model
     {
         return $this->db->postComment($nickname, $post_id, $comment);
     }
-    public function notify($nickname,$post_id,$comment) {
-        $this->db->notify($nickname,$post_id,"$nickname dice $comment"); 
+    public function notify($nickname, $post_id, $comment)
+    {
+        $this->db->notify($nickname, $post_id, "$nickname dice: $comment");
     }
 }
 

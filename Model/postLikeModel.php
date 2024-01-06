@@ -20,8 +20,9 @@ class LikeModel extends Model
     {
         $this->db->removeLike($nickname, $post_id);
     }
-    public function notify($nickname,$post_id) {
-        $this->db->notify($nickname,$post_id,"$nickname ha messo mi piace ad un tuo post."); 
+    public function notify($nickname, $post_id)
+    {
+        $this->db->notify($nickname, $post_id, "$nickname ha messo mi piace al tuo post.");
     }
 }
 

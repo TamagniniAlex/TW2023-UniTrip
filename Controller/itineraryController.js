@@ -5,7 +5,7 @@ $(document).ready(function () {
     if (itinerary_id != null && itinerary_id != "") {
         url = '../Controller/getItineraryController.php?itinerary_id=' + itinerary_id;
     } else {
-        window.location.replace("../View/feed.html");
+        window.location.href = "../View/feed.html";
     }
     $.ajax({
         type: 'GET',
@@ -13,7 +13,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data) {
             if (data === "error") {
-                window.location.replace("feed.html");
+                window.location.href = "../View/feed.html";
             } else {
                 $("#itineraryTitle").append(`<h2 class="text-center">` + data.name + " " + data.surname + " "
                     + data.organizer_username + `</h2>` + `<h3 class="text-center">` + data.description + `</h3>`);
