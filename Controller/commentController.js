@@ -102,8 +102,8 @@ $(document).ready(function () {
                     </div>
                 </div>
                 `;
+                $("#post").append(postHtml);
             }
-            $("#post").append(postHtml);
         },
         error: function (xhr, status, error) {
             console.error('Errore nella richiesta AJAX:', status, error);
@@ -145,7 +145,7 @@ $(document).ready(function () {
         success: function (response) {
             $("#sendComment").click(function () {
                 if (response === "error") {
-                    window.location.href = "../View/login.html";
+                    window.location.href = "../View/index.html";
                 } else {
                     sendComment(post_id);
                 }

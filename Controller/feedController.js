@@ -14,9 +14,10 @@ $(document).ready(function () {
         url: '../Controller/getProfileNicknameController.php',
         dataType: 'json',
         success: function (response) {
+            let htmlCode;
             if (response !== "error") {
                 sessionNickname = response;
-                let htmlCode = `
+                htmlCode = `
                 <div class="row mb-4">
                     ${sessionNickname ? `
                         <div class="col-2 col-lg-1 text-center">
@@ -40,7 +41,7 @@ $(document).ready(function () {
                 `;
                 getProfilePhoto(sessionNickname);
             } else {
-                let htmlCode = `
+                htmlCode = `
                 <div class="row mb-4">
                     <div class="col-6 align-self-center text-end">
                         <a href="feed.html" class="btn ${!followParameter ? 'fw-bold text-decoration-underline' : ''}">Suggeriti</a>
@@ -63,7 +64,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (response) {
             if (response === "notlogged") {
-                window.location.href = "../View/login.html";
+                window.location.href = "../View/index.html";
             } else {
                 response.forEach(function (post, index) {
                     let postHtml = `

@@ -5,48 +5,48 @@ CREATE DATABASE IF NOT EXISTS UniTrip;
 USE UniTrip;
 
 CREATE TABLE Profile (
-  nickname letCHAR(20) PRIMARY KEY,
-  mail letCHAR(150) UNIQUE,
+  nickname VARCHAR(20) PRIMARY KEY,
+  mail VARCHAR(150) UNIQUE,
   password CHAR(128) NOT NULL, 
   salt CHAR(128) NOT NULL,
-  name letCHAR(20),
-  surname letCHAR(20),
-  photo_url letCHAR(255),
-  description letCHAR(500),
+  name VARCHAR(20),
+  surname VARCHAR(20),
+  photo_url VARCHAR(255),
+  description VARCHAR(500),
   birth_date DATE,
   join_date DATE
 );
 
 CREATE TABLE Follow (
-  from_username letCHAR(20),
-  to_username letCHAR(20),
+  from_username VARCHAR(20),
+  to_username VARCHAR(20),
   PRIMARY KEY (from_username, to_username),
   FOREIGN KEY (from_username) REFERENCES Profile(nickname),
   FOREIGN KEY (to_username) REFERENCES Profile(nickname)
 );
 
 CREATE TABLE Country (
-  name letCHAR(255) PRIMARY KEY
+  name VARCHAR(255) PRIMARY KEY
 );
 
 CREATE TABLE City (
-  country letchar(255),
-  name letCHAR(255) PRIMARY KEY ,
+  country varchar(255),
+  name VARCHAR(255) PRIMARY KEY ,
   FOREIGN KEY (country) REFERENCES Country(name)
 );
 
 CREATE TABLE Itinerary (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  organizer_username letCHAR(255),
-  description letCHAR(255),
+  organizer_username VARCHAR(255),
+  description VARCHAR(255),
   FOREIGN KEY (organizer_username) REFERENCES Profile(nickname)
 );
 
 CREATE TABLE ItineraryBetweenCities (
   itinerary_id INT,
-  departure_city letCHAR(255),
+  departure_city VARCHAR(255),
   departure_time DATETIME,
-  arrival_city letCHAR(255),
+  arrival_city VARCHAR(255),
   arrival_time DATETIME,
   PRIMARY KEY (itinerary_id, departure_city),
   FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id),
@@ -56,11 +56,11 @@ CREATE TABLE ItineraryBetweenCities (
 
 CREATE TABLE Post (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  author letCHAR(255),
+  author VARCHAR(255),
   itinerary_id INT,
-  title letCHAR(255),
-  description letCHAR(255),
-  country letCHAR(255),
+  title VARCHAR(255),
+  description VARCHAR(255),
+  country VARCHAR(255),
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (itinerary_id) REFERENCES Itinerary(id),
   FOREIGN KEY (author) REFERENCES Profile(nickname),
@@ -69,15 +69,15 @@ CREATE TABLE Post (
 
 CREATE TABLE PostPhoto (
   post_id INT,
-  photo_url letCHAR(255),
+  photo_url VARCHAR(255),
   FOREIGN KEY (post_id) REFERENCES Post(id),
   PRIMARY KEY (post_id, photo_url)
 );
 
 CREATE TABLE PostComment (
   post_id INT,
-  author letCHAR(255),
-  comment letCHAR(255),
+  author VARCHAR(255),
+  comment VARCHAR(255),
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (post_id, author, datetime),
   FOREIGN KEY (post_id) REFERENCES Post(id),
@@ -86,7 +86,7 @@ CREATE TABLE PostComment (
 
 CREATE TABLE PostLike (
   post_id INT,
-  profile_username letCHAR(50),
+  profile_username VARCHAR(50),
   FOREIGN KEY (post_id) REFERENCES Post(id),
   FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
   PRIMARY KEY (profile_username, post_id)
@@ -94,7 +94,7 @@ CREATE TABLE PostLike (
 
 CREATE TABLE PostFavourites (
   post_id INT,
-  profile_username letCHAR(50),
+  profile_username VARCHAR(50),
   FOREIGN KEY (post_id) REFERENCES Post(id),
   FOREIGN KEY (profile_username) REFERENCES Profile(nickname),
   PRIMARY KEY (profile_username, post_id)
@@ -102,9 +102,9 @@ CREATE TABLE PostFavourites (
 
 CREATE TABLE Messages (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  from_username letCHAR(255),
-  to_username letchar(255) NULL,
-  message letCHAR(255),
+  from_username VARCHAR(255),
+  to_username varchar(255) NULL,
+  message VARCHAR(255),
   post_id INT NULL,
   datetime DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (post_id) REFERENCES Post(id),
@@ -126,8 +126,8 @@ CREATE TABLE Notify (
 );
 
 CREATE TABLE LoginAttempts (
-  nickname letCHAR(50) NOT NULL,
-  time letCHAR(30) NOT NULL 
+  nickname VARCHAR(50) NOT NULL,
+  time VARCHAR(30) NOT NULL 
 );
 
 DROP USER 'secure_user'@'localhost';
@@ -136,11 +136,6 @@ GRANT SELECT, INSERT, UPDATE ON `unitrip`.* TO 'secure_user'@'localhost';
 GRANT DELETE ON `unitrip`.`PostLike` TO 'secure_user'@'localhost';
 GRANT DELETE ON `unitrip`.`PostFavourites` TO 'secure_user'@'localhost';
 GRANT DELETE ON `unitrip`.`Follow` TO 'secure_user'@'localhost';
-
-INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
-VALUES ('a', 'a@a.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
-  '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'A_Nome', 'A_Cognome', '../img/profile/gray.jpg',
-  'a.', '1990-01-01', '2023-11-20');
 
 INSERT INTO Profile (nickname, mail, password, salt, name, surname, photo_url, description, birth_date, join_date)
 VALUES ('marco', 'MarcoRossi@gmail.com', '194de7803c093146a7931905306403ed4c4e2c334f35607fc66d58aaacb1559a958489748abdce3a1a303b08c71f649abb49a69cae09be113166542857279454',
@@ -167,14 +162,11 @@ VALUES ('roby', 'RobertoBianchi@gmail.com', '194de7803c093146a7931905306403ed4c4
   '8f8c796ca4563395a8810b6116b502799dd3ac04e3cc488c3d7c7bcf66a4cda715e09dd0788aaff25e42e9fb08f11f3baca6f396a47c037393e86289c2af028b', 'Roberto', 'Bianchi', '../img/profile/roby.jpg',
   'Ciao mi chiamo Roberto Bianchi, detto roby.', '2000-04-01', '2023-12-10');
 
-INSERT INTO Follow (from_username, to_username) VALUES ('a', 'marco');
-INSERT INTO Follow (from_username, to_username) VALUES ('a', 'alessia');
 INSERT INTO Follow (from_username, to_username) VALUES ('marco', 'alessia');
 INSERT INTO Follow (from_username, to_username) VALUES ('alessia', 'marco');
 INSERT INTO Follow (from_username, to_username) VALUES ('alessia', 'francesco');
 INSERT INTO Follow (from_username, to_username) VALUES ('francesco', 'marco');
 INSERT INTO Follow (from_username, to_username) VALUES ('francesco', 'roby');
-INSERT INTO Follow (from_username, to_username) VALUES ('chiara', 'a');
 INSERT INTO Follow (from_username, to_username) VALUES ('chiara', 'marco');
 INSERT INTO Follow (from_username, to_username) VALUES ('roby', 'alessia');
 INSERT INTO Follow (from_username, to_username) VALUES ('roby', 'francesco');
@@ -277,29 +269,23 @@ INSERT INTO PostPhoto (post_id, photo_url) VALUES (5, '../img/post/roby_3.jpg');
 INSERT INTO PostPhoto (post_id, photo_url) VALUES (5, '../img/post/roby_4.jpg');
 INSERT INTO PostPhoto (post_id, photo_url) VALUES (5, '../img/post/roby_5.jpg');
 
-INSERT INTO PostLike (post_id, profile_username) VALUES (1, 'a');
 INSERT INTO PostLike (post_id, profile_username) VALUES (1, 'marco');
-INSERT INTO PostLike (post_id, profile_username) VALUES (2, 'a');
 INSERT INTO PostLike (post_id, profile_username) VALUES (2, 'alessia');
 INSERT INTO PostLike (post_id, profile_username) VALUES (2, 'francesco');
 INSERT INTO PostLike (post_id, profile_username) VALUES (3, 'marco');
 INSERT INTO PostLike (post_id, profile_username) VALUES (3, 'alessia');
 INSERT INTO PostLike (post_id, profile_username) VALUES (3, 'roby');
-INSERT INTO PostLike (post_id, profile_username) VALUES (4, 'a');
 INSERT INTO PostLike (post_id, profile_username) VALUES (4, 'marco');
 INSERT INTO PostLike (post_id, profile_username) VALUES (4, 'alessia');
 INSERT INTO PostLike (post_id, profile_username) VALUES (4, 'francesco');
 INSERT INTO PostLike (post_id, profile_username) VALUES (4, 'roby');
-INSERT INTO PostLike (post_id, profile_username) VALUES (5, 'a');
 INSERT INTO PostLike (post_id, profile_username) VALUES (5, 'francesco');
 
-INSERT INTO PostFavourites (post_id, profile_username) VALUES (1, 'a');
-INSERT INTO PostFavourites (post_id, profile_username) VALUES (1, 'alessia');
+INSERT INTO PostFavourites (post_id, profile_username) VALUES (1, 'francesco');
 INSERT INTO PostFavourites (post_id, profile_username) VALUES (2, 'marco');
 INSERT INTO PostFavourites (post_id, profile_username) VALUES (3, 'roby');
 INSERT INTO PostFavourites (post_id, profile_username) VALUES (4, 'alessia');
 INSERT INTO PostFavourites (post_id, profile_username) VALUES (4, 'francesco');
-INSERT INTO PostFavourites (post_id, profile_username) VALUES (5, 'a');
 
 INSERT INTO PostComment (post_id, author, comment) VALUES (1, 'alessia', 'Bello!');
 INSERT INTO PostComment (post_id, author, comment) VALUES (1, 'francesco', 'Che bello!');
@@ -312,3 +298,12 @@ INSERT INTO PostComment (post_id, author, comment) VALUES (4, 'chiara', 'Si, è 
 INSERT INTO PostComment (post_id, author, comment) VALUES (5, 'alessia', 'Molto particolare Innsbruck, mi piacerebbe andarci!');
 INSERT INTO PostComment (post_id, author, comment) VALUES (5, 'roby', 'Si, è molto bella!');
 INSERT INTO PostComment (post_id, author, comment) VALUES (5, 'chiara', 'Viaggio incredibile, ci andrò l''anno prossimo!');
+
+INSERT INTO Notify (from_username, to_username, message) VALUES ('alessia', 'marco', 'alessia ha iniziato a seguirti!');
+INSERT INTO Notify (from_username, to_username, post_id, message) VALUES ('francesco', 'marco', 1, 'francesco ha salvato il tuo post nei preferiti.');
+
+INSERT INTO Messages (from_username, to_username, message) VALUES ('marco', 'alessia', 'Ciao, come stai?');
+INSERT INTO Messages (from_username, to_username, message) VALUES ('alessia', 'marco', 'Ciao, bene grazie, tu?');
+INSERT INTO Messages (from_username, to_username, post_id, message) VALUES ('alessia', 'marco', 2, 'Guarda questo post!');
+INSERT INTO Messages (from_username, to_username, message) VALUES ('francesco', 'marco', 'Weee marco, tutto bene?');
+INSERT INTO Messages (from_username, to_username, message) VALUES ('marco', 'francesco', 'Ciao, si tutto bene, tu?');

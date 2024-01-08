@@ -15,7 +15,7 @@ $(document).ready(function () {
             if (data === "error") {
                 window.location.href = "../View/feed.html";
             } else {
-                $("#itineraryTitle").append(`<h2 class="text-center">` + data.name + " " + data.surname + " "
+                $("#itineraryTitle").append(`<h2 class="text-center">` + data.name + " " + data.surname + " @"
                     + data.organizer_username + `</h2>` + `<h3 class="text-center">` + data.description + `</h3>`);
 
                 let oldDate = null;

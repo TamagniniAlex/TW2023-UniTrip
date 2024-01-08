@@ -63,7 +63,7 @@ function addStage() {
 
     let lastHr = document.querySelectorAll('hr')[document.querySelectorAll('hr').length - 1];
     lastHr.insertAdjacentHTML('afterend', newStageHTML);
-    stageCount += 1;
+    stageCount += 2;
 
     let selectNations = $('#selectNations');
     getCities(selectNations, false)
@@ -84,12 +84,14 @@ function getCities(selectNations, reload) {
             data: { nation: selectedNation },
             dataType: 'json',
             success: function (cities) {
-                cities.forEach(function (city) {
-                    for (let i = 1; i <= stageCount; i++) {
-                        let selectCities = $('#selectCities' + i);
-                        selectCities.append('<option value="' + city.name + '">' + city.name + '</option>');
+                for (let i = 1; i <= stageCount; i++) {
+                    let selectCities = $('#selectCities' + i);
+                    if (selectCities.children().length != cities.length + 1) {
+                        for (let j = 0; j < cities.length; j++) {
+                            selectCities.append('<option value="' + cities[j].name + '">' + cities[j].name + '</option>');
+                        }
                     }
-                });
+                }
             },
             error: function (xhr, status, error) {
                 console.error('Errore nella richiesta AJAX:', status, error);
